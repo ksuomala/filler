@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/25 21:41:14 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/25 22:17:39 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int     main(void)
 
     fd = open("debug.txt", O_RDWR);
     while (get_next_line(0, &line))
-        ft_dprintf(fd, "%s", line);
-    printf("8 2");
+    {
+        ft_dprintf(fd, "%s\n", line);
+    }
+    ft_dprintf(1, "8 2");
     return (0);
 }
