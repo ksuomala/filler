@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap_ptr.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/05 22:40:37 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/25 20:49:21 by ksuomala         ###   ########.fr       */
+/*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
+/*   Updated: 2020/11/25 19:47:26 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_swap_ptr(void **dest, void **src)
+void    to_debug_file(char *str)
 {
-	*src = *dest;
-	*dest = *src;
+    int fd = open("debug.txt");
+    write(fd, str, ft_strlen(str));
+    write(fd, "\n", 1);
+    close(fd);
 }

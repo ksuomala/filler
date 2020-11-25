@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+        */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 15:08:09 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/10/14 17:43:59 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/25 21:31:50 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct	s_struct
 
 int				ft_printf(const char *format, ...);
 int				ft_snprintf(char *s, size_t n, const char *format, ...);
+int				ft_dprintf(int fd, const char *format, ...);
+int				ft_start(t_struct *f);
 
 /*
 ** Functions in parse.c read the data between '%' and the SPEC.

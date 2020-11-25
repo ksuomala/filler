@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+        */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 23:09:23 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/10/13 22:36:17 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/25 20:53:36 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ void	ft_width(t_struct *f)
 
 void	ft_presicion(t_struct *f)
 {
-	int		ret;
 	char	*ptr;
 
 	ptr = &f->dup[f->i + 1];
-	ret = 0;
 	if (ft_isdigit(*ptr) || *ptr == '*')
 		f->i++;
 	if (!ft_isdigit(*ptr))

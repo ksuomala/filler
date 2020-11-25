@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+         #
+#    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/09 11:51:40 by ksuomala          #+#    #+#              #
-#    Updated: 2020/10/31 18:03:39 by ksuomala         ###   ########.fr        #
+#    Updated: 2020/11/25 21:30:35 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -*- Makefile -*-
 
 SRCS = add_to_buffer.c add.c check_g.c d.c ft_e.c ft_printf.c get_double.c\
-modify_g.c parse.c type.c ft_fail.c conv_to_out.c
+modify_g.c parse.c type.c ft_fail.c conv_to_out.c ft_dprintf.c
 
 CC = gcc -Wall -Wextra -Werror -c -g
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modify_g.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+        */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 14:47:28 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/10/14 17:22:15 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/25 20:52:18 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,10 @@ int			ft_digit_presicion(char *s, int presicion, char hash)
 void		ft_presicion_g(char *s, int presicion, int hash)
 {
 	int		i;
-	char	c;
 
 	i = ft_digit_presicion(s, presicion, hash);
 	if (hash && s[i] == '.')
 		i++;
-	c = s[i];
 	s[i] = '\0';
 }
 
