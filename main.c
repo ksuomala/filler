@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/25 22:17:39 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/25 22:41:23 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int     main(void)
     {
         ft_dprintf(fd, "%s\n", line);
     }
-    ft_dprintf(1, "8 2");
+    ft_printf("8 2");
+    close(fd);
     return (0);
 }
