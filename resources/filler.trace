@@ -1,1 +1,3 @@
-seed = 7491
+seed = 7978
+O: error on input
+./ksuomala.filler: Segfault at 0
