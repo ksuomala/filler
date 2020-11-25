@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 // typedef struct  s_grid
 // {
@@ -32,7 +33,7 @@ int     main(void)
     char *line;
     int fd;
 
-    fd = open("debug.txt");
+    fd = open("debug.txt", O_RDWR);
     while (get_next_line(0, &line))
         ft_dprintf(fd, "%s", line);
     printf("8 2");
