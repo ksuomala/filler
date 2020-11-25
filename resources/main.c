@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 
 // typedef struct  s_grid
 // {
@@ -23,15 +24,21 @@
 // ft_get_map(char **board)
 // {
 //     t_board
-// }
-
-char    *filler(char **s)
+// 
+void    to_debug_file(char *str)
 {
-    char *ss = "8 1";
-    printf("%s", ss);
-    return (ss);
+    int fd = open("debug.txt");
+    write(fd, str, ft_strlen(str));
+    write(fd, "\n", 1);
+    close(fd);
 }
+
 int     main(int argc, char **argv)
 {
-    filler(argv);
+    char *outPut;
+    
+    open("debug.txt");
+    
+    printf("%s", outPut);
+    return (0);
 }
