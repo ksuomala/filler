@@ -1,18 +1,18 @@
 #include "filler.h"
 
-void    filler_test(t_board filler)
+void    filler_test(int fd, t_board filler)
 {
     int i;
     int ii;
 
     i = 0;
     ii = 0;
-    while (i < filler.columns)
+    while (i < filler.height)
     {
         ft_n(1);
         while(ii < filler.width)
         {
-            ft_printf("%4d", filler.map[i][ii]);
+            ft_dprintf(fd, "%4d", filler.map[i][ii]);
             ii++;
         }
         ii = 0;

@@ -6,6 +6,8 @@ typedef struct s_coordinate
     int x;
 }              t_coordinate;
 
+int fd;
+
 
 typedef struct  s_token
 {
@@ -23,12 +25,13 @@ typedef struct  s_grid
     char    p;
     int     size;
     int     width;
-    int     columns;
+    int     height;
 }               t_board;
 
-t_board     ft_get_board(void);
-t_token     *ft_get_piece(void);
-char        ft_get_player(void);
-int         **ft_minesweeper(t_board f);
+t_board         ft_get_board(void);
+t_token         *ft_get_piece(void);
+char            ft_get_player(void);
+int             **ft_minesweeper(t_board f);
 
-void        filler_test(t_board filler);
+void            filler_test(int fd, t_board filler);
+t_coordinate    ft_next_move(t_board f);

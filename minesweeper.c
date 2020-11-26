@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:26:38 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 15:13:59 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 22:15:07 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static unsigned char is_opp(t_board f, int y, int x)
 {
     char opponent;
 
-    if (y < 0 || x < 0 || x >= f.width || y >= f.columns)
+    if (y < 0 || x < 0 || x >= f.width || y >= f.height)
         return (0);
     if (f.p == 'o')
         opponent = 'x';
@@ -45,11 +45,11 @@ static void ft_check_value(t_board f, int y, int x)
         f.map[y][x] = f.map[y][x - 1] + 1;
     if (x < f.width - 1 && f.map[y][x + 1] < f.map[y][x])
         f.map[y][x] = f.map[y][x + 1] + 1;
-    if (x && y < f.columns - 1 && f.map[y + 1][x - 1] < f.map[y][x])
+    if (x && y < f.height - 1 && f.map[y + 1][x - 1] < f.map[y][x])
         f.map[y][x] = f.map[y + 1][x - 1] + 1;
-    if (y < f.columns - 1 && f.map[y + 1][x] < f.map[y][x])
+    if (y < f.height - 1 && f.map[y + 1][x] < f.map[y][x])
         f.map[y][x] = f.map[y + 1][x] + 1;
-    if (y < f.columns - 1 && x < f.width - 1 && f.map[y + 1][x + 1] < f.map[y][x])
+    if (y < f.height - 1 && x < f.width - 1 && f.map[y + 1][x + 1] < f.map[y][x])
         f.map[y][x] = f.map[y + 1][x + 1] + 1;
 }
 
@@ -62,7 +62,7 @@ static int **ft_save_distance(t_board f)
   //  ft_printf("saave disance");
     count = 0;
     y = -1;
-    while (++y < f.columns)
+    while (++y < f.height)
     {
       x = -1;
         while (++x < f.width)
@@ -91,7 +91,7 @@ int **ft_minesweeper(t_board f)
 
     y = 0;
     x = 0;
-    f.map = ft_memalloc(sizeof(int*) * (f.columns + 1));
+    f.map = ft_memalloc(sizeof(int*) * (f.height + 1));
     while (f.board[y])
     {
         f.map[y] = ft_memalloc(sizeof(int) * f.width);

@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 16:15:38 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/27 00:08:00 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ char ft_get_player(void)
     char *p;
     char c;
     
-    get_next_line(0, &line);
+    ft_dprintf(fd, "\nwhaaaattestiiiis\n");
+    if (get_next_line(0, &line) < 1)
+        return (0);
     p = ft_strchr(line, 'p') + 1;
     c = *p;
     free(line);
@@ -101,13 +103,13 @@ t_board ft_get_board(void)
     board_size = ft_strsplit(line, ' ');
     free(line);
     filler.width = ft_atoi(board_size[2]);
-    filler.columns = ft_atoi(board_size[1]);
+    filler.height = ft_atoi(board_size[1]);
     ft_free2d((void*)board_size);
-    filler.board = ft_memalloc(sizeof(char*) * (filler.columns + 1));
+    filler.board = ft_memalloc(sizeof(char*) * (filler.height + 1));
     if (!get_next_line(0, &line))
         ft_printf("error2");
     i = 0;
-    while (i < filler.columns)
+    while (i < filler.height)
     {
         if (!get_next_line(0, &line))
             ft_printf("error3");

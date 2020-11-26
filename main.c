@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 16:55:06 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/27 00:08:45 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 ** Minesweeper changes the board into numbers for the algorithm.
 */
 
+
 t_board     ft_get_data(void)
 {
     
@@ -29,27 +30,53 @@ t_board     ft_get_data(void)
     char    player;
  //   char *line;
 
+    ft_dprintf(fd, "testiis");
     ft_bzero(&filler, sizeof(t_board));
     if (!(player = ft_get_player()))
         ft_printf("playaa");
     filler = ft_get_board();
     filler.p = player;
- //   ft_printf("playa is %c", filler.p);
+    ft_dprintf(fd, "playa is %c", filler.p);
     filler.map = ft_minesweeper(filler);
     filler.piece = ft_get_piece();
     return (filler);
 }
 
+char *ft_parse_coord(t_coordinate crd)
+{
+    char *first;
+    char *second;
+
+    first = ft_strfjoin(ft_itoa(crd.y), ft_strdup(" "));
+    second = ft_itoa(crd.x);
+    first = ft_strfjoin(first, second);
+    return (first);
+}
+
 int     main(void)
 {
-    t_board filler;
+    t_board         filler;
+    t_coordinate    move;
+    char            *out;
 
-    // while (1)
-    // {
-    // here I will loop get data and solve.
-    // }
     
-    filler = ft_get_data();
-    filler_test(filler);
-    return (0);
+
+    fd = open("debug.txt", O_RDWR);
+    // while (get_next_line(0, &out))
+    //     ft_dprintf(fd, "%s\n", out);
+    while (1)
+    {
+ //       ft_dprintf(fd, "blööö");
+   //     ft_bzero(&filler, sizeof(t_board));
+        ft_dprintf(fd, "whaatbuggy");
+        filler = ft_get_data();
+        filler_test(fd, filler);
+        move = ft_next_move(filler);
+        out = ft_parse_coord(move);
+        ft_dprintf(fd, "%s\n", out);
+        free(out);
+    }
+    
+        return (0);
+    
 }
