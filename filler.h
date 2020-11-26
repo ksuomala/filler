@@ -30,3 +30,5 @@ t_board     ft_get_board(void);
 t_token     *ft_get_piece(void);
 char        ft_get_player(void);
 int         **ft_minesweeper(t_board f);
+
+void        filler_test(t_board filler);
