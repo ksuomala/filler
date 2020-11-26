@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 15:14:54 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 16:55:06 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,6 @@ t_board     ft_get_data(void)
  //   ft_printf("playa is %c", filler.p);
     filler.map = ft_minesweeper(filler);
     filler.piece = ft_get_piece();
-    int i = 0;
-    int ii = 0;
-    while (i < filler.columns)
-    {
-        ft_n(1);
-        while(ii < filler.width)
-        {
-            ft_printf("%4d", filler.map[i][ii]);
-            ii++;
-        }
-        ii = 0;
-        i++;
-    }
     return (filler);
 }
 
@@ -63,5 +50,6 @@ int     main(void)
     // }
     
     filler = ft_get_data();
+    filler_test(filler);
     return (0);
 }
