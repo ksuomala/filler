@@ -6,37 +6,36 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 00:11:52 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 12:49:18 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-char **ft_get_board(void)
+t_board ft_get_board(void)
 {
-    char    **grid;
+    t_board filler;
+    char    **board_size;
     char    *line;
-    int     columns;
-    int     width;
     int     i;
 
     get_next_line(0, &line);
-    grid = ft_strsplit(line, ' ');
+    board_size = ft_strsplit(line, ' ');
     free(line);
-    width = ft_atoi(grid[2]);
-    columns = ft_atoi(grid[1]);
-    free(grid);
-    grid = ft_memalloc(sizeof(char*) * (columns + 1));
+    filler.width = ft_atoi(board_size[2]);
+    filler.columns = ft_atoi(board_size[1]);
+    ft_free2d((void*)board_size);
+    filler.board = ft_memalloc(sizeof(char*) * (filler.columns + 1));
     if (!get_next_line(0, &line))
-        return (NULL);
+        ft_printf("error2");
     i = 0;
-    while (i < columns)
+    while (i < filler.columns)
     {
         if (!get_next_line(0, &line))
-            return (NULL);
-        grid[i] = ft_strsub(line, 4, width);
+            ft_printf("error3");
+        filler.board[i] = ft_strsub(line, 4, filler.width);
         free(line);
         i++;
     }
-    return (grid);
+    return (filler);
 }

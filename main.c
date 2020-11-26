@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 00:55:48 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 13:57:15 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ char ft_get_player(void)
     p = ft_strchr(line, 'p') + 1;
     c = *p;
     free(line);
-    if (c)
-        return (c);
+    if (c == '1')
+        return ('o');
+    else if (c == '2')
+        return ('x');
     else
         return (0);
 }
@@ -51,19 +53,28 @@ t_board     ft_get_data(void)
 {
     
     t_board filler;
+    char    player;
  //   char *line;
 
     ft_bzero(&filler, sizeof(t_board));
-    if (!(filler.p = ft_get_player()))
+    if (!(player = ft_get_player()))
         ft_printf("playaa");
-    if (!(filler.board = ft_get_board()))
-        ft_printf("board fail xD");
+    filler = ft_get_board();
+    filler.p = player;
+    ft_printf("playa is %c", filler.p);
     // ft_get_piece()
-    filler.board = ft_minesweeper(filler);
+    filler.map = ft_minesweeper(filler);
     int i = 0;
-    while (filler.board[i])
+    int ii = 0;
+    while (i < filler.columns)
     {
-        ft_putendl(filler.board[i]);
+        ft_n(1);
+        while(ii < filler.width)
+        {
+            ft_putnbr(filler.map[i][ii]);
+            ii++;
+        }
+        ii = 0;
         i++;
     }
     return (filler);

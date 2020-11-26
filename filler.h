@@ -4,9 +4,12 @@ typedef struct  s_grid
 {
     char    **board;
     char    **piece;
+    int     **map;
     char    p;
     int     size;
+    int     width;
+    int     columns;
 }               t_board;
 
-char    **ft_get_board(void);
-char    **ft_minesweeper(t_board f);
+t_board    ft_get_board(void);
+int    **ft_minesweeper(t_board f);
