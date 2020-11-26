@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 13:57:15 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 14:06:27 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_board     ft_get_data(void)
         ft_n(1);
         while(ii < filler.width)
         {
-            ft_putnbr(filler.map[i][ii]);
+            ft_printf("%4d", filler.map[i][ii]);
             ii++;
         }
         ii = 0;

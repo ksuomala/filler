@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:26:38 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 13:51:16 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 14:14:49 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ static int **ft_save_distance(t_board f)
     int x;
     int count;
 
+    ft_printf("saave disance");
     count = 0;
     y = -1;
-    while (f.map[++y])
+    while (++y < f.columns)
     {
       x = -1;
-        while (f.map[y][++x])
+        while (++x < f.width)
         {
             if (f.map[y][x] == 50)
             {
@@ -98,20 +99,21 @@ int **ft_minesweeper(t_board f)
         {
             if (is_opp(f, y, x))
             {
-                ft_printf("%d | %d is opponent\n", y, x);
+                ft_printf("%d | %d is opponent", y, x);
                 ft_printf("playa is %c", f.p);
-                f.map[y][x] == 0;
+                f.map[y][x] = 0;
             }
             else if (ft_tolower(f.board[y][x]) == f.p)
             {
                 ft_printf("%d | %d is me\n", y, x);
-                f.map[y][x] == 100;
+                f.map[y][x] = 100;
             }
             else
             {
                 ft_printf("%d | %d is %c\n", y, x, ft_tolower(f.board[y][x]));
-                f.map[y][x] == 50;
+                f.map[y][x] = 50;
             }
+            ft_printf("%d\n", f.map[y][x]);
             x++;
         }
         y++;
