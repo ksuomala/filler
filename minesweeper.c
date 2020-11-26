@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:26:38 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 14:14:49 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 15:13:59 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static unsigned char is_opp(t_board f, int y, int x)
 
 static void ft_check_value(t_board f, int y, int x)
 {
-    ft_printf("board check around %d %d\n", y, x);
+  //  ft_printf("board check around %d %d\n", y, x);
     if (y && x && f.map[y - 1][x - 1] < f.map[y][x])
         f.map[y][x] = f.map[y - 1][x - 1] + 1;
     if (y && f.map[y - 1][x] < f.map[y][x])
@@ -59,7 +59,7 @@ static int **ft_save_distance(t_board f)
     int x;
     int count;
 
-    ft_printf("saave disance");
+  //  ft_printf("saave disance");
     count = 0;
     y = -1;
     while (++y < f.columns)
@@ -99,21 +99,21 @@ int **ft_minesweeper(t_board f)
         {
             if (is_opp(f, y, x))
             {
-                ft_printf("%d | %d is opponent", y, x);
-                ft_printf("playa is %c", f.p);
+  //              ft_printf("%d | %d is opponent", y, x);
+    //            ft_printf("playa is %c", f.p);
                 f.map[y][x] = 0;
             }
             else if (ft_tolower(f.board[y][x]) == f.p)
             {
-                ft_printf("%d | %d is me\n", y, x);
+ //               ft_printf("%d | %d is me\n", y, x);
                 f.map[y][x] = 100;
             }
             else
             {
-                ft_printf("%d | %d is %c\n", y, x, ft_tolower(f.board[y][x]));
+   //             ft_printf("%d | %d is %c\n", y, x, ft_tolower(f.board[y][x]));
                 f.map[y][x] = 50;
             }
-            ft_printf("%d\n", f.map[y][x]);
+   //         ft_printf("%d\n", f.map[y][x]);
             x++;
         }
         y++;

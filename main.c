@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 14:06:27 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 15:14:54 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-
-
-// ft_get_map(char **board)
-// {
-//     t_board
-// 
 #include "filler.h"
 
-/*
-** Reading the first line to see which player to play (p_).
-*/
-
-char ft_get_player(void)
-{
-    char *line;
-    char *p;
-    char c;
-    
-    get_next_line(0, &line);
-    p = ft_strchr(line, 'p') + 1;
-    c = *p;
-    free(line);
-    if (c == '1')
-        return ('o');
-    else if (c == '2')
-        return ('x');
-    else
-        return (0);
-}
 
 /*
 ** Reading the stdin and saving the board and the next game piece.
@@ -61,9 +34,9 @@ t_board     ft_get_data(void)
         ft_printf("playaa");
     filler = ft_get_board();
     filler.p = player;
-    ft_printf("playa is %c", filler.p);
-    // ft_get_piece()
+ //   ft_printf("playa is %c", filler.p);
     filler.map = ft_minesweeper(filler);
+    filler.piece = ft_get_piece();
     int i = 0;
     int ii = 0;
     while (i < filler.columns)
