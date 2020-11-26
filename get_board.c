@@ -6,11 +6,50 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 12:49:18 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 15:12:52 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+/*
+** Reading the first line to see which player to play (p_).
+*/
+
+char ft_get_player(void)
+{
+    char *line;
+    char *p;
+    char c;
+    
+    get_next_line(0, &line);
+    p = ft_strchr(line, 'p') + 1;
+    c = *p;
+    free(line);
+    if (c == '1')
+        return ('o');
+    else if (c == '2')
+        return ('x');
+    else
+        return (0);
+}
+
+t_token *ft_get_piece(void)
+{
+    char *line;
+    t_token *new;
+
+    new = ft_memalloc(sizeof(t_token));
+    if (!get_next_line(0, &line))
+        ft_printf("no more lines");
+    ft_printf("%s", line);
+    return (new);
+}
+
+/*
+** Reading and saving the board as char**. The first 4 characters
+** of every line are skipped.
+*/
 
 t_board ft_get_board(void)
 {
