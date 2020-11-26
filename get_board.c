@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 15:12:52 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/26 16:15:38 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,54 @@ char ft_get_player(void)
         return (0);
 }
 
+/*
+** Saving the coordinates of the squares into an array of t_coordinate
+** structs.
+*/
+
+t_coordinate *ft_get_coordinates(t_token *token)
+{
+    t_coordinate    arr[100];
+    char            *line;
+    int             y;
+    int             x;
+
+    y = -1;
+    x = -1;
+    while (++y < token->h)
+    {
+        x = -1;
+        get_next_line(0, &line);
+        while (++x < token->w)
+        {
+            if (line[x] == '*')
+            {
+                arr[token->len].x = x;
+                arr[token->len].y = y;
+                token->len++;
+            }
+        }
+        free(line);
+    }
+    return (ft_memdup((t_coordinate*)arr, sizeof(t_coordinate) * token->len));
+}
+
 t_token *ft_get_piece(void)
 {
     char *line;
+    char **token_size;
     t_token *new;
 
     new = ft_memalloc(sizeof(t_token));
     if (!get_next_line(0, &line))
         ft_printf("no more lines");
     ft_printf("%s", line);
+    token_size = ft_strsplit(line, ' ');
+    new->h = ft_atoi(token_size[1]);
+    new->w = ft_atoi(token_size[2]);
+    free(line);
+    ft_free2d((void*)token_size);
+    new->cr = ft_get_coordinates(new);
     return (new);
 }
 
