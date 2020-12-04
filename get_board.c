@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/27 00:08:00 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/11/27 17:53:22 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char ft_get_player(void)
     char *p;
     char c;
     
-    ft_dprintf(fd, "\nwhaaaattestiiiis\n");
+ //   ft_dprintf(fd, "\nwhaaaattestiiiis\n");
     if (get_next_line(0, &line) < 1)
         return (0);
     p = ft_strchr(line, 'p') + 1;
@@ -77,7 +77,7 @@ t_token *ft_get_piece(void)
     new = ft_memalloc(sizeof(t_token));
     if (!get_next_line(0, &line))
         ft_printf("no more lines");
-    ft_printf("%s", line);
+//    ft_printf("%s", line);
     token_size = ft_strsplit(line, ' ');
     new->h = ft_atoi(token_size[1]);
     new->w = ft_atoi(token_size[2]);

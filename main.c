@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/27 00:08:45 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/04 16:25:17 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ t_board     ft_get_data(void)
     char    player;
  //   char *line;
 
-    ft_dprintf(fd, "testiis");
+ //   ft_dprintf(fd, "testiis");
     ft_bzero(&filler, sizeof(t_board));
     if (!(player = ft_get_player()))
         ft_printf("playaa");
     filler = ft_get_board();
     filler.p = player;
-    ft_dprintf(fd, "playa is %c", filler.p);
+ //   ft_dprintf(fd, "playa is %c", filler.p);
     filler.map = ft_minesweeper(filler);
     filler.piece = ft_get_piece();
     return (filler);
@@ -62,21 +62,14 @@ int     main(void)
     
 
     fd = open("debug.txt", O_RDWR);
-    // while (get_next_line(0, &out))
-    //     ft_dprintf(fd, "%s\n", out);
-    while (1)
-    {
- //       ft_dprintf(fd, "blööö");
-   //     ft_bzero(&filler, sizeof(t_board));
-        ft_dprintf(fd, "whaatbuggy");
-        filler = ft_get_data();
-        filler_test(fd, filler);
-        move = ft_next_move(filler);
-        out = ft_parse_coord(move);
-        ft_dprintf(fd, "%s\n", out);
-        free(out);
-    }
-    
-        return (0);
-    
+    filler = ft_get_data();
+    //  filler_test(fd, filler);
+    move = ft_next_move(filler);
+    out = ft_parse_coord(move);
+    //  ft_dprintf(fd, "%s\n", out);
+    ft_dprintf(fd, "%s", out);
+    ft_printf("%s", out);
+    free(out);
+    close(fd);
+    return (0);
 }

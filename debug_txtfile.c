@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug_txtfile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/25 19:47:26 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/04 15:34:58 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void    to_debug_file(char *str)
+#include <fcntl.h>
+#include "libft/libft.h"
+
+int main (void)
 {
-    int fd = open("debug.txt");
-    write(fd, str, ft_strlen(str));
-    write(fd, "\n", 1);
-    close(fd);
+    char *line;
+    int     fd;
+
+    fd = open("debug.txt", O_RDWR);
+    while (get_next_line(0, &line))
+        ft_dprintf(fd, "%s\n", line);
+    return (0);
 }
