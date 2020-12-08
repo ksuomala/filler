@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/08 19:50:14 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/08 20:30:24 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int     ft_get_data(t_board *filler)
  //   ft_printf("bored");
 //    filler.p = player;
  //   ft_dprintf(fd, "playa is %c", filler.p);
+ // HERE is the segfault!
     filler->map = ft_minesweeper(*filler);
+    ft_putchar('b');
     filler->piece = ft_get_piece();
   //  filler_test(fd, *filler);
     return (1);
@@ -69,6 +71,7 @@ int     main(void)
     while (1)
     {
         ft_get_data(&filler);
+        ft_putchar('a');
         move = ft_next_move(filler);
         out = ft_parse_coord(move);
  //       ft_dprintf(fd, "%s\n", out);
