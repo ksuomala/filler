@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/27 17:53:22 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/08 19:09:05 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,30 +92,30 @@ t_token *ft_get_piece(void)
 ** of every line are skipped.
 */
 
-t_board ft_get_board(void)
+int ft_get_board(t_board *filler)
 {
-    t_board filler;
     char    **board_size;
     char    *line;
     int     i;
 
-    get_next_line(0, &line);
+    if (!get_next_line(0, &line))
+        exit(0);
     board_size = ft_strsplit(line, ' ');
     free(line);
-    filler.width = ft_atoi(board_size[2]);
-    filler.height = ft_atoi(board_size[1]);
+    filler->width = ft_atoi(board_size[2]);
+    filler->height = ft_atoi(board_size[1]);
     ft_free2d((void*)board_size);
-    filler.board = ft_memalloc(sizeof(char*) * (filler.height + 1));
+    filler->board = ft_memalloc(sizeof(char*) * (filler->height + 1));
     if (!get_next_line(0, &line))
-        ft_printf("error2");
+        return (0);
     i = 0;
-    while (i < filler.height)
+    while (i < filler->height)
     {
         if (!get_next_line(0, &line))
             ft_printf("error3");
-        filler.board[i] = ft_strsub(line, 4, filler.width);
+        filler->board[i] = ft_strsub(line, 4, filler->width);
         free(line);
         i++;
     }
-    return (filler);
+    return (1);
 }

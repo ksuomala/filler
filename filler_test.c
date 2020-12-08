@@ -7,7 +7,6 @@ void    filler_test(int fd, t_board filler)
 
     i = 0;
     ii = 0;
- //   ft_dprintf(fd, "\nwhaaaattestiiiis height = %d\n", filler.height);
 
     while (i < filler.height)
     {

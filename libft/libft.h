@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+        */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 12:07:29 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/05 18:36:49 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:41:53 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 
 # define LIBFT_H
-# define BUFF_SIZE	10000
+# define BUFF_SIZE	1
 # define FD_SIZE	10
 
 # include <unistd.h>

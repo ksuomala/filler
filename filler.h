@@ -28,7 +28,7 @@ typedef struct  s_grid
     int     height;
 }               t_board;
 
-t_board         ft_get_board(void);
+int              ft_get_board(t_board *filler);
 t_token         *ft_get_piece(void);
 char            ft_get_player(void);
 int             **ft_minesweeper(t_board f);

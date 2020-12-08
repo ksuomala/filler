@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/26 23:06:18 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/08 20:00:15 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int ft_move_value(int **board, t_coordinate token, t_coordinate *lst, int len)
         x = token.x + lst[i].x;
         y = token.y + lst[i].y;
         sum += board[y][x];
-        if (sum > 200)
+        if (sum > 200 || !board[y][x])
             return (200);
         i++;
     }
