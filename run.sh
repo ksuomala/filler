@@ -1,0 +1,1 @@
+./resources/filler_vm_old -f resources/maps/map00 -p1 ./resources/ksuomala.filler -p2 ./resources/ksuomala.filler

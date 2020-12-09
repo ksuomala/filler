@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:26:38 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/08 20:14:15 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/09 03:42:09 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static void ft_check_value(t_board f, int y, int x)
         f.map[y][x] = f.map[y + 1][x] + 1;
     if (y < f.height - 1 && x < f.width - 1 && f.map[y + 1][x + 1] < f.map[y][x])
         f.map[y][x] = f.map[y + 1][x + 1] + 1;
+    if (f.map[y][x] == 50)
+        f.map[y][x] += 1;
 }
 
 static int **ft_save_distance(t_board f)
@@ -59,7 +61,7 @@ static int **ft_save_distance(t_board f)
     int x;
     int count;
 
-  //  ft_printf("saave disance");
+ //   ft_printf("saave disance");
     count = 0;
     y = -1;
     while (++y < f.height)
@@ -91,7 +93,8 @@ int **ft_minesweeper(t_board f)
 
     y = 0;
     x = 0;
-    f.map = ft_memalloc(sizeof(int*) * (f.height + 1));
+    if (!(f.map = ft_memalloc(sizeof(int*) * (f.height + 1))))
+        exit(0);
     while (f.board[y])
     {
         f.map[y] = ft_memalloc(sizeof(int) * f.width);
