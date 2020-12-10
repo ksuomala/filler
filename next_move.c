@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/08 20:28:41 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/10 02:01:37 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_coordinate    ft_start_crd(t_token *p)
         if (start.y > p->cr[i].y)
             start.y = p->cr[i].y;
     }
+    start.x *= -1;
+    start.y *= -1;
     return (start);
 }
 
