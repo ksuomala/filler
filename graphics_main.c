@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/10 14:20:58 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:18:03 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,86 @@
 // according to the size so it always takes the same area of the screen. I want to make bars on the right side with the player colors, names and
 // scores. Maybe buttons where I could change the players.
 
-typedef struct s_window {
-    SDL_Window *win;
-    SDL_Surface *surf;
-    SDL_Renderer *render;
-}               t_win;
+typedef struct s_filler {
+    SDL_Window      *win;
+    SDL_Renderer    *renderer;
+    int             h;
+    int             w;
+    char            *p1;
+    char            *p2;
+}               t_filler;
 
-int read_output(t_win *win)
+void ft_error(int msg)
 {
+    ft_printf("error");
+    exit(0);
+}
 
+t_filler board_size(SDL_Window *w, SDL_Renderer *r)
+{
+    t_filler    new;
+    char        *line;
+    char        **size;
+    
+    new.win = w;
+    new.renderer = r;
+    while(get_next_line(0, &line))
+    {
+        if (ft_strstr(line, "exec p1"))
+            if (!(new.p1 = ft_strdup(ft_strstr(line, "./") + 2)))
+                ft_error(0);
+        if (ft_strstr(line, "exec p2"))
+            if (!(new.p2 = ft_strdup(ft_strstr(line, "./") + 2)))
+                ft_error(0);
+        if (ft_strstr(line, "Plateau"))
+        {
+            if (!(size = ft_strsplit(line, ' ')))
+                ft_error(0);
+            new.h = ft_atoi(size[1]);
+            new.w = ft_atoi(size[2]);
+            ft_free2d((void**)size);
+        }
+        free(line);
+    }
+    return (new);
+}
+
+int read_game(SDL_Window *win, SDL_Renderer *renderer)
+{
+    t_filler game;
+
+    game = board_size(win, renderer);
+}
+
+SDL_Renderer *render(SDL_Window *window)
+{
+    SDL_Renderer *renderer;
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+    return (renderer);
 }
 
 int main(void)
 {
-    t_win   win;
+    SDL_Window      *win;
+    SDL_Renderer    *renderer;
     SDL_Rect sq;
     
     if (SDL_Init(SDL_INIT_VIDEO))
         ft_printf("Error initializing SDL : %s", SDL_GetError());
     ft_printf("SDL initialized\n");
-    win.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_CENTERED,\
+    win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_CENTERED,\
     SDL_WINDOWPOS_CENTERED, WIN_WT, WIN_HT, 0);
-    if (!win.win)
+    if (!win)
         ft_printf("error creating window");
-    win.surf = SDL_GetWindowSurface(win.win);
-    win.render = SDL_CreateRenderer(win.win, -1, SDL_RENDERER_PRESENTVSYNC);
-    SDL_SetRenderDrawColor(win.render, 69, 69, 69, 255);
-    SDL_RenderClear(win.render);
 
-    sq.h = 12;
-    sq.w = 10;
-    sq.y = WIN_HT / 2 - sq.h / 2;
-    sq.x = WIN_WT / 2 - sq.w / 2;
-
-    SDL_SetRenderDrawColor(win.render, 200, 200, 200, 255);
-    SDL_RenderFillRect(win.render, &sq);
-    SDL_RenderPresent(win.render);
+    renderer = render(win);
+    read_game(win, renderer);
     SDL_Delay(3000);
-    SDL_DestroyWindow(win.win);
+    SDL_DestroyWindow(win);
     SDL_Quit();
     return (0);
 }       
