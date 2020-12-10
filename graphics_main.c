@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/10 18:18:03 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:53:36 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ void ft_error(int msg)
     exit(0);
 }
 
-t_filler board_size(SDL_Window *w, SDL_Renderer *r)
+t_filler parse_data(SDL_Window *w)
 {
     t_filler    new;
     char        *line;
     char        **size;
     
     new.win = w;
-    new.renderer = r;
     while(get_next_line(0, &line))
     {
         if (ft_strstr(line, "exec p1"))
@@ -64,40 +63,49 @@ t_filler board_size(SDL_Window *w, SDL_Renderer *r)
 
 int read_game(SDL_Window *win, SDL_Renderer *renderer)
 {
-    t_filler game;
-
-    game = board_size(win, renderer);
+   return (0);
 }
 
-SDL_Renderer *render(SDL_Window *window)
+SDL_Renderer *background(t_filler data)
 {
-    SDL_Renderer *renderer;
+    SDL_Renderer    *renderer;
+    SDL_Rect        board;
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
-    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 255);
+    renderer = SDL_CreateRenderer(data.win, -1, SDL_RENDERER_PRESENTVSYNC);
+    SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
     SDL_RenderClear(renderer);
+    board.h = WIN_HT * 0.9;
+    board.w = WIN_WT * 0.6;
+    board.x = WIN_HT * 0.05;
+    board.y = WIN_HT * 0.05;
+    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 255);
+    SDL_RenderFillRect(renderer, &board);
     SDL_RenderPresent(renderer);
     return (renderer);
 }
 
-int main(void)
+void    start(void)
 {
-    SDL_Window      *win;
-    SDL_Renderer    *renderer;
-    SDL_Rect sq;
+    t_filler        data;
     
+    ft_bzero(&data, sizeof(t_filler));
     if (SDL_Init(SDL_INIT_VIDEO))
         ft_printf("Error initializing SDL : %s", SDL_GetError());
     ft_printf("SDL initialized\n");
-    win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_CENTERED,\
+    data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_CENTERED,\
     SDL_WINDOWPOS_CENTERED, WIN_WT, WIN_HT, 0);
-    if (!win)
+    if (!data.win)
         ft_printf("error creating window");
+    data = parse_data(data.win);
+    data.renderer = background(data);
 
-    renderer = render(win);
-    read_game(win, renderer);
-    SDL_Delay(3000);
-    SDL_DestroyWindow(win);
+    SDL_Delay(5000);
+    SDL_DestroyWindow(data.win);
+}
+
+int main(void)
+{
+    start();
     SDL_Quit();
     return (0);
 }       
