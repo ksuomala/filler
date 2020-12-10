@@ -1,0 +1,1 @@
+gcc graphics_main.c libft/libft.a -o graphics `sdl2-config --cflags --libs` -lSDL2_image -lm
