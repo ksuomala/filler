@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/10 21:41:17 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/11 00:11:36 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 // according to the size so it always takes the same area of the screen. I want to make bars on the right side with the player colors, names and
 // scores. Maybe buttons where I could change the players.
 
-typedef struct s_filler {
+
+typedef struct s_filler 
+{
     SDL_Window      *win;
     SDL_Renderer    *renderer;
     char            **board;
@@ -35,34 +37,35 @@ void ft_error(int msg)
     exit(0);
 }
 
-char    **get_board(t_filler data)
+char    **get_board(size_t height, size_t width)
 {
     int y;
     char    *line;
     char    **board;
 
     y = -1;
-    if (!(board = ft_memalloc(sizeof(char**) * (data.h + 1))))
+    if (!(board = ft_memalloc(sizeof(char**) * (height + 1))))
         ft_error(0);
     get_next_line(0, &line);
     ft_strdel(&line);
-    while (++y < data.h)
+    while (++y < height)
     {
         get_next_line(0, &line);
-        if (!(board[y] = ft_strsub(line, 4, data.w)))
+        if (!(board[y] = ft_strsub(line, 4, width)))
             ft_error(0);
         ft_strdel(&line);
     }
+    ft_printf("got board\n");
     return (board);
 }
 
-t_filler parse_data(SDL_Window *w)
+t_filler get_data(SDL_Window *w)
 {
     t_filler    new;
     char        *line;
     char        **size;
     
-    new.win = w;
+ //   new.win = w;
     while(get_next_line(0, &line))
     {
         if (ft_strstr(line, "exec p1"))
@@ -119,8 +122,6 @@ void    square_to_window(t_filler filler, int y, int x)
     square.x = WIN_HT * 0.05 + square.h * x;
     square.y = WIN_HT * 0.05 + square.h * y;
     SDL_RenderFillRect(filler.renderer, &square);
-    SDL_RenderPresent(filler.renderer);
-    SDL_Delay(2000);
 }
 
 int game_to_window(t_filler filler)
@@ -135,15 +136,17 @@ int game_to_window(t_filler filler)
     {
         while(++x < filler.w)
         {
-            ft_putchar(filler.board[y][x]);
-            if (filler.board[y][x] != '.')
+ //           ft_putchar(filler.board[y][x]);
+            if (filler.board[y][x] != '.' && (!current || filler.board[y][x] != current[y][x]))
                 square_to_window(filler, y, x);
         }
         x = -1;
-        ft_n(1);
+//        ft_n(1);
     }
     if (!(current = cpy_board(filler.board, filler.h + 1)))
         ft_error(0);
+    SDL_Delay(300);
+    SDL_RenderPresent(filler.renderer);
    return (0);
 }
 
@@ -167,24 +170,51 @@ SDL_Renderer *background(t_filler *data)
     return (renderer);
 }
 
+int game_over(t_filler *filler)
+{
+    char *line;
+
+    line = NULL;
+    while (!ft_strstr(line, "Plateau") && !ft_strstr(line, "=="))
+    {
+        ft_strdel(&line);
+        if (!get_next_line(0, &line))
+            break;
+    }
+        ft_printf("I'm in");
+    if (ft_strstr(line, "Plateau"))
+    {
+        ft_strdel(&line);
+        return (0);
+    }
+    else
+    {
+        ft_strdel(&line);
+        return (1);
+    }
+}
+
 void    start(void)
 {
     t_filler        data;
     
     ft_bzero(&data, sizeof(t_filler));
+    data = get_data(data.win);
     if (SDL_Init(SDL_INIT_VIDEO))
         ft_printf("Error initializing SDL : %s", SDL_GetError());
     ft_printf("SDL initialized\n");
-    data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_CENTERED,\
-    SDL_WINDOWPOS_CENTERED, WIN_WT, WIN_HT, 0);
+    data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_UNDEFINED,\
+    SDL_WINDOWPOS_CENTERED, (float)data.w / data.h * WIN_HT + 420, WIN_HT, 0);
     if (!data.win)
         ft_printf("error creating window");
-    data = parse_data(data.win);
     data.renderer = background(&data);
-    data.board = get_board(data);
-    for(int i = 0; i < data.h; i++)
-        ft_printf("%s\n", data.board[i]);
-    game_to_window(data);
+    while (1)
+    {
+        data.board = get_board(data.h, data.w);
+        if (game_over(&data))
+            break;
+        game_to_window(data);
+    }
     SDL_Delay(5000);
     SDL_DestroyWindow(data.win);
 }
