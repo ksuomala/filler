@@ -6,10 +6,11 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/11 00:11:36 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/12 19:58:23 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "window.h"
 #include "filler.h"
 #include <fcntl.h>
 #include <SDL2/SDL.h>
@@ -29,11 +30,13 @@ typedef struct s_filler
     int             square_size;
     char            *p1;
     char            *p2;
+    char            *score_1;
+    char            *score_2;
 }               t_filler;
 
 void ft_error(int msg)
 {
-    ft_printf("error");
+    ft_printf("error %d", msg);
     exit(0);
 }
 
@@ -52,10 +55,9 @@ char    **get_board(size_t height, size_t width)
     {
         get_next_line(0, &line);
         if (!(board[y] = ft_strsub(line, 4, width)))
-            ft_error(0);
+            ft_error(1);
         ft_strdel(&line);
     }
-    ft_printf("got board\n");
     return (board);
 }
 
@@ -70,14 +72,14 @@ t_filler get_data(SDL_Window *w)
     {
         if (ft_strstr(line, "exec p1"))
             if (!(new.p1 = ft_strdup(ft_strstr(line, "./") + 2)))
-                ft_error(0);
+                ft_error(3);
         if (ft_strstr(line, "exec p2"))
             if (!(new.p2 = ft_strdup(ft_strstr(line, "./") + 2)))
-                ft_error(0);
+                ft_error(4);
         if (ft_strstr(line, "Plateau"))
         {
             if (!(size = ft_strsplit(line, ' ')))
-                ft_error(0);
+                ft_error(2);
             new.h = ft_atoi(size[1]);
             new.w = ft_atoi(size[2]);
             ft_free2d((void**)size);
@@ -108,15 +110,14 @@ void    square_to_window(t_filler filler, int y, int x)
 {
     SDL_Rect    square;
 
-    ft_printf("test");
     if (filler.board[y][x] == 'O')
         SDL_SetRenderDrawColor(filler.renderer, 0, 0, 255, 255);
     else if (filler.board[y][x] == 'o')
-        SDL_SetRenderDrawColor(filler.renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor(filler.renderer, 50, 50, 255, 230);
     else if (filler.board[y][x] == 'X')
         SDL_SetRenderDrawColor(filler.renderer, 255, 0, 0, 255);
     else if (filler.board[y][x] == 'x')
-        SDL_SetRenderDrawColor(filler.renderer, 255, 50, 50, 255);
+        SDL_SetRenderDrawColor(filler.renderer, 255, 50, 50, 230);
     square.h = filler.square_size;
     square.w = square.h;
     square.x = WIN_HT * 0.05 + square.h * x;
@@ -144,8 +145,8 @@ int game_to_window(t_filler filler)
 //        ft_n(1);
     }
     if (!(current = cpy_board(filler.board, filler.h + 1)))
-        ft_error(0);
-    SDL_Delay(300);
+        ft_error(5);
+    SDL_Delay(100);
     SDL_RenderPresent(filler.renderer);
    return (0);
 }
@@ -163,11 +164,30 @@ SDL_Renderer *background(t_filler *data)
     board.w = data->square_size * data->w;
     board.x = WIN_HT * 0.05;
     board.y = WIN_HT * 0.05;
-    ft_printf("board h %d board w %d", board.h, board.w);
     SDL_SetRenderDrawColor(renderer, 69, 69, 69, 255);
     SDL_RenderFillRect(renderer, &board);
  //   SDL_RenderPresent(renderer);
     return (renderer);
+}
+
+void    text_to_window(t_filler *filler)
+{
+    return ;
+}
+
+void    ft_score(t_filler *filler, char *line)
+{
+    char **scoreline;
+
+    scoreline = ft_strsplit(line, ' ');
+    filler->score_1 = ft_strdup(scoreline[3]);
+    ft_strdel(&line);
+    ft_free2d((void**)scoreline);
+    get_next_line(0, &line);
+    scoreline = ft_strsplit(line, ' ');
+    filler->score_2 = ft_strdup(scoreline[3]);
+    ft_printf("score %s, score %s\n", filler->score_1, filler->score_2);
+    text_to_window(filler);
 }
 
 int game_over(t_filler *filler)
@@ -181,7 +201,6 @@ int game_over(t_filler *filler)
         if (!get_next_line(0, &line))
             break;
     }
-        ft_printf("I'm in");
     if (ft_strstr(line, "Plateau"))
     {
         ft_strdel(&line);
@@ -189,8 +208,20 @@ int game_over(t_filler *filler)
     }
     else
     {
+        ft_score(filler, line);
         ft_strdel(&line);
         return (1);
+    }
+}
+
+void    events(t_filler filler)
+{
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_QUIT)
+            exit(0);
     }
 }
 
@@ -210,6 +241,7 @@ void    start(void)
     data.renderer = background(&data);
     while (1)
     {
+        events(data);
         data.board = get_board(data.h, data.w);
         if (game_over(&data))
             break;
