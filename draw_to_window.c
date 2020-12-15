@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/15 18:13:24 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:15:31 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ void        players_to_window(SDL_Renderer *renderer)
 
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "put your text here", White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
     if (!surfaceMessage)
-        printf("Unable to get surfaceMessage!");
+        ft_printf("Unable to get surfaceMessage!");
     ft_printf("This is just for test purposes\n");
     SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
-
+    if (!Message)
+        ft_printf("Unable to create Texture!");
     SDL_Rect Message_rect; //create a rect
     Message_rect.x = 100;  //controls the rect's x coordinate 
     Message_rect.y = 100; // controls the rect's y coordinte
