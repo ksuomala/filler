@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/15 18:41:01 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:24:27 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,26 @@ int game_to_window(t_filler filler)
 
 void        players_to_window(SDL_Renderer *renderer)
 {
-    //TTF_Init();
+    if (TTF_Init() == -1)
+        ft_printf("Failed to initialize TTF\n");
 
-    TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24); //this opens a font style and sets a size
+    TTF_Font* Sans = TTF_OpenFont("Lato-Italic.ttf", 24); //this opens a font style and sets a size
     if (!Sans)
-        ft_printf("Unable to OpenFOnt");
+        ft_printf("Unable to OpenFOnt\n");
 
     SDL_Color White = {255, 255, 255};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
-
+    ft_printf("test\n");
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "put your text here", White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
     if (!surfaceMessage)
-        ft_printf("Unable to get surfaceMessage!");
+        ft_printf("Unable to get surfaceMessage!\n");
     ft_printf("This is just for test purposes\n");
     SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
     if (!Message)
         ft_printf("Unable to create Texture!");
     SDL_Rect Message_rect; //create a rect
-    Message_rect.x = 100;  //controls the rect's x coordinate 
+    Message_rect.x = 500;  //controls the rect's x coordinate 
     Message_rect.y = 100; // controls the rect's y coordinte
-    Message_rect.w = 100; // controls the width of the rect
+    Message_rect.w = 500; // controls the width of the rect
     Message_rect.h = 100; // controls the height of the rect
 
 
