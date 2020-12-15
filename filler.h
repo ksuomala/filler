@@ -1,5 +1,8 @@
 #include "libft/libft.h"
 
+#define WIN_WT 1280
+#define WIN_HT 720
+
 typedef struct s_coordinate
 {
     int y;

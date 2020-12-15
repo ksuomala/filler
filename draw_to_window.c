@@ -6,117 +6,117 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/15 19:24:27 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/16 01:32:00 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-void    square_to_window(t_filler filler, int y, int x)
+void				square_to_window(t_filler filler, int y, int x)
 {
-    SDL_Rect    square;
+	SDL_Rect	square;
 
-    if (filler.board[y][x] == 'O')
-        SDL_SetRenderDrawColor(filler.renderer, 0, 0, 255, 255);
-    else if (filler.board[y][x] == 'o')
-        SDL_SetRenderDrawColor(filler.renderer, 50, 50, 255, 230);
-    else if (filler.board[y][x] == 'X')
-        SDL_SetRenderDrawColor(filler.renderer, 255, 0, 0, 255);
-    else if (filler.board[y][x] == 'x')
-        SDL_SetRenderDrawColor(filler.renderer, 255, 50, 50, 230);
-    square.h = filler.square_size;
-    square.w = square.h;
-    square.x = WIN_HT * 0.05 + square.h * x;
-    square.y = WIN_HT * 0.05 + square.h * y;
-    SDL_RenderFillRect(filler.renderer, &square);
+	if (filler.board[y][x] == 'O')
+		SDL_SetRenderDrawColor(filler.renderer, 0, 0, 255, 255);
+	else if (filler.board[y][x] == 'o')
+		SDL_SetRenderDrawColor(filler.renderer, 50, 50, 255, 230);
+	else if (filler.board[y][x] == 'X')
+		SDL_SetRenderDrawColor(filler.renderer, 255, 0, 0, 255);
+	else if (filler.board[y][x] == 'x')
+		SDL_SetRenderDrawColor(filler.renderer, 255, 50, 50, 230);
+	square.h = filler.square_size;
+	square.w = square.h;
+	square.x = WIN_HT * 0.05 + square.h * x;
+	square.y = WIN_HT * 0.05 + square.h * y;
+	SDL_RenderFillRect(filler.renderer, &square);
 }
 
-int game_to_window(t_filler filler)
+int					game_to_window(t_filler filler)
 {
-    int x;
-    int y;
-    static char **current;
+	int				x;
+	int				y;
+	static char		**current;
 
-    x = -1;
-    y = -1;
-    while(++y < filler.h)
-    {
-        while(++x < filler.w)
-        {
- //           ft_putchar(filler.board[y][x]);
-            if (filler.board[y][x] != '.' && (!current || filler.board[y][x] != current[y][x]))
-                square_to_window(filler, y, x);
-        }
-        x = -1;
-//        ft_n(1);
-    }
-    if (!(current = cpy_board(filler.board, filler.h + 1)))
-        ft_error(5);
-    SDL_Delay(100);
-    SDL_RenderPresent(filler.renderer);
-   return (0);
+	x = -1;
+	y = -1;
+	while(++y < filler.h)
+	{
+		while(++x < filler.w)
+		{
+			if (filler.board[y][x] != '.' && (!current || filler.board[y][x] != current[y][x]))
+				square_to_window(filler, y, x);
+		}
+		x = -1;
+	}
+	if (!(current = cpy_board(filler.board, filler.h + 1)))
+		ft_error(5);
+	SDL_Delay(100);
+	SDL_RenderPresent(filler.renderer);
+	return (0);
 }
 
-void        players_to_window(SDL_Renderer *renderer)
+void				text_to_window(SDL_Renderer *renderer, SDL_Color color, char *message, int location[1])
 {
-    if (TTF_Init() == -1)
-        ft_printf("Failed to initialize TTF\n");
+	TTF_Font *font;
+	SDL_Surface* surface;
+	SDL_Texture* texture;
+	SDL_Rect rect;
 
-    TTF_Font* Sans = TTF_OpenFont("Lato-Italic.ttf", 24); //this opens a font style and sets a size
-    if (!Sans)
-        ft_printf("Unable to OpenFOnt\n");
+	ft_printf("text_to_win\n");
+	font = TTF_OpenFont("../fonts/ubuntu/Ubuntu-M.ttf", 24);
+	if (!font)
+		ft_printf("Unable to OpenFOnt\n");
+	ft_printf("test\n");
+	surface = TTF_RenderText_Solid(font, message, color);
+	if (!surface)
+		ft_printf("Unable to get surfaceMessage!\n");
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	ft_printf("This is just for test purposes\n");
+	if (!texture)
+		ft_printf("Unable to create Texture!");
+	TTF_SizeText(font, message, &rect.w, &rect.h);
+	rect.x = location[0] + 210 - rect.w / 2;
+	rect.y = location[1];
 
-    SDL_Color White = {255, 255, 255};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
-    ft_printf("test\n");
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "put your text here", White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
-    if (!surfaceMessage)
-        ft_printf("Unable to get surfaceMessage!\n");
-    ft_printf("This is just for test purposes\n");
-    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage); //now you can convert it into a texture
-    if (!Message)
-        ft_printf("Unable to create Texture!");
-    SDL_Rect Message_rect; //create a rect
-    Message_rect.x = 500;  //controls the rect's x coordinate 
-    Message_rect.y = 100; // controls the rect's y coordinte
-    Message_rect.w = 500; // controls the width of the rect
-    Message_rect.h = 100; // controls the height of the rect
-
-
-    //Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understand
-
-    //Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
-
-    SDL_RenderCopy(renderer, Message, NULL, &Message_rect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-
-    //SDL_RenderPresent(renderer);
-    //SDL_Delay(4000);
-    //Don't forget to free your surface and texture
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
+	SDL_RenderCopy(renderer, texture, NULL, &rect);
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
 }
 
-SDL_Renderer *background(t_filler *data)
+t_coordinate		players_to_window(t_filler *data, SDL_Renderer *renderer)
 {
-    SDL_Renderer    *renderer;
-    SDL_Rect        board;
+	t_coordinate new;
 
-    renderer = SDL_CreateRenderer(data->win, -1, SDL_RENDERER_PRESENTVSYNC);
-    SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
-    SDL_RenderClear(renderer);
-    board.h = WIN_HT * 0.9;
-    data->square_size = board.h / data->h;
-    board.w = data->square_size * data->w;
-    board.x = WIN_HT * 0.05;
-    board.y = WIN_HT * 0.05;
-    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 255);
-    SDL_RenderFillRect(renderer, &board);
-    players_to_window(renderer);
-    SDL_RenderPresent(renderer);
-    SDL_Delay(2000);
-    return (renderer);
+	new.x = (data->w + 1)* data->square_size;
+	new.y = (data->h + 1) * data->square_size * 0.2;
+	ft_printf("x = %d y = %d\n", new.x, new.y);
+	text_to_window(renderer, (SDL_Color){0, 0, 255}, data->p1,\
+	(int[]){new.x, data->h * data->square_size * 0.25});
+	text_to_window(renderer, (SDL_Color){100, 100, 100}, "VS",\
+	(int[]){new.x, data->h  * data->square_size * 0.5});
+	text_to_window(renderer, (SDL_Color){255, 0, 0}, data->p2,\
+	(int[]){new.x, data->h * data->square_size * 0.75});
+	return(new);
 }
 
-void    text_to_window(t_filler *filler)
+SDL_Renderer		*background(t_filler *data)
 {
-    return ;
+	SDL_Renderer	*renderer;
+	SDL_Rect		board;
+
+	renderer = SDL_CreateRenderer(data->win, -1, SDL_RENDERER_PRESENTVSYNC);
+	SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
+	SDL_RenderClear(renderer);
+	board.h = WIN_HT * 0.9;
+	data->square_size = board.h / data->h;
+	board.w = data->square_size * data->w;
+	board.x = WIN_HT * 0.05;
+	board.y = WIN_HT * 0.05;
+	SDL_SetRenderDrawColor(renderer, 69, 69, 69, 255);
+	SDL_RenderFillRect(renderer, &board);
+//	text_to_window(renderer, (SDL_Color){0, 0, 255}, data->p1, players_to_window(data));
+	players_to_window(data, renderer);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(2000);
+	return (renderer);
 }

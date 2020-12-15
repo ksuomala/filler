@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/12 21:24:47 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/15 21:19:08 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void    ft_score(t_filler *filler, char *line)
     scoreline = ft_strsplit(line, ' ');
     filler->score_2 = ft_strdup(scoreline[3]);
     ft_printf("score %s, score %s\n", filler->score_1, filler->score_2);
-    text_to_window(filler);
 }
 
 int game_over(t_filler *filler)
@@ -83,6 +82,8 @@ void    start(void)
     data = get_data(data.win);
     if (SDL_Init(SDL_INIT_VIDEO))
         ft_printf("Error initializing SDL : %s", SDL_GetError());
+    if (TTF_Init() == -1)
+        ft_printf("Failed to initialize TTF\n");
     ft_printf("SDL initialized\n");
     data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_UNDEFINED,\
     SDL_WINDOWPOS_CENTERED, (float)data.w / data.h * WIN_HT + 420, WIN_HT, 0);

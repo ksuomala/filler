@@ -14,7 +14,7 @@ void    filler_test(int fd, t_board filler)
  //       ft_dprintf(fd, "hereeeeee\n");
         while(ii < filler.width)
         {
-            ft_printf("%4d", filler.map[i][ii]);
+            ft_printf("%8d", filler.map[i][ii]);
             ii++;
         }
         ii = 0;

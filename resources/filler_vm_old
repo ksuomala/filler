@@ -474,7 +474,6 @@ if __FILE__ == $0
                     begin
                         player_time = Timeout::timeout(init.time) do
                             @line = player.read_from_player()
-                            puts @line + "!!"
                         end
                     rescue Timeout::Error
                         puts "Player with #{player.piece_char}: timedout"
