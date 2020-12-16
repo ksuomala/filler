@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+#include "libft.h"
 
 #define WIN_WT 1280
 #define WIN_HT 720
