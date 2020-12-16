@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/16 05:27:35 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 01:26:50 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int		game_over(t_filler *filler)
 	else
 	{
 		ft_score(filler, line);
-		show_score(filler);
+//		show_score(filler);
 		ft_strdel(&line);
 		return (1);
 	}
 }
 
-void	events(t_filler filler)
+void	events(void)
 {
 	SDL_Event event;
 
@@ -74,6 +74,28 @@ void	events(t_filler filler)
 			exit(0);
 	}
 }
+
+/*
+** start initializes SDL and TTF. Calling get_data to get player data and
+** window size. background draws the board and writes the player names on the
+** screen and returns the renderer.
+*/
+
+void	play(t_filler *data)
+{
+	while (!(data->game_over = game_over(data)))
+	{
+		events();
+		data->board = get_board(data->h, data->w);
+		background(data);
+		game_to_window(data);
+	}
+	background(data);
+	show_score(data);
+	SDL_Delay(5000);
+	SDL_DestroyWindow(data->win);
+}
+
 
 void	start(void)
 {
@@ -85,20 +107,13 @@ void	start(void)
 		ft_printf("Error initializing SDL : %s", SDL_GetError());
 	if (TTF_Init() == -1)
 		ft_printf("Failed to initialize TTF\n");
-	ft_printf("SDL initialized\n");
 	data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_UNDEFINED,\
 	SDL_WINDOWPOS_CENTERED, (float)data.w / data.h * WIN_HT + 420, WIN_HT, 0);
 	if (!data.win)
 		ft_printf("error creating window");
-	data.renderer = background(&data);
-	while (!game_over(&data))
-	{
-		events(data);
-		data.board = get_board(data.h, data.w);
-		game_to_window(&data);
-	}
-	SDL_Delay(5000);
-	SDL_DestroyWindow(data.win);
+	data.renderer = SDL_CreateRenderer(data.win, -1, SDL_RENDERER_ACCELERATED);
+	data.font = TTF_OpenFont("../fonts/ubuntu/Ubuntu-M.ttf", 24);
+	play(&data);
 }
 
 int	main(void)

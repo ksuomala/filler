@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/15 23:40:11 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:50:10 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char			**get_board(size_t height, size_t width)
 	ft_strdel(&line);
 	while (++y < height)
 	{
-		get_next_line(0, &line);
+		if (get_next_line(0, &line) <= 0)
+			ft_error(1);
 		if (!(board[y] = ft_strsub(line, 4, width)))
 			ft_error(1);
 		ft_strdel(&line);
