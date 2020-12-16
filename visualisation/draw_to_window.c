@@ -6,32 +6,32 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/16 04:58:02 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/16 05:12:28 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-void				square_to_window(t_filler filler, int y, int x)
+void				square_to_window(t_filler *filler, int y, int x)
 {
 	SDL_Rect	square;
 
-	if (filler.board[y][x] == 'O')
-		SDL_SetRenderDrawColor(filler.renderer, 0, 0, 255, 255);
-	else if (filler.board[y][x] == 'o')
-		SDL_SetRenderDrawColor(filler.renderer, 50, 50, 255, 230);
-	else if (filler.board[y][x] == 'X')
-		SDL_SetRenderDrawColor(filler.renderer, 255, 0, 0, 255);
-	else if (filler.board[y][x] == 'x')
-		SDL_SetRenderDrawColor(filler.renderer, 255, 50, 50, 230);
-	square.h = filler.square_size;
+	if (filler->board[y][x] == 'O')
+		SDL_SetRenderDrawColor(filler->renderer, 0, 0, 255, 255);
+	else if (filler->board[y][x] == 'o')
+		SDL_SetRenderDrawColor(filler->renderer, 50, 50, 255, 230);
+	else if (filler->board[y][x] == 'X')
+		SDL_SetRenderDrawColor(filler->renderer, 255, 0, 0, 255);
+	else if (filler->board[y][x] == 'x')
+		SDL_SetRenderDrawColor(filler->renderer, 255, 50, 50, 230);
+	square.h = filler->square_size;
 	square.w = square.h;
 	square.x = WIN_HT * 0.05 + square.h * x;
 	square.y = WIN_HT * 0.05 + square.h * y;
-	SDL_RenderFillRect(filler.renderer, &square);
+	SDL_RenderFillRect(filler->renderer, &square);
 }
 
-int					game_to_window(t_filler filler)
+int					game_to_window(t_filler *filler)
 {
 	int				x;
 	int				y;
@@ -39,19 +39,19 @@ int					game_to_window(t_filler filler)
 
 	x = -1;
 	y = -1;
-	while(++y < filler.h)
+	while(++y < filler->h)
 	{
-		while(++x < filler.w)
+		while(++x < filler->w)
 		{
-			if (filler.board[y][x] != '.' && (!current || filler.board[y][x] != current[y][x]))
+			if (filler->board[y][x] != '.' && (!current || filler->board[y][x] != current[y][x]))
 				square_to_window(filler, y, x);
 		}
 		x = -1;
 	}
-	if (!(current = cpy_board(filler.board, filler.h + 1)))
+	if (!(current = cpy_board(filler->board, filler->h + 1)))
 		ft_error(5);
 	SDL_Delay(50);
-	SDL_RenderPresent(filler.renderer);
+	SDL_RenderPresent(filler->renderer);
 	return (0);
 }
 

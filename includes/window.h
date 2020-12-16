@@ -27,8 +27,8 @@ t_filler		get_data(SDL_Window *w);
 char			**cpy_board(char **board, size_t n);
 void			show_score(t_filler *data);
 
-void			square_to_window(t_filler filler, int y, int x);
-int				game_to_window(t_filler filler);
+void			square_to_window(t_filler *filler, int y, int x);
+int				game_to_window(t_filler *filler);
 SDL_Renderer	*background(t_filler *data);
 void			text_to_window(SDL_Renderer *renderer, SDL_Color color, char *message, int location[1]);
 
