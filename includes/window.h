@@ -10,9 +10,11 @@ typedef struct		s_filler
 {
 	SDL_Window		*win;
 	SDL_Renderer	*renderer;
+	TTF_Font		*font;
 	char			**board;
 	int				h;
 	int				w;
+	int				game_over;
 	int				square_size;
 	char			*p1;
 	char			*p2;
@@ -30,6 +32,6 @@ void			show_score(t_filler *data);
 void			square_to_window(t_filler *filler, int y, int x);
 int				game_to_window(t_filler *filler);
 SDL_Renderer	*background(t_filler *data);
-void			text_to_window(SDL_Renderer *renderer, SDL_Color color, char *message, int location[1]);
+void			text_to_window(t_filler *data, SDL_Color color, char *message, int location[1]);
 
 #endif
