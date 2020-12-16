@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/16 01:32:00 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/16 04:58:02 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int					game_to_window(t_filler filler)
 	}
 	if (!(current = cpy_board(filler.board, filler.h + 1)))
 		ft_error(5);
-	SDL_Delay(100);
+	SDL_Delay(50);
 	SDL_RenderPresent(filler.renderer);
 	return (0);
 }

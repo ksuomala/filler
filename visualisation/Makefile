@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2020/12/16 04:17:56 by ksuomala         ###   ########.fr        #
+#    Updated: 2020/12/16 04:45:59 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = visualizer
 SRCS = graphics_main.c \
 	game_data.c \
 	draw_to_window.c \
+	score.c
 
 OBJS = $(SRCS:.c=.o)
 
