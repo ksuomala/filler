@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/09 11:51:40 by ksuomala          #+#    #+#              #
-#    Updated: 2020/11/25 21:30:35 by ksuomala         ###   ########.fr        #
+#    Updated: 2020/12/16 04:20:34 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ clean:
 	@rm -f $(OBJS)
 
 fclean: clean
-	@rm -rf libftprintf.a test.dSYM
+	@rm -rf libftprintf.a
 
 re: fclean all
 

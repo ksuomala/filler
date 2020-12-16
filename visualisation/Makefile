@@ -5,67 +5,46 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/12/16 03:20:59 by ksuomala          #+#    #+#              #
-#    Updated: 2020/12/16 04:25:02 by ksuomala         ###   ########.fr        #
+#    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
+#    Updated: 2020/12/16 04:17:56 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ksuomala.filler
+NAME = visualizer
 
-SRCS = main.c \
-	get_board.c \
-	minesweeper.c \
-	next_move.c \
+SRCS = graphics_main.c \
+	game_data.c \
+	draw_to_window.c \
 
-SRCS_DIR = src
-
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
-
-OBJ_DIR = obj
-
-LIBFT = libft/libft.a
+OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-FLAGS = -g -Wall -Wextra -Werror
+FLAGS = `sdl2-config --cflags --libs`
 
-LINKS = -L libft -lft
+LINKS = -lSDL2_image -lSDL2_ttf -lm
 
-INCL = -I includes -I libft
+INCL = -I ../includes -I ../libft
 
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LINKS)
+	@$(CC) $(OBJS) ../libft/libft.a -o $(NAME) $(FLAGS) $(LINKS)
 	@echo "executable compiled!"
 
-$(OBJS): $(LIBFT) $(addprefix $(SRCS_DIR)/, $(SRCS)) $(OBJ_DIR)
+$(OBJS): $(SRCS)
 	@echo "Compiling..."
-	@$(CC) $(FLAGS) -c $(addprefix $(SRCS_DIR)/, $(SRCS)) $(INCL)
-	@echo "Compiled. Moving .o files..."
-	@mv $(SRCS:.c=.o) $(OBJ_DIR)/
-
-$(LIBFT):
-	@make -s -C libft
-
-$(OBJ_DIR):
-	mkdir $(OBJ_DIR)
+	$(CC) $(FLAGS) -c $(SRCS) $(INCL) $(LINKS)
+	@echo "*object files created"
 
 clean:
-	@make -s -C libft clean
-	@make -s -C visualisation clean
 	@rm -f $(OBJS)
 	@echo "*.o removed!"
 
 fclean: clean
-	@make -s -C libft fclean
-	@make -s -C visualisation fclean
 	@rm -f $(NAME)
 	@echo "Targets removed!"
 
 re: fclean all
-
-visualizer:
-	@make -s -C visualisation
