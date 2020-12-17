@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/10 02:01:37 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 02:20:32 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ int ft_move_value(int **board, t_coordinate token, t_coordinate *lst, int len)
         x = token.x + lst[i].x;
         y = token.y + lst[i].y;
         sum += board[y][x];
-        if (sum > 2000 || !board[y][x])
-            return (2000);
+        if (sum > 20000 || !board[y][x])
+            return (20000);
         i++;
     }
    // ft_printf("sum of y%d x%d = %d", token.y, token.x, sum);
-    if (sum < 1000)
-        return (2000);
+    if (sum < 10000)
+        return (20000);
     else
         return (sum);
 }
@@ -107,7 +107,7 @@ t_coordinate        ft_next_move(t_board f)
     crd = f.piece->cr;
     start = ft_start_crd(f.piece);
     end = ft_end_crd(f.piece);
-    value = 2000;
+    value = 20000;
     x = start.x;
     ft_bzero(&best_move, sizeof(t_coordinate));
     while (start.y < f.height - end.y)

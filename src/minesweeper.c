@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:26:38 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/09 03:42:09 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 02:19:19 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int **ft_minesweeper(t_board f)
             else if (ft_tolower(f.board[y][x]) == f.p)
             {
  //               ft_printf("%d | %d is me\n", y, x);
-                f.map[y][x] = 1000;
+                f.map[y][x] = 10000;
             }
             else
             {
