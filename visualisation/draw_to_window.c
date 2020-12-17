@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 02:30:38 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 04:37:53 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ t_coordinate		players_to_window(t_filler *data, SDL_Renderer *renderer)
 SDL_Renderer		*background(t_filler *data)
 {
 	SDL_Rect		board;
+	SDL_Rect		pause;
+//	t_buttons		rect;
 
 	SDL_SetRenderDrawColor(data->renderer, 25, 25, 25, 255);
 	SDL_RenderClear(data->renderer);
@@ -117,7 +119,9 @@ SDL_Renderer		*background(t_filler *data)
 	SDL_SetRenderDrawColor(data->renderer, 69, 69, 69, 255);
 	SDL_RenderFillRect(data->renderer, &board);
 	players_to_window(data, data->renderer);
+//	rect = ft_buttons(data);
 //	SDL_Delay(20);
 //	SDL_RenderPresent(data->renderer);
+	pause = draw_button("visualisation/textures/pause.bmp", (SDL_Rect){(short)100, (short)100, (short)30, (short)30}, data);
 	return (data->renderer);
 }

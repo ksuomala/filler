@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 01:37:29 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 04:07:25 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,23 @@
 #include <fcntl.h>
 #include "filler.h"
 
+typedef	struct		s_buttons
+{
+	SDL_Rect		speed_up;
+	SDL_Rect		speed_down;
+	SDL_Rect		pause;
+	SDL_Rect		play;
+	SDL_Rect		previous;
+}					t_buttons;
+
+
 typedef struct		s_filler
 {
 	SDL_Window		*win;
 	SDL_Renderer	*renderer;
+	SDL_Rect		*speed_up;
+	SDL_Rect		*speed_down;
+	t_coordinate	win_size;
 	TTF_Font		*font;
 	char			**board;
 	int				h;
@@ -45,5 +58,9 @@ void			square_to_window(t_filler *filler, int y, int x);
 int				game_to_window(t_filler *filler);
 SDL_Renderer	*background(t_filler *data);
 void			text_to_window(t_filler *data, SDL_Color color, char *message, int location[1]);
+
+t_buttons		*ft_buttons(t_filler *data);
+int				game_over(t_filler *filler);
+SDL_Rect		draw_button(char *image, SDL_Rect location, t_filler *data);
 
 #endif
