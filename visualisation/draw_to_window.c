@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 01:33:20 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 02:30:38 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ SDL_Renderer		*background(t_filler *data)
 	SDL_SetRenderDrawColor(data->renderer, 69, 69, 69, 255);
 	SDL_RenderFillRect(data->renderer, &board);
 	players_to_window(data, data->renderer);
-	SDL_RenderPresent(data->renderer);
+//	SDL_Delay(20);
+//	SDL_RenderPresent(data->renderer);
 	return (data->renderer);
 }
