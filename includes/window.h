@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 04:07:25 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 17:48:03 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ typedef	struct		s_buttons
 	SDL_Rect		speed_up;
 	SDL_Rect		speed_down;
 	SDL_Rect		pause;
-	SDL_Rect		play;
 	SDL_Rect		previous;
 }					t_buttons;
+
+typedef struct		s_game
+{
+	int				paused;
+}					t_game;
 
 
 typedef struct		s_filler
@@ -34,8 +38,8 @@ typedef struct		s_filler
 	SDL_Renderer	*renderer;
 	SDL_Rect		*speed_up;
 	SDL_Rect		*speed_down;
-	t_coordinate	win_size;
 	TTF_Font		*font;
+	int				win_width;
 	char			**board;
 	int				h;
 	int				w;
@@ -56,7 +60,7 @@ void			show_score(t_filler *data);
 
 void			square_to_window(t_filler *filler, int y, int x);
 int				game_to_window(t_filler *filler);
-SDL_Renderer	*background(t_filler *data);
+t_buttons		background(t_filler *data);
 void			text_to_window(t_filler *data, SDL_Color color, char *message, int location[1]);
 
 t_buttons		*ft_buttons(t_filler *data);
