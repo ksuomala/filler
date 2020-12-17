@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/16 15:50:10 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 00:32:07 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char *get_player(char *line)
 
 	i = 0;
 	sub = ft_strrchr(line, '/') + 1;
-//	ft_printf("%s", sub);
 	if (sub)
 	{
 		while (sub[i] && sub[i] != '.')
@@ -29,7 +28,7 @@ char *get_player(char *line)
 		}
 	}
 	ft_strclr(line + i);
-	ft_printf("%s\n", line);
+	ft_printf("%s\n", line); //test
 	return (ft_strdup(line));
 }
 
@@ -44,7 +43,7 @@ char			**get_board(size_t height, size_t width)
 		ft_error(0);
 	get_next_line(0, &line);
 	ft_strdel(&line);
-	while (++y < height)
+	while (++y < (int)height)
 	{
 		if (get_next_line(0, &line) <= 0)
 			ft_error(1);
@@ -55,7 +54,7 @@ char			**get_board(size_t height, size_t width)
 	return (board);
 }
 
-t_filler get_data(SDL_Window *w)
+t_filler get_data(void)
 {
 	t_filler	new;
 	char		*line;
@@ -93,7 +92,7 @@ char **cpy_board(char **board, size_t n)
 	if (!cpy)
 		return (NULL);
 	i = -1;
-	while (++i < n - 1)
+	while (++i < (int)n - 1)
 		if (!(cpy[i] = ft_strdup(board[i])))
 			return (NULL);
 	return (cpy);

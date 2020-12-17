@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 21:19:50 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 00:31:42 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,43 @@ int		inside_rect(int x, int y, SDL_Rect dest)
 	return (1);
 }
 
+void	keypress(t_game *game, SDL_Event event, t_buttons rect)
+{
+	if (inside_rect(event.button.x, event.button.y, rect.pause))
+	{
+		if (game->paused)
+			game->paused = 0;
+		else
+			game->paused = 1;
+	}
+	else if (game->paused && inside_rect(event.button.x, event.button.y, rect.previous))
+	{
+		if (game->frame)
+			game->frame -= 1;
+	}
+	else if (game->paused && inside_rect(event.button.x, event.button.y, rect.next))
+	{
+		if (game->frame < game->moves - 1)
+			game->frame += 1;
+	}
+}
+
 void	events(t_game *game, t_buttons rect)
 {
 	SDL_Event		event;
-	t_coordinate	click;
 
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
 			exit(0);
+		if (event.key.keysym.sym == SDLK_DOWN)
+			game->fps += 3;
+		if (event.key.keysym.sym == SDLK_UP)
+			game->fps -= 3;
+		if (game->fps < 1)
+			game->fps = 1;
 		if (event.type == SDL_MOUSEBUTTONDOWN)
-			if (inside_rect(event.button.x, event.button.y, rect.pause))
-			{
-				if (game->paused)
-					game->paused = 0;
-				else
-					game->paused = 1;
-			}
-
-
+			keypress(game, event, rect);
 	}
 }
 
@@ -70,8 +88,8 @@ void	play(t_filler *data)
 	ft_bzero(frames, sizeof(char**) * 10000);
 	ft_bzero(&game, sizeof(game));
 	frames[game.frame] = get_board(data->h, data->w);
-	game.fps = 1000 / 20;
-	game.paused = 0;
+	game.fps = 50;
+	game.moves = 1;
 	while (game.paused || !(data->game_over = game_over(data)))
 	{
 		events(&game, button);
@@ -81,13 +99,19 @@ void	play(t_filler *data)
 		if (!game.paused)
 		{
 			game.frame += 1;
-			frames[game.frame] = get_board(data->h, data->w);
+			if (game.frame == game.moves)
+			{
+				frames[game.frame] = get_board(data->h, data->w);
+				game.moves += 1;
+			}
 		}
 	}
 	background(data, game);
 	show_score(data);
 	SDL_Delay(5000);
-	SDL_DestroyWindow(data->win);
+	ft_printf("THE END 1.0\n");
+
+	// SDL_DestroyWindow(data->win);
 }
 
 
@@ -96,7 +120,7 @@ void	start(void)
 	t_filler	data;
 
 	ft_bzero(&data, sizeof(t_filler));
-	data = get_data(data.win);
+	data = get_data();
 	if (SDL_Init(SDL_INIT_EVERYTHING))
 		ft_printf("Error initializing SDL : %s", SDL_GetError());
 	if (TTF_Init() == -1)
@@ -114,6 +138,7 @@ void	start(void)
 int	main(void)
 {
 	start();
+	ft_printf("THE END\n");
 	SDL_Quit();
 	return (0);
 }

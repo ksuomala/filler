@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 17:09:02 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 00:37:40 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,8 @@ SDL_Rect		draw_button(char *image, SDL_Rect location, t_filler *data)
 	SDL_RenderCopy(data->renderer, bmp_texture, NULL, &location);
 	SDL_FreeSurface(img);
 	SDL_DestroyTexture(bmp_texture);
-	ft_printf("Dreew\n");
 	return (location);
 }
-
-// void	pause(void)
-// {
-// 	SDL_Event event;
-// 	while(1)
-// 	{
-// 		ft_events(SDL_PollEvent(&event));
-// 		if ()
-// 	}
-// }
-
-// t_buttons	*ft_buttons(t_filler *data)
-// {
-// 	t_buttons *rect;
-
-// 	if (!rect = ft_memalloc(sizeof(t_buttons)))
-// 		ft_error(1);
-// 	rect->pause.h = 30;
-// 	rect->pause.w = 30;
-// 	rect->pause.x = data->win_size.x * 0.8;
-// 	rect->pause.y = data->win_size.y * 0.9;
-// 	ft_memcpy(rect->play, rect->pause);
-// 	return (rect);
-// }
 
 void	ft_score(t_filler *filler, char *line)
 {
@@ -82,7 +57,6 @@ int		game_over(t_filler *filler)
 	else
 	{
 		ft_score(filler, line);
-//		show_score(filler);
 		ft_strdel(&line);
 		return (1);
 	}
@@ -91,9 +65,7 @@ int		game_over(t_filler *filler)
 
 void	show_score(t_filler *data)
 {
-	char *winner;
-
-	text_to_window(data, (SDL_Color){120, 120, 120}, data->score_1, (int[]){(data->w + 1) * data->square_size, data->h * data->square_size * 0.35});
-	text_to_window(data, (SDL_Color){120, 120, 120}, data->score_2, (int[]){(data->w + 1) * data->square_size, data->h * data->square_size * 0.65});
+	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_1, (int[]){data->win_width - 520, WIN_HT * 0.2 + 50});
+	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_2, (int[]){data->win_width - 520, WIN_HT * 0.2 + 150});
 	SDL_RenderPresent(data->renderer);
 }
