@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 20:04:18 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 00:31:00 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	struct		s_buttons
 	SDL_Rect		speed_down;
 	SDL_Rect		pause;
 	SDL_Rect		previous;
+	SDL_Rect		next;
 }					t_buttons;
 
 typedef struct		s_game
@@ -31,6 +32,7 @@ typedef struct		s_game
 	int				frame;
 	int				paused;
 	int				fps;
+	int				moves;
 }					t_game;
 
 
@@ -56,7 +58,7 @@ typedef struct		s_filler
 
 void			ft_error(int msg);
 char			**get_board(size_t height, size_t width);
-t_filler		get_data(SDL_Window *w);
+t_filler		get_data(void);
 char			**cpy_board(char **board, size_t n);
 void			show_score(t_filler *data);
 
