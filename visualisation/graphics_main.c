@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 04:11:19 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 17:47:19 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ void	ft_error(int msg)
 
 
 
-void	events(void)
+void	events(t_game *game)
 {
-	SDL_Event event;
+	SDL_Event		event;
+	t_coordinate	click;
 
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
 			exit(0);
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+			if (event.button.x )
+			game->paused = 1;
 	}
 }
 
@@ -44,12 +48,19 @@ void	events(void)
 
 void	play(t_filler *data)
 {
-	while (!(data->game_over = game_over(data)))
+	t_game		game;
+	t_buttons	button;
+
+	ft_bzero(&game, sizeof(game));
+	while (game.paused || !(data->game_over = game_over(data)))
 	{
-		events();
-		data->board = get_board(data->h, data->w);
-		background(data);
-		game_to_window(data);
+		events(&game);
+		if (!game.paused)
+		{
+			data->board = get_board(data->h, data->w);
+			button = background(data);
+			game_to_window(data);
+		}
 	}
 	background(data);
 	show_score(data);
@@ -68,8 +79,9 @@ void	start(void)
 		ft_printf("Error initializing SDL : %s", SDL_GetError());
 	if (TTF_Init() == -1)
 		ft_printf("Failed to initialize TTF\n");
+	data.win_width = (float)data.w / data.h * WIN_HT + 420;
 	data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_UNDEFINED,\
-	SDL_WINDOWPOS_CENTERED, (float)data.w / data.h * WIN_HT + 420, WIN_HT, 0);
+	SDL_WINDOWPOS_CENTERED, data.win_width, WIN_HT, 0);
 	if (!data.win)
 		ft_printf("error creating window");
 	data.renderer = SDL_CreateRenderer(data.win, -1, SDL_RENDERER_ACCELERATED);

@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 04:35:15 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 17:09:02 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,19 @@ SDL_Rect		draw_button(char *image, SDL_Rect location, t_filler *data)
 	SDL_RenderCopy(data->renderer, bmp_texture, NULL, &location);
 	SDL_FreeSurface(img);
 	SDL_DestroyTexture(bmp_texture);
+	ft_printf("Dreew\n");
 	return (location);
 }
+
+// void	pause(void)
+// {
+// 	SDL_Event event;
+// 	while(1)
+// 	{
+// 		ft_events(SDL_PollEvent(&event));
+// 		if ()
+// 	}
+// }
 
 // t_buttons	*ft_buttons(t_filler *data)
 // {
