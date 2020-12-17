@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 17:48:03 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:04:18 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ typedef	struct		s_buttons
 
 typedef struct		s_game
 {
+	int				frame;
 	int				paused;
+	int				fps;
 }					t_game;
 
 
@@ -59,12 +61,13 @@ char			**cpy_board(char **board, size_t n);
 void			show_score(t_filler *data);
 
 void			square_to_window(t_filler *filler, int y, int x);
-int				game_to_window(t_filler *filler);
-t_buttons		background(t_filler *data);
+int				game_to_window(t_filler *filler, int fps);
+t_buttons		background(t_filler *data, t_game game);
 void			text_to_window(t_filler *data, SDL_Color color, char *message, int location[1]);
 
 t_buttons		*ft_buttons(t_filler *data);
 int				game_over(t_filler *filler);
 SDL_Rect		draw_button(char *image, SDL_Rect location, t_filler *data);
+void			draw_pause(t_filler *data);
 
 #endif

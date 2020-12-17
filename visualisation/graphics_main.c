@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/17 17:47:19 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/17 21:19:50 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,16 @@ void	ft_error(int msg)
 	exit(0);
 }
 
+int		inside_rect(int x, int y, SDL_Rect dest)
+{
+	if (x < dest.x || x > dest.x + dest.w)
+		return (0);
+	if (y < dest.y || y > dest.y + dest.h)
+		return (0);
+	return (1);
+}
 
-
-void	events(t_game *game)
+void	events(t_game *game, t_buttons rect)
 {
 	SDL_Event		event;
 	t_coordinate	click;
@@ -35,8 +42,15 @@ void	events(t_game *game)
 		if (event.type == SDL_QUIT)
 			exit(0);
 		if (event.type == SDL_MOUSEBUTTONDOWN)
-			if (event.button.x )
-			game->paused = 1;
+			if (inside_rect(event.button.x, event.button.y, rect.pause))
+			{
+				if (game->paused)
+					game->paused = 0;
+				else
+					game->paused = 1;
+			}
+
+
 	}
 }
 
@@ -48,21 +62,29 @@ void	events(t_game *game)
 
 void	play(t_filler *data)
 {
-	t_game		game;
 	t_buttons	button;
+	t_game		game;
+	char		**frames[10000];
 
+
+	ft_bzero(frames, sizeof(char**) * 10000);
 	ft_bzero(&game, sizeof(game));
+	frames[game.frame] = get_board(data->h, data->w);
+	game.fps = 1000 / 20;
+	game.paused = 0;
 	while (game.paused || !(data->game_over = game_over(data)))
 	{
-		events(&game);
+		events(&game, button);
+		data->board = frames[game.frame];
+		button = background(data, game);
+		game_to_window(data, game.fps);
 		if (!game.paused)
 		{
-			data->board = get_board(data->h, data->w);
-			button = background(data);
-			game_to_window(data);
+			game.frame += 1;
+			frames[game.frame] = get_board(data->h, data->w);
 		}
 	}
-	background(data);
+	background(data, game);
 	show_score(data);
 	SDL_Delay(5000);
 	SDL_DestroyWindow(data->win);
