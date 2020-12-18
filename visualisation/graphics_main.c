@@ -6,13 +6,13 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 00:31:42 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:10:22 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-// Read the stdout/in, take the size of the board. Board width and height. Divide the screen. Most of it should be the board and that should scale
+// Read the stdout/in, take the size of the board. Boardw and height. Divide the screen. Most of it should be the board and that should scale
 // according to the size so it always takes the same area of the screen. I want to make bars on the right side with the player colors, names and
 // scores. Maybe buttons where I could change the players.
 

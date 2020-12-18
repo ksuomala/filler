@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 00:32:07 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:28:28 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char *get_player(char *line)
 		}
 	}
 	ft_strclr(line + i);
-	ft_printf("%s\n", line); //test
 	return (ft_strdup(line));
 }
 
@@ -47,7 +46,7 @@ char			**get_board(size_t height, size_t width)
 	{
 		if (get_next_line(0, &line) <= 0)
 			ft_error(1);
-		if (!(board[y] = ft_strsub(line, 4, width)))
+		if (!(board[y] = ft_strsub(line, 4,width)))
 			ft_error(1);
 		ft_strdel(&line);
 	}

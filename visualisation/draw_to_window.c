@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 00:36:55 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:30:49 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,11 @@ int					game_to_window(t_filler *filler, int fps)
 	{
 		while(++x < filler->w)
 		{
-//			SDL_Delay(100);
-//			ft_putchar(filler->board[y][x]); //test
 			if (filler->board[y][x] != '.')
 				square_to_window(filler, y, x);
 		}
-//		ft_n(1); //test
 		x = -1;
 	}
-//	text_to_window(filler->renderer, (SDL_Color){120, 120, 120}, "yees", (int[]){(filler->w + 1) * filler->square_size, filler->h * filler->square_size * 0.35}); //test
 	if (!(current = cpy_board(filler->board, filler->h + 1)))
 		ft_error(5);
 	SDL_Delay(fps);
@@ -61,18 +57,10 @@ int					game_to_window(t_filler *filler, int fps)
 
 void				text_to_window(t_filler *data, SDL_Color color, char *message, int location[1])
 {
-//	TTF_Font *font;
 	SDL_Surface* surface;
 	SDL_Texture* texture;
 	SDL_Rect rect;
 
-//	SDL_RenderPresent(renderer);
-//	font = TTF_OpenFont("../fonts/ubuntu/Ubuntu-M.ttf", 24);
-	// if (font)
-	// {
-	// 	ft_error(5);
-	// 	ft_printf("Unable to OpenFOnt\n");
-	// }
 	surface = TTF_RenderText_Solid(data->font, message, color);
 	if (!surface)
 		ft_printf("Unable to get surfaceMessage!\n");
@@ -88,9 +76,9 @@ void				text_to_window(t_filler *data, SDL_Color color, char *message, int locat
 	SDL_DestroyTexture(texture);
 }
 
-t_coordinate		players_to_window(t_filler *data, t_game game)
+t_crd		players_to_window(t_filler *data, t_game game)
 {
-	t_coordinate new;
+	t_crd new;
 	char		*str;
 	char		*fps;
 
@@ -99,13 +87,12 @@ t_coordinate		players_to_window(t_filler *data, t_game game)
 	if (!(fps = ft_strfjoin(ft_strdup("delay(ms) "), ft_itoa(game.fps))))
 		ft_error(1);
 	new.x = data->win_width - 520;
-	new.y = WIN_HT * 0.2;
-	//ft_printf("x = %d y = %d\n", new.x, new.y); //test
-	text_to_window(data, (SDL_Color){0, 0, 255, 100}, data->p1,\
+	new.y = WIN_HT * 0.1;
+	text_to_window(data, (SDL_Color){0, 0, 255, 200}, data->p1,\
 	(int[]){new.x, new.y});
-	text_to_window(data, (SDL_Color){100, 100, 100, 100}, "VS",\
+	text_to_window(data, (SDL_Color){100, 100, 100, 200}, "VS",\
 	(int[]){new.x, new.y + 100});
-	text_to_window(data, (SDL_Color){255, 0, 0, 100}, data->p2,\
+	text_to_window(data, (SDL_Color){255, 0, 0, 200}, data->p2,\
 	(int[]){new.x, new.y + 200});
 	text_to_window(data, (SDL_Color){255, 255, 0, 100}, str,\
 	(int[]){new.x, new.y + 300});
@@ -120,7 +107,6 @@ t_buttons		background(t_filler *data, t_game game)
 {
 	SDL_Rect		board;
 	t_buttons		rect;
-//	t_buttons		rect;
 
 	SDL_SetRenderDrawColor(data->renderer, 25, 25, 25, 255);
 	SDL_RenderClear(data->renderer);
@@ -132,9 +118,6 @@ t_buttons		background(t_filler *data, t_game game)
 	SDL_SetRenderDrawColor(data->renderer, 69, 69, 69, 255);
 	SDL_RenderFillRect(data->renderer, &board);
 	players_to_window(data, game);
-//	rect = ft_buttons(data);
-//	SDL_Delay(20);
-//	SDL_RenderPresent(data->renderer);
 	if (game.paused)
 	{
 		rect.pause = draw_button("visualisation/textures/play.bmp", (SDL_Rect){data->win_width - 150, WIN_HT * 0.05 , 100, 100}, data);
