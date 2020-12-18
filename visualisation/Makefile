@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2020/12/18 03:36:03 by ksuomala         ###   ########.fr        #
+#    Updated: 2020/12/18 16:58:20 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror `sdl2-config --cflags --libs`
 
-LINKS = -lSDL2_image -lSDL2_ttf -lm
+LINKS = -L ../libft -lft -lSDL2_image -lSDL2_ttf -lm
 
 INCL = -I ../includes -I ../libft
 
@@ -33,7 +33,7 @@ INCL = -I ../includes -I ../libft
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) ../libft/libft.a -o $(NAME) $(FLAGS) $(LINKS)
+	@$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(INCL) $(LINKS)
 	@echo "executable compiled!"
 
 $(OBJS): $(SRCS)
