@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 21:28:54 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/11/25 21:30:20 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:44:30 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_dprintf(int fd, const char *format, ...)
 {
-    	t_struct	f;
+	t_struct	f;
 	int			ret_val;
 
 	ft_bzero((void*)&f, sizeof(t_struct));
