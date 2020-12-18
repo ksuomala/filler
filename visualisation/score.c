@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:25:54 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 17:12:51 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int			game_over(t_filler *filler)
 void		show_score(t_filler *data)
 {
 	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_1,\
-	(int[]){data->win_width - 520, WIN_HT * 0.05 + 50});
+	(int[]){data->win_width - 520, WIN_HT * 0.05 + 75});
 	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_2,\
-	(int[]){data->win_width - 520, WIN_HT * 0.05 + 150});
+	(int[]){data->win_width - 520, WIN_HT * 0.05 + 200});
 	SDL_RenderPresent(data->renderer);
 }

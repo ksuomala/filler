@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:35:48 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 17:45:34 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	start(void)
 	if (!data.win)
 		ft_printf("error creating window");
 	data.renderer = SDL_CreateRenderer(data.win, -1, SDL_RENDERER_ACCELERATED);
-	data.font = TTF_OpenFont("../fonts/ubuntu/Ubuntu-M.ttf", 24);
+	if (!(data.font = TTF_OpenFont("Ubuntu-M.ttf", 24)))
+		ft_error(1);
 	play(&data, button, game, frames);
 }
 
