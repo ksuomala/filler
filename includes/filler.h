@@ -1,17 +1,32 @@
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   filler.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
+/*   Updated: 2020/12/18 03:41:59 by ksuomala         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define WIN_WT 1280
-#define WIN_HT 720
+#ifndef FILLER_H
+# define FILLER_H
 
-typedef struct s_crd
+# include "libft.h"
+
+# define WIN_WT 1280
+# define WIN_HT 720
+
+typedef struct	s_crd
 {
 	int y;
 	int x;
-}			t_crd;
+}				t_crd;
 
 typedef struct	s_token
 {
-	t_crd	*cr;
+	t_crd		*cr;
 	int			len;
 	int			w;
 	int			h;
@@ -35,3 +50,5 @@ int				**ft_minesweeper(t_board f);
 
 void			filler_test(int fd, t_board filler);
 t_crd			ft_next_move(t_board f);
+
+#endif
