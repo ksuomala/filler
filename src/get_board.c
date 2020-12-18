@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 02:12:44 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:20:05 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Reading the first line to see which player to play (p_).
 */
 
-char			ft_get_player(void)
+char		ft_get_player(void)
 {
 	char *line;
 	char *p;
@@ -40,9 +40,9 @@ char			ft_get_player(void)
 ** structs.
 */
 
-t_crd	*ft_get_coordinates(t_token *token)
+t_crd		*ft_get_coordinates(t_token *token)
 {
-	t_crd	arr[100];
+	t_crd			arr[100];
 	char			*line;
 	int				y;
 	int				x;
@@ -67,7 +67,7 @@ t_crd	*ft_get_coordinates(t_token *token)
 	return (ft_memdup((t_crd*)arr, sizeof(t_crd) * token->len));
 }
 
-t_token			*ft_get_piece(void)
+t_token		*ft_get_piece(void)
 {
 	char		*line;
 	char		**token_size;
@@ -90,7 +90,7 @@ t_token			*ft_get_piece(void)
 ** of every line are skipped.
 */
 
-int				ft_get_board(t_board *filler)
+int			ft_get_board(t_board *filler)
 {
 	char	**board_size;
 	char	*line;

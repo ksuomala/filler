@@ -6,13 +6,13 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 02:30:49 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:12:19 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-void				square_to_window(t_filler *filler, int y, int x)
+void		square_to_window(t_filler *filler, int y, int x)
 {
 	SDL_Rect	square;
 
@@ -31,7 +31,7 @@ void				square_to_window(t_filler *filler, int y, int x)
 	SDL_RenderFillRect(filler->renderer, &square);
 }
 
-int					game_to_window(t_filler *filler, int fps)
+int			game_to_window(t_filler *filler, int fps)
 {
 	int				x;
 	int				y;
@@ -39,9 +39,9 @@ int					game_to_window(t_filler *filler, int fps)
 
 	x = -1;
 	y = -1;
-	while(++y < filler->h)
+	while (++y < filler->h)
 	{
-		while(++x < filler->w)
+		while (++x < filler->w)
 		{
 			if (filler->board[y][x] != '.')
 				square_to_window(filler, y, x);
@@ -55,11 +55,12 @@ int					game_to_window(t_filler *filler, int fps)
 	return (0);
 }
 
-void				text_to_window(t_filler *data, SDL_Color color, char *message, int location[1])
+void		text_to_window(t_filler *data, SDL_Color color,\
+char *message, int location[1])
 {
-	SDL_Surface* surface;
-	SDL_Texture* texture;
-	SDL_Rect rect;
+	SDL_Surface		*surface;
+	SDL_Texture		*texture;
+	SDL_Rect		rect;
 
 	surface = TTF_RenderText_Solid(data->font, message, color);
 	if (!surface)
@@ -70,7 +71,6 @@ void				text_to_window(t_filler *data, SDL_Color color, char *message, int locat
 	TTF_SizeText(data->font, message, &rect.w, &rect.h);
 	rect.x = location[0] + 210 - rect.w / 2;
 	rect.y = location[1];
-
 	SDL_RenderCopy(data->renderer, texture, NULL, &rect);
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
@@ -78,7 +78,7 @@ void				text_to_window(t_filler *data, SDL_Color color, char *message, int locat
 
 t_crd		players_to_window(t_filler *data, t_game game)
 {
-	t_crd new;
+	t_crd		new;
 	char		*str;
 	char		*fps;
 
@@ -100,13 +100,12 @@ t_crd		players_to_window(t_filler *data, t_game game)
 	(int[]){new.x, new.y + 400});
 	free(fps);
 	free(str);
-	return(new);
+	return (new);
 }
 
-t_buttons		background(t_filler *data, t_game game)
+t_buttons	background(t_filler *data, t_game game)
 {
 	SDL_Rect		board;
-	t_buttons		rect;
 
 	SDL_SetRenderDrawColor(data->renderer, 25, 25, 25, 255);
 	SDL_RenderClear(data->renderer);
@@ -120,12 +119,15 @@ t_buttons		background(t_filler *data, t_game game)
 	players_to_window(data, game);
 	if (game.paused)
 	{
-		rect.pause = draw_button("visualisation/textures/play.bmp", (SDL_Rect){data->win_width - 150, WIN_HT * 0.05 , 100, 100}, data);
-		rect.next = draw_button("visualisation/textures/next.bmp", (SDL_Rect){data->win_width - 150, WIN_HT * 0.05 + 150 , 100, 100}, data);
-		rect.previous = draw_button("visualisation/textures/prev.bmp", (SDL_Rect){data->win_width - 150, WIN_HT * 0.05 + 300 , 100, 100}, data);
+		game.rect.pause = draw_button("visualisation/textures/play.bmp",\
+		(SDL_Rect){data->win_width - 150, WIN_HT * 0.05, 100, 100}, data);
+		game.rect.next = draw_button("visualisation/textures/next.bmp",\
+		(SDL_Rect){data->win_width - 150, WIN_HT * 0.05 + 150, 100, 100}, data);
+		game.rect.previous = draw_button("visualisation/textures/prev.bmp",\
+		(SDL_Rect){data->win_width - 150, WIN_HT * 0.05 + 300, 100, 100}, data);
 	}
 	else
-		rect.pause = draw_button("visualisation/textures/pause.bmp", (SDL_Rect){data->win_width - 150, WIN_HT * 0.05 , 100, 100}, data);
-
-	return (rect);
+		game.rect.pause = draw_button("visualisation/textures/pause.bmp",\
+		(SDL_Rect){data->win_width - 150, WIN_HT * 0.05, 100, 100}, data);
+	return (game.rect);
 }

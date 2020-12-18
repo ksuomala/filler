@@ -6,70 +6,16 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 02:10:22 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:35:48 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-// Read the stdout/in, take the size of the board. Boardw and height. Divide the screen. Most of it should be the board and that should scale
-// according to the size so it always takes the same area of the screen. I want to make bars on the right side with the player colors, names and
-// scores. Maybe buttons where I could change the players.
-
-
 void	ft_error(int msg)
 {
 	ft_printf("error %d", msg);
 	exit(0);
-}
-
-int		inside_rect(int x, int y, SDL_Rect dest)
-{
-	if (x < dest.x || x > dest.x + dest.w)
-		return (0);
-	if (y < dest.y || y > dest.y + dest.h)
-		return (0);
-	return (1);
-}
-
-void	keypress(t_game *game, SDL_Event event, t_buttons rect)
-{
-	if (inside_rect(event.button.x, event.button.y, rect.pause))
-	{
-		if (game->paused)
-			game->paused = 0;
-		else
-			game->paused = 1;
-	}
-	else if (game->paused && inside_rect(event.button.x, event.button.y, rect.previous))
-	{
-		if (game->frame)
-			game->frame -= 1;
-	}
-	else if (game->paused && inside_rect(event.button.x, event.button.y, rect.next))
-	{
-		if (game->frame < game->moves - 1)
-			game->frame += 1;
-	}
-}
-
-void	events(t_game *game, t_buttons rect)
-{
-	SDL_Event		event;
-
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
-			exit(0);
-		if (event.key.keysym.sym == SDLK_DOWN)
-			game->fps += 3;
-		if (event.key.keysym.sym == SDLK_UP)
-			game->fps -= 3;
-		if (game->fps < 1)
-			game->fps = 1;
-		if (event.type == SDL_MOUSEBUTTONDOWN)
-			keypress(game, event, rect);
-	}
 }
 
 /*
@@ -78,15 +24,9 @@ void	events(t_game *game, t_buttons rect)
 ** screen and returns the renderer.
 */
 
-void	play(t_filler *data)
+void	play(t_filler *data, t_buttons button, t_game game,\
+char **frames[10000])
 {
-	t_buttons	button;
-	t_game		game;
-	char		**frames[10000];
-
-
-	ft_bzero(frames, sizeof(char**) * 10000);
-	ft_bzero(&game, sizeof(game));
 	frames[game.frame] = get_board(data->h, data->w);
 	game.fps = 50;
 	game.moves = 1;
@@ -109,16 +49,18 @@ void	play(t_filler *data)
 	background(data, game);
 	show_score(data);
 	SDL_Delay(5000);
-	ft_printf("THE END 1.0\n");
-
-	// SDL_DestroyWindow(data->win);
+	SDL_DestroyWindow(data->win);
 }
-
 
 void	start(void)
 {
 	t_filler	data;
+	t_buttons	button;
+	t_game		game;
+	char		**frames[10000];
 
+	ft_bzero(frames, sizeof(char**) * 10000);
+	ft_bzero(&game, sizeof(game));
 	ft_bzero(&data, sizeof(t_filler));
 	data = get_data();
 	if (SDL_Init(SDL_INIT_EVERYTHING))
@@ -132,10 +74,10 @@ void	start(void)
 		ft_printf("error creating window");
 	data.renderer = SDL_CreateRenderer(data.win, -1, SDL_RENDERER_ACCELERATED);
 	data.font = TTF_OpenFont("../fonts/ubuntu/Ubuntu-M.ttf", 24);
-	play(&data);
+	play(&data, button, game, frames);
 }
 
-int	main(void)
+int		main(void)
 {
 	start();
 	ft_printf("THE END\n");

@@ -6,25 +6,28 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 00:37:40 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:25:54 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-SDL_Rect		draw_button(char *image, SDL_Rect location, t_filler *data)
+SDL_Rect	draw_button(char *image, SDL_Rect location, t_filler *data)
 {
-	SDL_Surface *img = SDL_LoadBMP(image);
+	SDL_Surface *img;
+	SDL_Texture *bmp_texture;
+
+	img = SDL_LoadBMP(image);
+	bmp_texture = SDL_CreateTextureFromSurface(data->renderer, img);
 	if (!img)
 		ft_printf("Failed to load img Error: %s", SDL_GetError());
-	SDL_Texture *bmp_texture = SDL_CreateTextureFromSurface(data->renderer, img);
 	SDL_RenderCopy(data->renderer, bmp_texture, NULL, &location);
 	SDL_FreeSurface(img);
 	SDL_DestroyTexture(bmp_texture);
 	return (location);
 }
 
-void	ft_score(t_filler *filler, char *line)
+void		ft_score(t_filler *filler, char *line)
 {
 	char **scoreline;
 
@@ -38,7 +41,7 @@ void	ft_score(t_filler *filler, char *line)
 	ft_printf("score %s, score %s\n", filler->score_1, filler->score_2);
 }
 
-int		game_over(t_filler *filler)
+int			game_over(t_filler *filler)
 {
 	char	*line;
 
@@ -47,7 +50,7 @@ int		game_over(t_filler *filler)
 	{
 		ft_strdel(&line);
 		if (!get_next_line(0, &line))
-			break;
+			break ;
 	}
 	if (ft_strstr(line, "Plateau"))
 	{
@@ -62,10 +65,11 @@ int		game_over(t_filler *filler)
 	}
 }
 
-
-void	show_score(t_filler *data)
+void		show_score(t_filler *data)
 {
-	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_1, (int[]){data->win_width - 520, WIN_HT * 0.2 + 50});
-	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_2, (int[]){data->win_width - 520, WIN_HT * 0.2 + 150});
+	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_1,\
+	(int[]){data->win_width - 520, WIN_HT * 0.05 + 50});
+	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_2,\
+	(int[]){data->win_width - 520, WIN_HT * 0.05 + 150});
 	SDL_RenderPresent(data->renderer);
 }

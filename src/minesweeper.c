@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 02:02:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 02:15:11 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:21:23 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int				**ft_save_distance(t_board f)
 	y = -1;
 	while (++y < f.h)
 	{
-	  x = -1;
+		x = -1;
 		while (++x < f.w)
 		{
 			if (f.map[y][x] == 50)

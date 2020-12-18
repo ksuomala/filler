@@ -6,16 +6,16 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 02:28:28 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:27:55 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-char *get_player(char *line)
+char			*get_player(char *line)
 {
-	char *sub;
-	int i;
+	char	*sub;
+	int		i;
 
 	i = 0;
 	sub = ft_strrchr(line, '/') + 1;
@@ -46,20 +46,20 @@ char			**get_board(size_t height, size_t width)
 	{
 		if (get_next_line(0, &line) <= 0)
 			ft_error(1);
-		if (!(board[y] = ft_strsub(line, 4,width)))
+		if (!(board[y] = ft_strsub(line, 4, width)))
 			ft_error(1);
 		ft_strdel(&line);
 	}
 	return (board);
 }
 
-t_filler get_data(void)
+t_filler		get_data(void)
 {
 	t_filler	new;
 	char		*line;
 	char		**size;
 
-	while(get_next_line(0, &line) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
 		if (ft_strstr(line, "exec p1"))
 			if (!(new.p1 = get_player(line)))
@@ -75,14 +75,14 @@ t_filler get_data(void)
 			new.w = ft_atoi(size[2]);
 			ft_free2d((void**)size);
 			free(line);
-			break;
+			break ;
 		}
 		free(line);
 	}
 	return (new);
 }
 
-char **cpy_board(char **board, size_t n)
+char			**cpy_board(char **board, size_t n)
 {
 	int		i;
 	char	**cpy;
