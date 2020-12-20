@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 06:52:31 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 08:20:34 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,4 @@ t_filler		get_data(void)
 		free(line);
 	}
 	return (new);
-}
-
-char			**cpy_board(char **board, size_t n)
-{
-	int		i;
-	char	**cpy;
-
-	cpy = ft_memalloc(sizeof(char**) * n);
-	if (!cpy)
-		return (NULL);
-	i = -1;
-	while (++i < (int)n - 1)
-		if (!(cpy[i] = ft_strdup(board[i])))
-			return (NULL);
-	return (cpy);
 }

@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 06:59:55 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 07:23:17 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ SDL_Rect	draw_button(char *image, SDL_Rect location, t_filler *data)
 	bmp_texture = SDL_CreateTextureFromSurface(data->renderer, img);
 	if (!img)
 		ft_printf("Failed to load img Error: %s", SDL_GetError());
-	SDL_RenderCopy(data->renderer, bmp_texture, NULL, &location);
+	if (SDL_RenderCopy(data->renderer, bmp_texture, NULL, &location) < 0)
+		ft_error(SDL_GetError());
 	SDL_FreeSurface(img);
 	SDL_DestroyTexture(bmp_texture);
 	return (location);
@@ -32,12 +33,21 @@ void		ft_score(t_filler *filler, char *line)
 	char **scoreline;
 
 	scoreline = ft_strsplit(line, ' ');
+	if (!scoreline)
+		ft_error("split fail \n");
 	filler->score_1 = ft_strdup(scoreline[3]);
+	if (!filler->score_1)
+		ft_error("failed to allocate for score \n");
 	ft_strdel(&line);
 	ft_free2d((void**)scoreline);
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) < 0)
+		ft_error("GNL error\n");
 	scoreline = ft_strsplit(line, ' ');
+	if (!scoreline)
+		ft_error("failed to split score");
 	filler->score_2 = ft_strdup(scoreline[3]);
+	if (!filler->score_2)
+		ft_error("failed to allocate for score2\n");
 }
 
 /*

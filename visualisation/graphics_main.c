@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 06:56:11 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 09:09:11 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,29 @@ char **frames[10000])
 ** Initialising data structures and SDL pointers
 */
 
+void	cleanup(t_filler data, char **frames[])
+{
+	int i;
+
+	i = 0;
+	SDL_DestroyWindow(data.win);
+	SDL_DestroyRenderer(data.renderer);
+	free(data.speed_up);
+	data.speed_up = NULL;
+	free(data.speed_down);
+	data.speed_down = NULL;
+	ft_strdel(&data.p1);
+	ft_strdel(&data.p2);
+	ft_strdel(&data.score_1);
+	ft_strdel(&data.score_2);
+	ft_free2d((void**)data.board);
+	while (frames[i])
+	{
+		ft_free2d((void**)frames[i]);
+		i++;
+	}
+}
+
 void	start(void)
 {
 	t_filler	data;
@@ -82,11 +105,11 @@ void	start(void)
 	if (!(data.font = TTF_OpenFont("Ubuntu-M.ttf", 24)))
 		ft_error(SDL_GetError());
 	play(&data, button, game, frames);
+	cleanup(data, frames);
 }
 
 int		main(void)
 {
 	start();
-	SDL_Quit();
 	return (0);
 }
