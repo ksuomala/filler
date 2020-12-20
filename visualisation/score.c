@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 17:12:51 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 06:59:55 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,27 @@ void		ft_score(t_filler *filler, char *line)
 	get_next_line(0, &line);
 	scoreline = ft_strsplit(line, ' ');
 	filler->score_2 = ft_strdup(scoreline[3]);
-	ft_printf("score %s, score %s\n", filler->score_1, filler->score_2);
 }
+
+/*
+** Reading stdin to see whether more moves were made or the game is over.
+** "Plateau" is contained in the line that shows the size of the board and
+** is only displayed if the game is still running.
+*/
 
 int			game_over(t_filler *filler)
 {
 	char	*line;
+	int		ret;
 
 	line = NULL;
 	while (!ft_strstr(line, "Plateau") && !ft_strstr(line, "=="))
 	{
 		ft_strdel(&line);
-		if (!get_next_line(0, &line))
+		ret = get_next_line(0, &line);
+		if (ret == -1)
+			ft_error("GNL error\n");
+		if (!ret)
 			break ;
 	}
 	if (ft_strstr(line, "Plateau"))

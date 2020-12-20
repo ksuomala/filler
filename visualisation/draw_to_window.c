@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:12:19 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 06:21:24 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int			game_to_window(t_filler *filler, int fps)
 {
 	int				x;
 	int				y;
-	static char		**current;
 
 	x = -1;
 	y = -1;
@@ -48,8 +47,6 @@ int			game_to_window(t_filler *filler, int fps)
 		}
 		x = -1;
 	}
-	if (!(current = cpy_board(filler->board, filler->h + 1)))
-		ft_error(5);
 	SDL_Delay(fps);
 	SDL_RenderPresent(filler->renderer);
 	return (0);
@@ -83,9 +80,9 @@ t_crd		players_to_window(t_filler *data, t_game game)
 	char		*fps;
 
 	if (!(str = ft_strfjoin(ft_strdup("frame "), ft_itoa(game.frame))))
-		ft_error(1);
+		ft_error("ft_strfjoin failed to allocate\n");
 	if (!(fps = ft_strfjoin(ft_strdup("delay(ms) "), ft_itoa(game.fps))))
-		ft_error(1);
+		ft_error("ft_strjoin failed to allocate\n");
 	new.x = data->win_width - 520;
 	new.y = WIN_HT * 0.1;
 	text_to_window(data, (SDL_Color){0, 0, 255, 200}, data->p1,\

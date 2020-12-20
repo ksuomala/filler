@@ -6,15 +6,15 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 17:45:34 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 06:56:11 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 
-void	ft_error(int msg)
+void	ft_error(const char *msg)
 {
-	ft_printf("error %d", msg);
+	ft_printf("error %s", msg);
 	exit(0);
 }
 
@@ -52,6 +52,10 @@ char **frames[10000])
 	SDL_DestroyWindow(data->win);
 }
 
+/*
+** Initialising data structures and SDL pointers
+*/
+
 void	start(void)
 {
 	t_filler	data;
@@ -64,24 +68,25 @@ void	start(void)
 	ft_bzero(&data, sizeof(t_filler));
 	data = get_data();
 	if (SDL_Init(SDL_INIT_EVERYTHING))
-		ft_printf("Error initializing SDL : %s", SDL_GetError());
+		ft_error(SDL_GetError());
 	if (TTF_Init() == -1)
-		ft_printf("Failed to initialize TTF\n");
+		ft_error(SDL_GetError());
 	data.win_width = (float)data.w / data.h * WIN_HT + 420;
 	data.win = SDL_CreateWindow("Filler", SDL_WINDOWPOS_UNDEFINED,\
 	SDL_WINDOWPOS_CENTERED, data.win_width, WIN_HT, 0);
 	if (!data.win)
-		ft_printf("error creating window");
-	data.renderer = SDL_CreateRenderer(data.win, -1, SDL_RENDERER_ACCELERATED);
+		ft_error(SDL_GetError());
+	if (!(data.renderer = SDL_CreateRenderer(data.win, -1,\
+	SDL_RENDERER_ACCELERATED)))
+		ft_error(SDL_GetError());
 	if (!(data.font = TTF_OpenFont("Ubuntu-M.ttf", 24)))
-		ft_error(1);
+		ft_error(SDL_GetError());
 	play(&data, button, game, frames);
 }
 
 int		main(void)
 {
 	start();
-	ft_printf("THE END\n");
 	SDL_Quit();
 	return (0);
 }

@@ -6,11 +6,17 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:27:55 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 06:52:31 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
+
+/*
+** Copying the players name from the path of the player executable. The name is
+** copied to the beginning of *line using *sub and a duplicate is returned,
+** beacause line is freed later on in the reading loop.
+*/
 
 char			*get_player(char *line)
 {
@@ -39,15 +45,16 @@ char			**get_board(size_t height, size_t width)
 
 	y = -1;
 	if (!(board = ft_memalloc(sizeof(char**) * (height + 1))))
-		ft_error(0);
-	get_next_line(0, &line);
+		ft_error("failed to allocate memory for board\n");
+	if (!get_next_line(0, &line))
+		ft_error("GNL fail \n");
 	ft_strdel(&line);
 	while (++y < (int)height)
 	{
 		if (get_next_line(0, &line) <= 0)
-			ft_error(1);
+			ft_error("GNL fail\n");
 		if (!(board[y] = ft_strsub(line, 4, width)))
-			ft_error(1);
+			ft_error("GNL fail\n");
 		ft_strdel(&line);
 	}
 	return (board);
@@ -63,14 +70,14 @@ t_filler		get_data(void)
 	{
 		if (ft_strstr(line, "exec p1"))
 			if (!(new.p1 = get_player(line)))
-				ft_error(3);
+				ft_error("GNL fail\n");
 		if (ft_strstr(line, "exec p2"))
 			if (!(new.p2 = get_player(line)))
-				ft_error(4);
+				ft_error("GNL fail\n");
 		if (ft_strstr(line, "Plateau"))
 		{
 			if (!(size = ft_strsplit(line, ' ')))
-				ft_error(2);
+				ft_error("failed to split line \n");
 			new.h = ft_atoi(size[1]);
 			new.w = ft_atoi(size[2]);
 			ft_free2d((void**)size);
