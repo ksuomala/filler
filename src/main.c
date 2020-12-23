@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 08:36:31 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/24 01:48:55 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		main(void)
 		ft_get_data(&filler);
 		move = ft_next_move(filler);
 		out = ft_parse_coord(move);
-	//	ft_cleanup(filler);
+		ft_cleanup(filler);
 		ft_printf("%s\n", out);
 		ft_strdel(&out);
 	}
