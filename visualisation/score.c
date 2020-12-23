@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 07:23:17 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 04:11:40 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ SDL_Rect	draw_button(char *image, SDL_Rect location, t_filler *data)
 	return (location);
 }
 
-void		ft_score(t_filler *filler, char *line)
+void		ft_score(t_filler *filler, char *line, int fd)
 {
 	char **scoreline;
 
@@ -42,6 +42,7 @@ void		ft_score(t_filler *filler, char *line)
 	ft_free2d((void**)scoreline);
 	if (get_next_line(0, &line) < 0)
 		ft_error("GNL error\n");
+	ft_dprintf(fd, "%s\n", line);
 	scoreline = ft_strsplit(line, ' ');
 	if (!scoreline)
 		ft_error("failed to split score");
@@ -56,7 +57,7 @@ void		ft_score(t_filler *filler, char *line)
 ** is only displayed if the game is still running.
 */
 
-int			game_over(t_filler *filler)
+int			game_over(t_filler *filler, int fd)
 {
 	char	*line;
 	int		ret;
@@ -65,11 +66,11 @@ int			game_over(t_filler *filler)
 	while (!ft_strstr(line, "Plateau") && !ft_strstr(line, "=="))
 	{
 		ft_strdel(&line);
-		ret = get_next_line(0, &line);
+		if (!(ret = get_next_line(0, &line)))
+			break ;
 		if (ret == -1)
 			ft_error("GNL error\n");
-		if (!ret)
-			break ;
+		ft_dprintf(fd, "%s\n", line);
 	}
 	if (ft_strstr(line, "Plateau"))
 	{
@@ -78,7 +79,8 @@ int			game_over(t_filler *filler)
 	}
 	else
 	{
-		ft_score(filler, line);
+		ft_score(filler, line, fd);
+		show_score(filler);
 		ft_strdel(&line);
 		return (1);
 	}
@@ -90,5 +92,4 @@ void		show_score(t_filler *data)
 	(int[]){data->win_width - 520, WIN_HT * 0.05 + 75});
 	text_to_window(data, (SDL_Color){0, 255, 0, 100}, data->score_2,\
 	(int[]){data->win_width - 520, WIN_HT * 0.05 + 200});
-	SDL_RenderPresent(data->renderer);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+        */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 10:45:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/09/15 20:12:47 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 20:55:13 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char			**ft_strsplit(char const *s, char c)
 	size_t	i;
 	size_t	i_new;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	i_new = 0;
 	words = ft_words(s, c);

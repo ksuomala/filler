@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 09:09:11 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 04:07:40 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,78 +18,78 @@ void	ft_error(const char *msg)
 	exit(0);
 }
 
-/*
-** start initializes SDL and TTF. Calling get_data to get player data and
-** window size. background draws the board and writes the player names on the
-** screen and returns the renderer.
-*/
-
-void	play(t_filler *data, t_buttons button, t_game game,\
-char **frames[10000])
-{
-	frames[game.frame] = get_board(data->h, data->w);
-	game.fps = 50;
-	game.moves = 1;
-	while (game.paused || !(data->game_over = game_over(data)))
-	{
-		events(&game, button);
-		data->board = frames[game.frame];
-		button = background(data, game);
-		game_to_window(data, game.fps);
-		if (!game.paused)
-		{
-			game.frame += 1;
-			if (game.frame == game.moves)
-			{
-				frames[game.frame] = get_board(data->h, data->w);
-				game.moves += 1;
-			}
-		}
-	}
-	background(data, game);
-	show_score(data);
-	SDL_Delay(5000);
-	SDL_DestroyWindow(data->win);
-}
-
-/*
-** Initialising data structures and SDL pointers
-*/
-
-void	cleanup(t_filler data, char **frames[])
+void	cleanup(t_filler *data, char **frames[], int moves_made)
 {
 	int i;
 
 	i = 0;
-	SDL_DestroyWindow(data.win);
-	SDL_DestroyRenderer(data.renderer);
-	free(data.speed_up);
-	data.speed_up = NULL;
-	free(data.speed_down);
-	data.speed_down = NULL;
-	ft_strdel(&data.p1);
-	ft_strdel(&data.p2);
-	ft_strdel(&data.score_1);
-	ft_strdel(&data.score_2);
-	ft_free2d((void**)data.board);
-	while (frames[i])
+	SDL_DestroyWindow(data->win);
+	SDL_DestroyRenderer(data->renderer);
+
+	ft_strdel(&data->p1);
+	ft_strdel(&data->p2);
+	ft_strdel(&data->score_1);
+	ft_strdel(&data->score_2);
+	ft_free2d((void**)data->board);
+	while (i < moves_made - 1)
 	{
+		ft_putgrid_eol(frames[i], 0);
+		ft_printf("i = %d, moves = %d\n", i, moves_made);
 		ft_free2d((void**)frames[i]);
 		i++;
 	}
 }
 
-void	start(void)
+/*
+** Running the game loop, until x is pressed to close the game. In the loop we are reading
+** events, getting the board from stdin, and re-rendering the screen for each frame.
+*/
+
+void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
+{
+	t_game game;
+
+	ft_bzero(&game, sizeof(t_game));
+	frames[game.frame] = get_board(data->h, data->w, fd);
+	game.fps = 100;
+	game.moves = 1;
+	game.paused = 1;
+	game_over(data, fd);
+	while (!data->quit)
+	{
+		data->quit = events(&game, button);
+		data->board = frames[game.frame];
+		button = background(data, game);
+		ft_printf("frame %d, moves %d\n", game.frame, game.moves);
+		game_to_window(data, game.fps);
+		if (!game.paused && !data->game_over && !data->quit)
+		{
+			game.frame += 1;
+			if (game.frame == game.moves)
+			{
+				frames[game.frame] = get_board(data->h, data->w, fd);
+				game.moves += 1;
+				data->game_over = game_over(data, fd);
+			}
+		}
+	}
+	cleanup(data, frames, game.moves);
+}
+
+
+/*
+** Initialising data structures and SDL pointers
+*/
+
+void	start(int fd)
 {
 	t_filler	data;
 	t_buttons	button;
-	t_game		game;
 	char		**frames[10000];
 
-	ft_bzero(frames, sizeof(char**) * 10000);
-	ft_bzero(&game, sizeof(game));
+	ft_bzero(&frames, sizeof(char**) * 10000);
 	ft_bzero(&data, sizeof(t_filler));
-	data = get_data();
+	data = get_data(fd);
 	if (SDL_Init(SDL_INIT_EVERYTHING))
 		ft_error(SDL_GetError());
 	if (TTF_Init() == -1)
@@ -104,12 +104,17 @@ void	start(void)
 		ft_error(SDL_GetError());
 	if (!(data.font = TTF_OpenFont("Ubuntu-M.ttf", 24)))
 		ft_error(SDL_GetError());
-	play(&data, button, game, frames);
-	cleanup(data, frames);
+	play(&data, button, fd, frames);
 }
 
 int		main(void)
 {
-	start();
+	int fd;
+
+	fd = open("visualizer_log.txt", O_RDWR);
+	if (!fd)
+		ft_error("failed to open file");
+	start(fd);
+	close(fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 06:03:43 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 13:44:41 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ typedef struct		s_filler
 {
 	SDL_Window		*win;
 	SDL_Renderer	*renderer;
-	SDL_Rect		*speed_up;
-	SDL_Rect		*speed_down;
+
 	TTF_Font		*font;
 	int				win_width;
 	char			**board;
 	int				h;
 	int				w;
+	int				quit;
 	int				game_over;
 	int				square_size;
 	char			*p1;
@@ -56,8 +56,8 @@ typedef struct		s_filler
 }					t_filler;
 
 void				ft_error(const char *msg);
-char				**get_board(size_t height, size_t width);
-t_filler			get_data(void);
+char				**get_board(size_t height, size_t width, int fd);
+t_filler			get_data(int fd);
 char				**cpy_board(char **board, size_t n);
 void				show_score(t_filler *data);
 
@@ -68,10 +68,10 @@ void				text_to_window(t_filler *data, SDL_Color color,\
 char *message, int location[1]);
 
 t_buttons			*ft_buttons(t_filler *data);
-int					game_over(t_filler *filler);
+int					game_over(t_filler *filler, int fd);
 SDL_Rect			draw_button(char *image, SDL_Rect location, t_filler *data);
 void				draw_pause(t_filler *data);
 
-void				events(t_game *game, t_buttons rect);
+int					events(t_game *game, t_buttons rect);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 06:21:24 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 04:10:50 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ char *message, int location[1])
 
 	surface = TTF_RenderText_Solid(data->font, message, color);
 	if (!surface)
-		ft_printf("Unable to get surfaceMessage!\n");
+		ft_error("Unable to get surface message\n");
 	texture = SDL_CreateTextureFromSurface(data->renderer, surface);
 	if (!texture)
-		ft_printf("Unable to create Texture!");
+		ft_error("Unable to create Texture!");
 	TTF_SizeText(data->font, message, &rect.w, &rect.h);
 	rect.x = location[0] + 210 - rect.w / 2;
 	rect.y = location[1];
@@ -95,6 +95,8 @@ t_crd		players_to_window(t_filler *data, t_game game)
 	(int[]){new.x, new.y + 300});
 	text_to_window(data, (SDL_Color){255, 0, 255, 100}, fps,\
 	(int[]){new.x, new.y + 400});
+	if (data->game_over)
+		show_score(data);
 	free(fps);
 	free(str);
 	return (new);

@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2020/12/18 16:58:20 by ksuomala         ###   ########.fr        #
+#    Updated: 2020/12/20 19:51:03 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror `sdl2-config --cflags --libs`
+FLAGS = -g -Wall -Wextra -Werror `sdl2-config --cflags --libs`
 
 LINKS = -L ../libft -lft -lSDL2_image -lSDL2_ttf -lm
 

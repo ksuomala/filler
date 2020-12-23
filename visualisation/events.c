@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:35:11 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:35:25 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/20 09:28:12 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	keypress(t_game *game, SDL_Event event, t_buttons rect)
 	}
 }
 
-void	events(t_game *game, t_buttons rect)
+int		events(t_game *game, t_buttons rect)
 {
 	SDL_Event		event;
 
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
-			exit(0);
+			return(1);
 		if (event.key.keysym.sym == SDLK_DOWN)
 			game->fps += 3;
 		if (event.key.keysym.sym == SDLK_UP)
@@ -61,4 +61,5 @@ void	events(t_game *game, t_buttons rect)
 		if (event.type == SDL_MOUSEBUTTONDOWN)
 			keypress(game, event, rect);
 	}
+	return(0);
 }
