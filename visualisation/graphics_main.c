@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 04:07:40 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 08:52:13 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 	i = 0;
 	SDL_DestroyWindow(data->win);
 	SDL_DestroyRenderer(data->renderer);
-
 	ft_strdel(&data->p1);
 	ft_strdel(&data->p2);
 	ft_strdel(&data->score_1);
 	ft_strdel(&data->score_2);
-	ft_free2d((void**)data->board);
-	while (i < moves_made - 1)
+	while (i < moves_made)
 	{
 		ft_putgrid_eol(frames[i], 0);
 		ft_printf("i = %d, moves = %d\n", i, moves_made);
@@ -41,8 +39,9 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 }
 
 /*
-** Running the game loop, until x is pressed to close the game. In the loop we are reading
-** events, getting the board from stdin, and re-rendering the screen for each frame.
+** Running the game loop, until x is pressed to close the game. In
+** the loop we are reading events, getting the board from stdin, and
+** re-rendering the screen for each frame.
 */
 
 void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
@@ -60,7 +59,6 @@ void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
 		data->quit = events(&game, button);
 		data->board = frames[game.frame];
 		button = background(data, game);
-		ft_printf("frame %d, moves %d\n", game.frame, game.moves);
 		game_to_window(data, game.fps);
 		if (!game.paused && !data->game_over && !data->quit)
 		{

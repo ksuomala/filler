@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksuomala <ksuomala@student.hive.com>       +#+  +:+       +#+        */
+/*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 13:08:23 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/10/07 22:17:18 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 08:39:06 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ long long	ft_atoi(const char *str)
 	long long	ret;
 	int			neg;
 
+	if (str == NULL)
+		return (0);
 	i = 0;
 	neg = 1;
 	ret = 0;

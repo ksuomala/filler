@@ -6,11 +6,15 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:20:24 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 08:36:31 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+// Cleanup
+// free board 2d, token, token->cr, map.
+// error handling instead of printf.
 
 /*
 ** Reading the stdin and saving the board and the next game piece.
@@ -25,7 +29,8 @@ int		ft_get_data(t_board *filler)
 	if (!ft_get_board(filler))
 		exit(0);
 	filler->map = ft_minesweeper(*filler);
-	filler->piece = ft_get_piece();
+	if (!(filler->piece = ft_get_piece()))
+		ft_printf("Failed to get piece");
 	return (1);
 }
 
@@ -45,6 +50,18 @@ char	*ft_parse_coord(t_crd crd)
 	return (first);
 }
 
+/*
+** ft_cleanup frees all the allocated memory after every move.
+*/
+
+void ft_cleanup(t_board filler)
+{
+	ft_free2d((void**)filler.board);
+	ft_memdel((void**)&filler.piece->cr);
+	ft_memdel((void**)&filler.piece);
+	ft_free2d((void**)filler.map);
+}
+
 int		main(void)
 {
 	t_board		filler;
@@ -57,6 +74,7 @@ int		main(void)
 		ft_get_data(&filler);
 		move = ft_next_move(filler);
 		out = ft_parse_coord(move);
+	//	ft_cleanup(filler);
 		ft_printf("%s\n", out);
 		ft_strdel(&out);
 	}

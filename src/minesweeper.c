@@ -6,14 +6,14 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 02:02:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/18 03:21:23 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/23 06:08:22 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
 /*
-** Finding the distance of the nearest enemy square for every coordinate.
+** If yx = opponent, return 1.
 */
 
 static unsigned char	is_opp(t_board f, int y, int x)
