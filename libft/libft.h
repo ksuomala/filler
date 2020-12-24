@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 12:07:29 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 08:43:31 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/24 02:07:58 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void				*ft_replace_ptr(void *new, void *old);
 int					ft_count_digits_s(char *s);
 long double			ft_mod_double(long double x, long double y);
 
-void				ft_putgrid_eol(char **grid, int y);
+void				ft_putgrid_chr(char **grid, int y);
+void				ft_putgrid_int(int **grid, int y, int x, int min_width);
+
 
 #endif
