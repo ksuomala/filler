@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 02:02:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 06:08:22 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/24 04:35:40 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,68 @@ static unsigned char	is_opp(t_board f, int y, int x)
 }
 
 /*
-** Checking the values of every square next to the coordinate.
+** Checking if the values surrounding the coordinate are equal to
+** int value
 */
 
-static void				ft_check_value(t_board f, int y, int x)
+int						value_to_ptr(int *square, int value)
 {
-	if (y && x && f.map[y - 1][x - 1] < f.map[y][x])
-		f.map[y][x] = f.map[y - 1][x - 1] + 1;
-	if (y && f.map[y - 1][x] < f.map[y][x])
-		f.map[y][x] = f.map[y - 1][x] + 1;
-	if (y && x < f.w - 1 && f.map[y - 1][x + 1] < f.map[y][x])
-		f.map[y][x] = f.map[y - 1][x + 1] + 1;
-	if (x && f.map[y][x - 1] < f.map[y][x])
-		f.map[y][x] = f.map[y][x - 1] + 1;
-	if (x < f.w - 1 && f.map[y][x + 1] < f.map[y][x])
-		f.map[y][x] = f.map[y][x + 1] + 1;
-	if (x && y < f.h - 1 && f.map[y + 1][x - 1] < f.map[y][x])
-		f.map[y][x] = f.map[y + 1][x - 1] + 1;
-	if (y < f.h - 1 && f.map[y + 1][x] < f.map[y][x])
-		f.map[y][x] = f.map[y + 1][x] + 1;
-	if (y < f.h - 1 && x < f.w - 1 && f.map[y + 1][x + 1] < f.map[y][x])
-		f.map[y][x] = f.map[y + 1][x + 1] + 1;
-	if (f.map[y][x] == 50)
-		f.map[y][x] += 1;
+	*square = value;
+	return (value);
 }
 
-static int				**ft_save_distance(t_board f)
+static int				ft_check_value(t_board f, int y, int x, int value)
+{
+	int change;
+
+	change = 0;
+	if (y && x && f.map[y - 1][x - 1] == EMPTY)
+		change = value_to_ptr(&f.map[y - 1][x - 1], value + 1);
+	if (y && f.map[y - 1][x] == EMPTY)
+		change = value_to_ptr(&f.map[y - 1][x], value + 1);
+	if (y && x < f.w - 1 && f.map[y - 1][x + 1] == EMPTY)
+		change = value_to_ptr(&f.map[y - 1][x + 1], value + 1);
+	if (x && f.map[y][x - 1] == EMPTY)
+		change = value_to_ptr(&f.map[y][x - 1], value + 1);
+	if (x < f.w - 1 && f.map[y][x + 1] == EMPTY)
+		change = value_to_ptr(&f.map[y][x + 1], value + 1);
+	if (x && y < f.h - 1 && f.map[y + 1][x - 1] == EMPTY)
+		change = value_to_ptr(&f.map[y + 1][x - 1], value + 1);
+	if (y < f.h - 1 && f.map[y + 1][x] == EMPTY)
+		change = value_to_ptr(&f.map[y + 1][x], value + 1);
+	if (y < f.h - 1 && x < f.w - 1 && f.map[y + 1][x + 1] == EMPTY)
+		change = value_to_ptr(&f.map[y + 1][x + 1], value + 1);
+	return (change);
+}
+
+void	ft_debug_grid(int fd, int **grid, int y, int x, int min_width) //test fuction
+{
+	int i_x;
+	int i_y;
+
+	i_y = 0;
+	i_x = 0;
+	while (i_y < y)
+	{
+		while (i_x < x)
+		{
+			if (grid[i_y][i_x] == 10000)
+				ft_dprintf(fd, " P1");
+			else if (!grid[i_y][i_x])
+				ft_dprintf(fd, " P2");
+			else
+				ft_dprintf(fd, "%*d", min_width, grid[i_y][i_x]);
+			i_x++;
+		}
+		i_x = 0;
+		i_y++;
+		ft_dprintf(fd, "\n");
+	}
+	ft_dprintf(fd, "\n");
+}
+
+
+static int				**ft_save_distance(t_board f, int value)
 {
 	int y;
 	int x;
@@ -71,21 +107,23 @@ static int				**ft_save_distance(t_board f)
 		x = -1;
 		while (++x < f.w)
 		{
-			if (f.map[y][x] == 50)
+			if (f.map[y][x] == value)
 			{
-				ft_check_value(f, y, x);
-				count++;
+				if (ft_check_value(f, y, x, value))
+					count++;
 			}
 		}
 	}
+	if (value)
+		ft_debug_grid(fd, f.map, f.h, f.w, 3);
 	if (count)
-		f.map = ft_save_distance(f);
+		f.map = ft_save_distance(f, value + 1);
 	return (f.map);
 }
 
 /*
-** Saving the locations of both players pieces. Opponent value = 0, own = 100
-** and everything in between gets the value of 50.
+** Saving the locations of both players pieces. Opponent value = 0, own = 10000
+** and everything in between gets the value of 5000.
 */
 
 int						**ft_minesweeper(t_board f)
@@ -107,12 +145,12 @@ int						**ft_minesweeper(t_board f)
 			else if (ft_tolower(f.board[y][x]) == f.p)
 				f.map[y][x] = 10000;
 			else
-				f.map[y][x] = 50;
+				f.map[y][x] = EMPTY;
 			x++;
 		}
 		y++;
 		x = 0;
 	}
-	f.map = ft_save_distance(f);
+	f.map = ft_save_distance(f, 0);
 	return (f.map);
 }

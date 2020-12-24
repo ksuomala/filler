@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 08:52:13 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/24 02:02:01 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 	ft_strdel(&data->score_2);
 	while (i < moves_made)
 	{
-		ft_putgrid_eol(frames[i], 0);
+		ft_putgrid_chr(frames[i], 0);
 		ft_printf("i = %d, moves = %d\n", i, moves_made);
 		ft_free2d((void**)frames[i]);
 		i++;
@@ -54,9 +54,8 @@ void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
 	game.moves = 1;
 	game.paused = 1;
 	game_over(data, fd);
-	while (!data->quit)
+	while (!(data->quit = events(&game, button)))
 	{
-		data->quit = events(&game, button);
 		data->board = frames[game.frame];
 		button = background(data, game);
 		game_to_window(data, game.fps);
@@ -73,7 +72,6 @@ void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
 	}
 	cleanup(data, frames, game.moves);
 }
-
 
 /*
 ** Initialising data structures and SDL pointers

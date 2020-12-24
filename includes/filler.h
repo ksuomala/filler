@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 06:53:28 by ksuomala         ###   ########.fr       */
+/*   Updated: 2020/12/24 04:46:33 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 # include "libft.h"
 
+# define EMPTY 500
 # define WIN_WT 1280
 # define WIN_HT 720
+
+int fd; //test
 
 typedef struct	s_crd
 {
