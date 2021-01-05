@@ -13,7 +13,3 @@ As a bonus I created a visualizer using the SDL graphics library.</p>
 
 </html>
 ![heatmap](https://raw.githubusercontent.com/ksuomala/filler/master/images/heatmap.png)
-![IMAGE](heatmap.png)
-![IMAGEII](images/heatmap.png)
-![IMAGEII]("images/heatmap.png")
-![IMAGE]("heatmap.png")
