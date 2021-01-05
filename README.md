@@ -18,4 +18,4 @@ As a bonus I created a visualizer using the SDL graphics library.</p>
 
 Pieces are placed as close to the opponent as possible, surrounding the opponent and making it impossible for them to expand. Here is one game played against a fellow students algorithm.
 
-![Here you can see my filler in action](https://github.com/ksuomala/filler/blob/master/images/filler_test.mp4)
+![visualizer.png](https://github.com/ksuomala/filler/blob/master/images/visualizer.png)
