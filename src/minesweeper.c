@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 02:02:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/24 04:35:40 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/01/05 22:11:29 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,6 @@ static int				ft_check_value(t_board f, int y, int x, int value)
 	return (change);
 }
 
-void	ft_debug_grid(int fd, int **grid, int y, int x, int min_width) //test fuction
-{
-	int i_x;
-	int i_y;
-
-	i_y = 0;
-	i_x = 0;
-	while (i_y < y)
-	{
-		while (i_x < x)
-		{
-			if (grid[i_y][i_x] == 10000)
-				ft_dprintf(fd, " P1");
-			else if (!grid[i_y][i_x])
-				ft_dprintf(fd, " P2");
-			else
-				ft_dprintf(fd, "%*d", min_width, grid[i_y][i_x]);
-			i_x++;
-		}
-		i_x = 0;
-		i_y++;
-		ft_dprintf(fd, "\n");
-	}
-	ft_dprintf(fd, "\n");
-}
-
-
 static int				**ft_save_distance(t_board f, int value)
 {
 	int y;
@@ -114,8 +87,6 @@ static int				**ft_save_distance(t_board f, int value)
 			}
 		}
 	}
-	if (value)
-		ft_debug_grid(fd, f.map, f.h, f.w, 3);
 	if (count)
 		f.map = ft_save_distance(f, value + 1);
 	return (f.map);

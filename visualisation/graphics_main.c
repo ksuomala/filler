@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/24 02:02:01 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/01/05 21:41:22 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 	ft_strdel(&data->score_2);
 	while (i < moves_made)
 	{
-		ft_putgrid_chr(frames[i], 0);
-		ft_printf("i = %d, moves = %d\n", i, moves_made);
 		ft_free2d((void**)frames[i]);
 		i++;
 	}
@@ -44,16 +42,16 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 ** re-rendering the screen for each frame.
 */
 
-void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
+void	play(t_filler *data, t_buttons button, char **frames[10000])
 {
 	t_game game;
 
 	ft_bzero(&game, sizeof(t_game));
-	frames[game.frame] = get_board(data->h, data->w, fd);
+	frames[game.frame] = get_board(data->h, data->w);
 	game.fps = 100;
 	game.moves = 1;
 	game.paused = 1;
-	game_over(data, fd);
+	game_over(data);
 	while (!(data->quit = events(&game, button)))
 	{
 		data->board = frames[game.frame];
@@ -64,9 +62,9 @@ void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
 			game.frame += 1;
 			if (game.frame == game.moves)
 			{
-				frames[game.frame] = get_board(data->h, data->w, fd);
+				frames[game.frame] = get_board(data->h, data->w);
 				game.moves += 1;
-				data->game_over = game_over(data, fd);
+				data->game_over = game_over(data);
 			}
 		}
 	}
@@ -77,7 +75,7 @@ void	play(t_filler *data, t_buttons button, int fd, char **frames[10000])
 ** Initialising data structures and SDL pointers
 */
 
-void	start(int fd)
+void	start(void)
 {
 	t_filler	data;
 	t_buttons	button;
@@ -85,7 +83,7 @@ void	start(int fd)
 
 	ft_bzero(&frames, sizeof(char**) * 10000);
 	ft_bzero(&data, sizeof(t_filler));
-	data = get_data(fd);
+	data = get_data();
 	if (SDL_Init(SDL_INIT_EVERYTHING))
 		ft_error(SDL_GetError());
 	if (TTF_Init() == -1)
@@ -100,17 +98,11 @@ void	start(int fd)
 		ft_error(SDL_GetError());
 	if (!(data.font = TTF_OpenFont("Ubuntu-M.ttf", 24)))
 		ft_error(SDL_GetError());
-	play(&data, button, fd, frames);
+	play(&data, button, frames);
 }
 
 int		main(void)
 {
-	int fd;
-
-	fd = open("visualizer_log.txt", O_RDWR);
-	if (!fd)
-		ft_error("failed to open file");
-	start(fd);
-	close(fd);
+	start();
 	return (0);
 }

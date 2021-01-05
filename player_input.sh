@@ -1,1 +1,0 @@
-./resources/filler_vm_old -f resources/maps/map00 -p1 ./test_input -p2 ./resources/players/sadawilin.filler

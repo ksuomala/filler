@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 13:44:41 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/01/05 21:13:20 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct		s_filler
 }					t_filler;
 
 void				ft_error(const char *msg);
-char				**get_board(size_t height, size_t width, int fd);
-t_filler			get_data(int fd);
+char				**get_board(size_t height, size_t width);
+t_filler			get_data(void);
 char				**cpy_board(char **board, size_t n);
 void				show_score(t_filler *data);
 
@@ -68,7 +68,7 @@ void				text_to_window(t_filler *data, SDL_Color color,\
 char *message, int location[1]);
 
 t_buttons			*ft_buttons(t_filler *data);
-int					game_over(t_filler *filler, int fd);
+int					game_over(t_filler *filler);
 SDL_Rect			draw_button(char *image, SDL_Rect location, t_filler *data);
 void				draw_pause(t_filler *data);
 

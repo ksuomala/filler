@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 04:11:40 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/01/05 21:20:08 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ SDL_Rect	draw_button(char *image, SDL_Rect location, t_filler *data)
 	return (location);
 }
 
-void		ft_score(t_filler *filler, char *line, int fd)
+void		ft_score(t_filler *filler, char *line)
 {
 	char **scoreline;
 
@@ -42,7 +42,6 @@ void		ft_score(t_filler *filler, char *line, int fd)
 	ft_free2d((void**)scoreline);
 	if (get_next_line(0, &line) < 0)
 		ft_error("GNL error\n");
-	ft_dprintf(fd, "%s\n", line);
 	scoreline = ft_strsplit(line, ' ');
 	if (!scoreline)
 		ft_error("failed to split score");
@@ -57,7 +56,7 @@ void		ft_score(t_filler *filler, char *line, int fd)
 ** is only displayed if the game is still running.
 */
 
-int			game_over(t_filler *filler, int fd)
+int			game_over(t_filler *filler)
 {
 	char	*line;
 	int		ret;
@@ -70,7 +69,6 @@ int			game_over(t_filler *filler, int fd)
 			break ;
 		if (ret == -1)
 			ft_error("GNL error\n");
-		ft_dprintf(fd, "%s\n", line);
 	}
 	if (ft_strstr(line, "Plateau"))
 	{
@@ -79,7 +77,7 @@ int			game_over(t_filler *filler, int fd)
 	}
 	else
 	{
-		ft_score(filler, line, fd);
+		ft_score(filler, line);
 		show_score(filler);
 		ft_strdel(&line);
 		return (1);

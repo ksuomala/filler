@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 08:41:11 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/01/05 22:05:10 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,13 @@ int			ft_get_board(t_board *filler)
 	if (!get_next_line(0, &line))
 		return (0);
 	ft_strdel(&line);
-	i = 0;
-	while (i < filler->h)
+	i = -1;
+	while (++i < filler->h)
 	{
 		if (!get_next_line(0, &line))
 			ft_printf("error3");
 		filler->board[i] = ft_strsub(line, 4, filler->w);
 		free(line);
-		i++;
 	}
 	return (1);
 }

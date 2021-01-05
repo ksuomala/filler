@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/20 21:07:44 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/01/05 22:11:49 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char			*get_player(char *line)
 	return (ft_strdup(line));
 }
 
-char			**get_board(size_t height, size_t width, int fd)
+char			**get_board(size_t height, size_t width)
 {
 	int		y;
 	char	*line;
@@ -48,13 +48,11 @@ char			**get_board(size_t height, size_t width, int fd)
 		ft_error("failed to allocate memory for board\n");
 	if (!get_next_line(0, &line))
 		ft_error("GNL returned 0 \n");
-	ft_dprintf(fd, "%s\n", line);
 	ft_strdel(&line);
 	while (++y < (int)height)
 	{
 		if (get_next_line(0, &line) <= 0)
 			ft_error("GNL returned 0\n");
-		ft_dprintf(fd, "%s\n", line);
 		if (!(board[y] = ft_strsub(line, 4, width)))
 			ft_error("allocation failure\n");
 		ft_strdel(&line);
@@ -62,7 +60,7 @@ char			**get_board(size_t height, size_t width, int fd)
 	return (board);
 }
 
-t_filler		get_data(int fd)
+t_filler		get_data(void)
 {
 	t_filler	new;
 	char		*line;
@@ -70,7 +68,6 @@ t_filler		get_data(int fd)
 
 	while (get_next_line(0, &line) > 0 && !ft_strstr(line, "Plateau"))
 	{
-		ft_dprintf(fd, "%s\n", line);
 		if (ft_strstr(line, "exec p1"))
 			if (!(new.p1 = get_player(line)))
 				ft_error("GNL fail\n");
@@ -85,6 +82,5 @@ t_filler		get_data(int fd)
 	new.w = ft_atoi(size[2]);
 	ft_free2d((void**)size);
 	free(line);
-
 	return (new);
 }
