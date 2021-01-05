@@ -11,6 +11,11 @@
 As a bonus I created a visualizer using the SDL graphics library.</p>
 </html>
 
-The Algorithm
+<html><h1>The Algorithm</h1></html>
       My filler algorithm places the piece as close to the enemy as possible. To calculate the distance from the other player I created a heatmap, that saves the       distance to the nearerst enemy piece for each coordinate.
+      
 ![heatmap](https://github.com/ksuomala/filler/blob/master/images/heatmap.png)
+
+Pieces are placed as close to the opponent as possible, surrounding the opponent and making it impossible for them to expand. Here is one game played against a fellow students algorithm.
+
+![heatmap_video](https://github.com/ksuomala/filler/blob/master/images/filler_test.mp4)
