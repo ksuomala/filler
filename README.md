@@ -12,4 +12,4 @@ As a bonus I created a visualizer using the SDL graphics library.</p>
 
 
 </html>
-![WORLD-ICE](https://github.com/ksuomala/filler/blob/master/heatmap.png)
+![heatmap](https://github.com/ksuomala/filler/blob/master/heatmap.png)
