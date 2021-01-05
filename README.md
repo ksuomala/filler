@@ -12,4 +12,4 @@ As a bonus I created a visualizer using the SDL graphics library.</p>
 
 
 </html>
-![heatmap](https://raw.githubusercontent.com/ksuomala/filler/master/images/heatmap.png)
+![heatmap](https://github.com/ksuomala/filler/blob/master/images/heatmap.png)
