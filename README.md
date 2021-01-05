@@ -10,5 +10,6 @@
 
 As a bonus I created a visualizer using the SDL graphics library.</p>
 
-![Screenshot from 2020-12-24 03-03-53.png](Screenshot from 2020-12-24 03-03-53.png)
+
 </html>
+![Screenshot from 2020-12-24 03-03-53.png](Screenshot from 2020-12-24 03-03-53.png)
