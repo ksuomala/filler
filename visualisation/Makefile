@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2020/12/20 19:51:03 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/01/23 13:12:47 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(NAME): $(OBJS)
 
 $(OBJS): $(SRCS)
 	@echo "Compiling..."
-	$(CC) $(FLAGS) -c $(SRCS) $(INCL) $(LINKS)
+	$(CC) $(FLAGS) -c $(SRCS) $(INCL)
 	@echo "*object files created"
 
 clean:
