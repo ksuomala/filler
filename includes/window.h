@@ -6,15 +6,15 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/01/05 21:13:20 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/07 22:04:24 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _WINDOW_H
 # define _WINDOW_H
 
-# include <SDL2/SDL.h>
-# include <SDL_ttf.h>
+# include "SDL2/SDL.h"
+# include "SDL_ttf.h"
 # include <fcntl.h>
 # include "filler.h"
 
