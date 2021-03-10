@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/01/05 21:41:22 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/10 16:59:57 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	start(void)
 	char		**frames[10000];
 
 	ft_bzero(&frames, sizeof(char**) * 10000);
+	ft_bzero(&button, sizeof(t_buttons));
 	ft_bzero(&data, sizeof(t_filler));
 	data = get_data();
 	if (SDL_Init(SDL_INIT_EVERYTHING))
