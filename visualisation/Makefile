@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/10 18:23:40 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/10 18:36:48 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ LINKS = -L ../libft -lft -L lib/lib
 
 #LINKS = -L ../libft -lft -lSDL2_image -lSDL2_ttf -lm
 
-INCL = -I ../includes -I ../libft -I libSDL2/include -I SDL2_ttf
+INCL = -I ../includes -I ../libft -I lib/libSDL2/include -I SDL2_ttf
 
 .PHONY: all clean fclean re
 
