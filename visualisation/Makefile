@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/09 14:25:28 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/10 14:28:48 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,15 +69,22 @@ fclean: clean
 	@echo "*LIBSDL2 removed!"
 
 $(LIBSDL2_TTF): $(LIBSDL2) | $(LIB_DIR)
-	cd SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)libSDL2_ttf)
-	$(MAKE) --directory=SDL2_ttf
-	$(MAKE) --directory=SDL2_ttf install
+	@echo "Configuring SDL2_ttf..."
+	@cd SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)libSDL2_ttf)
+	@echo "SDL2_ttf configured!"
+	@echo "bulding SDL2_ttf"
+	@$(MAKE) --directory=SDL2_ttf
+	@$(MAKE) --directory=SDL2_ttf install
+	@echo "SDL2_ttf built!"
 
 $(LIBSDL2): $(LIB_DIR)
-	cd libSDL2 && ./configure --prefix=$(abspath $(LIB_DIR)libSDL2) --disable-shared --disable-video-wayland
-	$(MAKE) --directory=libSDL2
-	$(MAKE) --directory=libSDL2 install
-
+	@echo "Configuring SDL2..."
+	@cd libSDL2 && ./configure --prefix=$(abspath $(LIB_DIR)libSDL2) --disable-shared --disable-video-wayland
+	@echo "SDL2 configured"
+	@echo "Building SDL2..."
+	@$(MAKE) --directory=libSDL2
+	@$(MAKE) --directory=libSDL2 install
+	@echo "SDL2 built!"
 
 $(LIB_DIR):
 	mkdir $(@)

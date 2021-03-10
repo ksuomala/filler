@@ -12679,12 +12679,13 @@ LIBS="$LIBS $FT2_LIBS"
 
 SDL_VERSION=2.0.8
 
+# Changed else sdl_prefix= from ""
 
 # Check whether --with-sdl-prefix was given.
 if test "${with_sdl_prefix+set}" = set; then :
   withval=$with_sdl_prefix; sdl_prefix="$withval"
 else
-  sdl_prefix=""
+  sdl_prefix="/home/ksuomala/Hive/filler/visualisation/lib/libSDL2"
 fi
 
 
