@@ -6,11 +6,11 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/10 22:33:08 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/12 18:27:16 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = visualizer
+NAME = ../visualizer
 
 SRCS = graphics_main.c \
 	game_data.c \
@@ -59,10 +59,10 @@ INCL = -I ../includes -I ../libft -I lib/libSDL2/include -I lib/include/SDL2
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o ../$(NAME) $(L_FLAGS) $(INCL) $(LINKS)
+	@$(CC) $(OBJS) -o $(NAME) $(L_FLAGS) $(INCL) $(LINKS)
 	@echo "executable compiled!"
 
-$(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) $(OBJ_DIR)
+$(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) | $(OBJ_DIR)
 	@echo "Compiling..."
 	$(CC) $(C_FLAGS) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
 	@mv $(SRCS:.c=.o) $(OBJ_DIR)/

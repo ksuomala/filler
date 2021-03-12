@@ -6,9 +6,11 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:20:59 by ksuomala          #+#    #+#              #
-#    Updated: 2020/12/23 06:30:16 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/12 18:25:42 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# -*- Makefile -*-
 
 NAME = ksuomala.filler
 
@@ -17,11 +19,13 @@ SRCS = main.c \
 	minesweeper.c \
 	next_move.c \
 
-SRCS_DIR = src
+SRCS_DIR = src/
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+# Is the dependency right?
 
-OBJ_DIR = obj
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
+
+OBJ_DIR = obj/
 
 LIBFT = libft/libft.a
 
@@ -33,39 +37,41 @@ LINKS = -L libft -lft
 
 INCL = -I includes -I libft
 
+VISUALIZER = visualizer
+
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LINKS)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LINKS)
 	@echo "executable compiled!"
 
-$(OBJS): $(LIBFT) $(addprefix $(SRCS_DIR)/, $(SRCS)) $(OBJ_DIR)
+$(OBJS): $(LIBFT) $(addprefix $(SRCS_DIR), $(SRCS)) | $(OBJ_DIR)
 	@echo "Compiling..."
-	@$(CC) $(FLAGS) -c $(addprefix $(SRCS_DIR)/, $(SRCS)) $(INCL)
+	$(CC) $(FLAGS) -c $(addprefix $(SRCS_DIR), $(SRCS)) $(INCL)
 	@echo "Compiled. Moving .o files..."
-	@mv $(SRCS:.c=.o) $(OBJ_DIR)/
+	mv $(SRCS:.c=.o) $(OBJ_DIR)
 
 $(LIBFT):
 	@make -s -C libft
 
 $(OBJ_DIR):
-	mkdir $(OBJ_DIR)
+	mkdir $(@)
 
 clean:
-	@make -s -C libft clean
-	@make -s -C visualisation clean
-	@rm -f $(OBJS)
-	@echo "*.o removed!"
+	make -s -C libft clean
+	make -s -C visualisation clean
+	rm -f $(OBJS)
+	echo "*.o removed!"
 
 fclean: clean
-	@make -s -C libft fclean
-	@make -s -C visualisation fclean
-	@rm -f $(NAME)
-	@echo "Targets removed!"
+	make -s -C libft fclean
+	make -s -C visualisation fclean
+	rm -f $(NAME)
+	echo "Targets removed!"
 
 re: fclean all
 
-visualizer:
+$(VISUALIZER):
 	@make -s -C visualisation
