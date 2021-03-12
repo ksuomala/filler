@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/12 18:27:16 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/12 21:40:46 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,13 @@ LIBSDL2 = $(LIB_DIR)libSDL2/lib/libSDL2.a
 
 LIBSDL2_TTF = $(LIB_DIR)lib/libSDL2_ttf.a
 
-LIBSDL_MAKE = libSDL2/Makefile
+LIBSDL_MAKE = SDL2/libSDL2/Makefile
+
+LIBFT = ../libft/libft.a
 
 LIB_DIR = lib/
+
+F_SANITIZE = -fsanitize=leak -fsanitize=address
 
 OBJ_DIR = obj/
 
@@ -62,7 +66,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(OBJS) -o $(NAME) $(L_FLAGS) $(INCL) $(LINKS)
 	@echo "executable compiled!"
 
-$(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) | $(OBJ_DIR)
+$(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) | $(OBJ_DIR) $(LIBFT)
 	@echo "Compiling..."
 	$(CC) $(C_FLAGS) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
 	@mv $(SRCS:.c=.o) $(OBJ_DIR)/
@@ -70,6 +74,7 @@ $(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) | $(OBJ_DIR)
 
 clean:
 	@rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 	@echo "*.o removed!"
 	if test -f $(LIBSDL_MAKE); then $(MAKE) AUTOMAKE=: --directory=SDL2/libSDL2 clean; fi
 	@echo "*LIBSDL2 cleaned!"
@@ -99,10 +104,17 @@ $(LIBSDL2): $(LIB_DIR)
 	$(MAKE) --directory=SDL2/libSDL2 install
 	@echo "SDL2 built!"
 
+$(LIBFT):
+	make -C ../libft
+
 $(LIB_DIR):
 	mkdir $(@)
 
 $(OBJ_DIR):
 	mkdir $(@)
+
+leaks:
+	$(CC) $(C_FLAGS) $(F_SANITIZE) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
+	@$(CC) $(OBJS) -o $(NAME) $(L_FLAGS) $(F_SANITIZE) $(INCL) $(LINKS)
 
 re: fclean all

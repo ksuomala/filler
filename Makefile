@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:20:59 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/12 18:25:42 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/12 21:42:39 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ CC = gcc
 
 FLAGS = -g -Wall -Wextra -Werror
 
+F_SANITIZE = -fsanitize=address
+
 LINKS = -L libft -lft
 
 INCL = -I includes -I libft
@@ -44,7 +46,7 @@ VISUALIZER = visualizer
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LINKS)
+	$(CC) $(OBJS) -o $(NAME) $(LINKS)
 	@echo "executable compiled!"
 
 $(OBJS): $(LIBFT) $(addprefix $(SRCS_DIR), $(SRCS)) | $(OBJ_DIR)
@@ -63,6 +65,7 @@ clean:
 	make -s -C libft clean
 	make -s -C visualisation clean
 	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 	echo "*.o removed!"
 
 fclean: clean
@@ -75,3 +78,7 @@ re: fclean all
 
 $(VISUALIZER):
 	@make -s -C visualisation
+
+leaks:
+	$(CC) $(FLAGS) -c $(addprefix $(SRCS_DIR), $(SRCS)) $(INCL) $(F_SANITIZE)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LINKS) $(F_SANITIZE)

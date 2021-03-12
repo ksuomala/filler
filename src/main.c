@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/01/05 22:10:51 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/12 20:37:08 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ int		main(void)
 	t_board		filler;
 	t_crd		move;
 	char		*out;
+
+	//test create leak
+	char *str;
+	str = ft_memalloc(sizeof(char) * 999);
+	str = NULL;
+	if (str)
+		return(0);
+	//test create leak
 
 	ft_bzero(&filler, sizeof(filler));
 	while (1)
