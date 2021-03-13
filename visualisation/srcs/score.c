@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/10 21:56:25 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/13 23:02:46 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@ void		ft_score(t_filler *filler, char *line)
 	filler->score_1 = ft_strdup(scoreline[3]);
 	if (!filler->score_1)
 		ft_error("failed to allocate for score \n");
-	ft_strdel(&line);
+//	ft_strdel(&line);
 	ft_free2d((void**)scoreline);
 	if (get_next_line(0, &line) < 0)
 		ft_error("GNL error\n");
 	ft_printf("%s\n", line); //test
 	scoreline = ft_strsplit(line, ' ');
+	ft_strdel(&line);
 	if (!scoreline)
 		ft_error("failed to split score");
 	filler->score_2 = ft_strdup(scoreline[3]);
 	if (!filler->score_2)
 		ft_error("failed to allocate for score2\n");
+	ft_free2d((void**)scoreline);
 }
 
 /*
@@ -66,7 +68,8 @@ int			game_over(t_filler *filler)
 	line = NULL;
 	while (!ft_strstr(line, "Plateau") && !ft_strstr(line, "=="))
 	{
-		ft_strdel(&line);
+		if (line)
+			ft_strdel(&line);
 		if (!(ret = get_next_line(0, &line)))
 			break ;
 		if (ret == -1)

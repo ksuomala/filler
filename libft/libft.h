@@ -6,14 +6,14 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/09 12:07:29 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/13 21:30:06 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/13 22:20:42 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 
 # define LIBFT_H
-# define BUFF_SIZE	100
+# define BUFF_SIZE	1
 # define FD_SIZE	10
 
 # include <unistd.h>

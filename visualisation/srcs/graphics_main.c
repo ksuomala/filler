@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/10 16:59:57 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 00:40:36 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 	i = 0;
 	SDL_DestroyWindow(data->win);
 	SDL_DestroyRenderer(data->renderer);
+	SDL_Quit();
+	TTF_CloseFont(data->font);
+	TTF_Quit();
 	ft_strdel(&data->p1);
 	ft_strdel(&data->p2);
 	ft_strdel(&data->score_1);
