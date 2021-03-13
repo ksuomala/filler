@@ -6,12 +6,21 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/12 20:37:08 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/13 22:07:21 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include <fcntl.h>
+
+void		kill_all(t_board filler)
+{
+	ft_free2d((void**)filler.board);
+	ft_memdel((void**)&filler.piece->cr);
+	ft_memdel((void**)&filler.piece);
+	ft_free2d((void**)filler.map);
+	exit(0);
+}
 
 /*
 ** Reading the stdin and saving the board and the next game piece.
@@ -22,12 +31,12 @@ int		ft_get_data(t_board *filler)
 {
 	if (!filler->p)
 		if (!(filler->p = ft_get_player()))
-			ft_printf("playaa");
+			return (0);
 	if (!ft_get_board(filler))
 		exit(0);
 	filler->map = ft_minesweeper(*filler);
 	if (!(filler->piece = ft_get_piece()))
-		ft_printf("Failed to get piece");
+		return (0);
 	return (1);
 }
 
@@ -42,7 +51,11 @@ char	*ft_parse_coord(t_crd crd)
 	char *second;
 
 	first = ft_strfjoin(ft_itoa(crd.y), ft_strdup(" "));
+	if (!first)
+		return (NULL);
 	second = ft_itoa(crd.x);
+	if (!second)
+		return (NULL);
 	first = ft_strfjoin(first, second);
 	return (first);
 }
@@ -65,20 +78,15 @@ int		main(void)
 	t_crd		move;
 	char		*out;
 
-	//test create leak
-	char *str;
-	str = ft_memalloc(sizeof(char) * 999);
-	str = NULL;
-	if (str)
-		return(0);
-	//test create leak
-
 	ft_bzero(&filler, sizeof(filler));
 	while (1)
 	{
-		ft_get_data(&filler);
-		move = ft_next_move(filler);
+		if (!ft_get_data(&filler))
+			kill_all(filler);
+		move = ft_next_move(filler, filler.piece->cr);
 		out = ft_parse_coord(move);
+		if (!out)
+			kill_all(filler);
 		ft_cleanup(filler);
 		ft_printf("%s\n", out);
 		ft_strdel(&out);

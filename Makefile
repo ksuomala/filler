@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:20:59 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/12 21:42:39 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/13 15:22:37 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,6 @@ SRCS = main.c \
 	next_move.c \
 
 SRCS_DIR = src/
-
-# Is the dependency right?
 
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 

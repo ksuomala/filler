@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/01/05 22:05:10 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/13 19:25:43 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char		ft_get_player(void)
 	if (get_next_line(0, &line) < 1)
 		return (0);
 	if (!(p = ft_strchr(line, 'p')))
-		ft_printf("what");
+		ft_printf("invalid input from vm\n"); //test
 	p += 1;
 	c = *p;
 	ft_strdel(&line);
@@ -53,7 +53,8 @@ t_crd		*ft_get_coordinates(t_token *token)
 	while (++y < token->h)
 	{
 		x = -1;
-		get_next_line(0, &line);
+		if (get_next_line(0, &line) <= 0)
+			ft_printf("error");
 		while (++x < token->w)
 		{
 			if (line[x] == '*')
@@ -81,11 +82,13 @@ t_token		*ft_get_piece(void)
 	new = ft_memalloc(sizeof(t_token));
 	if (!get_next_line(0, &line))
 		ft_printf("no more lines");
-	token_size = ft_strsplit(line, ' ');
+	if (!(token_size = ft_strsplit(line, ' ')))
+		ft_printf("add error\n");
 	new->h = ft_atoi(token_size[1]);
 	new->w = ft_atoi(token_size[2]);
+	//depending on uninitialized valgrind
+	ft_free2d((void**)token_size);
 	ft_strdel(&line);
-	ft_free2d((void*)token_size);
 	new->cr = ft_get_coordinates(new);
 	return (new);
 }
@@ -102,7 +105,7 @@ int			ft_get_board(t_board *filler)
 	int		i;
 
 	if (!get_next_line(0, &line))
-		ft_printf("line full\n");
+		ft_printf("line full\n"); //add error management
 	if (!(board_size = ft_strsplit(line, ' ')))
 		ft_printf("failed split\n");
 	ft_strdel(&line);
