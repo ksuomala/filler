@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/07 22:04:24 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 20:46:02 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct		s_filler
 }					t_filler;
 
 void				ft_error(const char *msg);
-char				**get_board(size_t height, size_t width);
+char				**get_board_v(size_t height, size_t width);
 t_filler			get_data(void);
 char				**cpy_board(char **board, size_t n);
 void				show_score(t_filler *data);

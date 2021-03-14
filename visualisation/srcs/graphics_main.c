@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/14 15:42:53 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 20:49:01 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 	i = 0;
 	SDL_DestroyRenderer(data->renderer);
 	SDL_DestroyWindow(data->win);
+	SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
 	SDL_Quit();
 	TTF_CloseFont(data->font);
 	TTF_Quit();
@@ -50,7 +51,7 @@ void	play(t_filler *data, t_buttons button, char **frames[10000])
 	t_game game;
 
 	ft_bzero(&game, sizeof(t_game));
-	frames[game.frame] = get_board(data->h, data->w);
+	frames[game.frame] = get_board_v(data->h, data->w);
 	game.fps = 100;
 	game.moves = 1;
 	game.paused = 1;
@@ -65,7 +66,7 @@ void	play(t_filler *data, t_buttons button, char **frames[10000])
 			game.frame += 1;
 			if (game.frame == game.moves)
 			{
-				frames[game.frame] = get_board(data->h, data->w);
+				frames[game.frame] = get_board_v(data->h, data->w);
 				game.moves += 1;
 				data->game_over = game_over(data);
 			}

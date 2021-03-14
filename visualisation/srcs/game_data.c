@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:01:55 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/01/05 22:11:49 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 20:48:33 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** beacause line is freed later on in the reading loop.
 */
 
-char			*get_player(char *line)
+char			*get_player_v(char *line)
 {
 	char	*sub;
 	int		i;
@@ -37,7 +37,7 @@ char			*get_player(char *line)
 	return (ft_strdup(line));
 }
 
-char			**get_board(size_t height, size_t width)
+char			**get_board_v(size_t height, size_t width)
 {
 	int		y;
 	char	*line;
@@ -69,10 +69,10 @@ t_filler		get_data(void)
 	while (get_next_line(0, &line) > 0 && !ft_strstr(line, "Plateau"))
 	{
 		if (ft_strstr(line, "exec p1"))
-			if (!(new.p1 = get_player(line)))
+			if (!(new.p1 = get_player_v(line)))
 				ft_error("GNL fail\n");
 		if (ft_strstr(line, "exec p2"))
-			if (!(new.p2 = get_player(line)))
+			if (!(new.p2 = get_player_v(line)))
 				ft_error("GNL fail\n");
 		free(line);
 	}

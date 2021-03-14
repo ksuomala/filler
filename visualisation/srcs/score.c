@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/14 16:10:19 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 20:57:36 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,15 @@ void		score(t_filler *filler, char *line)
 {
 	char **scoreline;
 
-	ft_printf("%s\n", line); //test
 	scoreline = ft_strsplit(line, ' ');
 	if (!scoreline)
 		ft_error("split fail \n");
 	filler->score_1 = ft_strdup(scoreline[3]);
 	if (!filler->score_1)
 		ft_error("failed to allocate for score \n");
-//	ft_strdel(&line);
 	ft_free2d((void**)scoreline);
 	if (get_next_line(0, &line) < 0)
 		ft_error("GNL error\n");
-	ft_printf("%s\n", line); //test
 	scoreline = ft_strsplit(line, ' ');
 	ft_strdel(&line);
 	if (!scoreline)
