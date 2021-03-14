@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:59:31 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/14 00:40:36 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 15:42:53 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	cleanup(t_filler *data, char **frames[], int moves_made)
 	int i;
 
 	i = 0;
-	SDL_DestroyWindow(data->win);
 	SDL_DestroyRenderer(data->renderer);
+	SDL_DestroyWindow(data->win);
 	SDL_Quit();
 	TTF_CloseFont(data->font);
 	TTF_Quit();

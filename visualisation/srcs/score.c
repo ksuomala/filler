@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 04:33:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/13 23:02:46 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 16:10:19 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ SDL_Rect	draw_button(char *image, SDL_Rect location, t_filler *data)
 	return (location);
 }
 
-void		ft_score(t_filler *filler, char *line)
+void		score(t_filler *filler, char *line)
 {
 	char **scoreline;
 
@@ -82,7 +82,7 @@ int			game_over(t_filler *filler)
 	}
 	else
 	{
-		ft_score(filler, line);
+		score(filler, line);
 		show_score(filler);
 		ft_strdel(&line);
 		return (1);

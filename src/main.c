@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/13 22:07:21 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 16:09:56 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void		kill_all(t_board filler)
 int		ft_get_data(t_board *filler)
 {
 	if (!filler->p)
-		if (!(filler->p = ft_get_player()))
+		if (!(filler->p = get_player()))
 			return (0);
-	if (!ft_get_board(filler))
+	if (!get_board(filler))
 		exit(0);
 	filler->map = ft_minesweeper(*filler);
-	if (!(filler->piece = ft_get_piece()))
+	if (!(filler->piece = get_piece()))
 		return (0);
 	return (1);
 }

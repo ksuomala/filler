@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/13 19:25:43 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/14 16:09:56 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Reading the first line to see which player to play (p_).
 */
 
-char		ft_get_player(void)
+char		get_player(void)
 {
 	char *line;
 	char *p;
@@ -41,7 +41,7 @@ char		ft_get_player(void)
 ** Saving the token as coordinates into an array of t_crd structs.
 */
 
-t_crd		*ft_get_coordinates(t_token *token)
+t_crd		*get_coordinates(t_token *token)
 {
 	t_crd			arr[100];
 	char			*line;
@@ -73,7 +73,7 @@ t_crd		*ft_get_coordinates(t_token *token)
 ** Getting the token that has to be placed on the board.
 */
 
-t_token		*ft_get_piece(void)
+t_token		*get_piece(void)
 {
 	char		*line;
 	char		**token_size;
@@ -89,7 +89,7 @@ t_token		*ft_get_piece(void)
 	//depending on uninitialized valgrind
 	ft_free2d((void**)token_size);
 	ft_strdel(&line);
-	new->cr = ft_get_coordinates(new);
+	new->cr = get_coordinates(new);
 	return (new);
 }
 
@@ -98,7 +98,7 @@ t_token		*ft_get_piece(void)
 ** of every line are skipped.
 */
 
-int			ft_get_board(t_board *filler)
+int			get_board(t_board *filler)
 {
 	char	**board_size;
 	char	*line;
