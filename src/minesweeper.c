@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 02:02:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/01/05 22:11:29 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/15 18:22:35 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ static unsigned char	is_opp(t_board f, int y, int x)
 		return (1);
 }
 
-/*
-** Checking if the values surrounding the coordinate are equal to
-** int value
-*/
-
 int						value_to_ptr(int *square, int value)
 {
 	*square = value;
 	return (value);
 }
 
-static int				ft_check_value(t_board f, int y, int x, int value)
+/*
+** Checking if the values surrounding the coordinate are equal to
+** int value
+*/
+
+static int				check_value(t_board f, int y, int x, int value)
 {
 	int change;
 
@@ -67,7 +67,7 @@ static int				ft_check_value(t_board f, int y, int x, int value)
 	return (change);
 }
 
-static int				**ft_save_distance(t_board f, int value)
+static int				**save_distance(t_board f, int value)
 {
 	int y;
 	int x;
@@ -82,13 +82,13 @@ static int				**ft_save_distance(t_board f, int value)
 		{
 			if (f.map[y][x] == value)
 			{
-				if (ft_check_value(f, y, x, value))
+				if (check_value(f, y, x, value))
 					count++;
 			}
 		}
 	}
 	if (count)
-		f.map = ft_save_distance(f, value + 1);
+		f.map = save_distance(f, value + 1);
 	return (f.map);
 }
 
@@ -97,19 +97,49 @@ static int				**ft_save_distance(t_board f, int value)
 ** and everything in between gets the value of 5000.
 */
 
-int						**ft_minesweeper(t_board f)
+void			print_map(t_board f, int **map)
+{
+	int x;
+	int y;
+
+	fd = open("heatmap.txt", O_WRONLY); //test
+	x = 0;
+	y = 0;
+	while (x < f.w)
+	{
+		ft_dprintf(fd, "%6d ", x);
+		x++;
+	}
+	x = 0;
+	ft_dprintf(fd, "\n \n");
+	while (y < f.h)
+	{
+		while(x < f.w)
+		{
+			ft_dprintf(fd, "%6d ", map[y][x]);
+			x++;
+		}
+		ft_dprintf(fd, "\n");
+		x = 0;
+		y++;
+	}
+}
+
+int						**minesweeper(t_board f)
 {
 	int y;
 	int x;
 
-	y = 0;
-	x = 0;
+	y = -1;
+	x = -1;
 	if (!(f.map = ft_memalloc(sizeof(int*) * (f.h + 1))))
-		exit(0);
-	while (f.board[y])
+		kill_filler("Failed to malloc map\n", &f);
+	while (f.board[++y])
 	{
 		f.map[y] = ft_memalloc(sizeof(int) * f.w);
-		while (f.board[y][x])
+		if (!f.map[y])
+			kill_filler("failed to malloc map row", &f);
+		while (f.board[y][++x])
 		{
 			if (is_opp(f, y, x))
 				f.map[y][x] = 0;
@@ -117,11 +147,10 @@ int						**ft_minesweeper(t_board f)
 				f.map[y][x] = 10000;
 			else
 				f.map[y][x] = EMPTY;
-			x++;
 		}
-		y++;
-		x = 0;
+		x = -1;
 	}
-	f.map = ft_save_distance(f, 0);
+	f.map = save_distance(f, 0);
+	print_map(f, f.map);
 	return (f.map);
 }

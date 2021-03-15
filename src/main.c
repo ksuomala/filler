@@ -6,19 +6,23 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/14 16:09:56 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/15 16:47:17 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include <fcntl.h>
 
-void		kill_all(t_board filler)
+void	kill_filler(char *error, t_board *filler)
 {
-	ft_free2d((void**)filler.board);
-	ft_memdel((void**)&filler.piece->cr);
-	ft_memdel((void**)&filler.piece);
-	ft_free2d((void**)filler.map);
+	if (filler)
+	{
+		ft_free2d((void**)filler->board);
+		ft_memdel((void**)&filler->piece->cr);
+		ft_memdel((void**)&filler->piece);
+		ft_free2d((void**)filler->map);
+	}
+	ft_putstr(error);
 	exit(0);
 }
 
@@ -27,14 +31,12 @@ void		kill_all(t_board filler)
 ** Minesweeper converts the board into numbers for the algorithm.
 */
 
-int		ft_get_data(t_board *filler)
+int		get_data(t_board *filler)
 {
 	if (!filler->p)
-		if (!(filler->p = get_player()))
-			return (0);
-	if (!get_board(filler))
-		exit(0);
-	filler->map = ft_minesweeper(*filler);
+		filler->p = get_player();
+	get_board(filler);
+	filler->map = minesweeper(*filler);
 	if (!(filler->piece = get_piece()))
 		return (0);
 	return (1);
@@ -81,12 +83,12 @@ int		main(void)
 	ft_bzero(&filler, sizeof(filler));
 	while (1)
 	{
-		if (!ft_get_data(&filler))
-			kill_all(filler);
+		if (!get_data(&filler))
+			kill_filler("Failed to get data\n", &filler);
 		move = ft_next_move(filler, filler.piece->cr);
 		out = ft_parse_coord(move);
 		if (!out)
-			kill_all(filler);
+			kill_filler("Parsing coordinates failed\n", &filler);
 		ft_cleanup(filler);
 		ft_printf("%s\n", out);
 		ft_strdel(&out);

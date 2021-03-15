@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/13 19:08:12 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/15 18:43:14 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,33 @@ t_crd			ft_end_crd(t_token *p)
 ** Adding up the map values of all the coordinates.
 */
 
-int				ft_move_value(int **board, t_crd token_pos, t_crd *token_crd, int len)
+int				move_value(int **board, t_crd token_pos,
+t_crd *token_crd, int len)
 {
 	int		sum;
 	int		i;
 	int		x;
 	int		y;
-// x starts from -1 for some reason.
+
 	i = 0;
 	sum = 0;
 	x = 0;
 	y = 0;
+	ft_dprintf(fd, "\n"); //test
 	while (i < len)
 	{
 		x = token_pos.x + token_crd[i].x;
 		y = token_pos.y + token_crd[i].y;
+		ft_dprintf(fd, "move x: %d y; %d value %d\n", x, y, board[y][x]); //test
 		sum += board[y][x];
+		if (sum > 10000)
+			ft_dprintf(fd, "sum %d %d == %d\n", y, x, sum);//test
 		if (sum > 20000 || !board[y][x])
 			return (20000);
 		i++;
 	}
+	if (sum > 10000 && sum < 20000)
+		ft_dprintf(fd, "SUM = %d\n", sum); //test
 	if (sum < 10000)
 		return (20000);
 	else
@@ -94,33 +101,40 @@ int				ft_move_value(int **board, t_crd token_pos, t_crd *token_crd, int len)
 
 /*
 ** start and end coordinates define the range where the piece
-** fits on the board.
+** fits on the board. If the value of the move is <= the value of
+** the current best_move, it will be saved as the best move.
 */
 
-t_crd			ft_next_move(t_board filler, t_crd *token_crd)
+t_crd			ft_next_move(t_board f, t_crd *token_crd)
 {
 	t_crd	start;
 	t_crd	end;
 	t_crd	best_move;
 	int		value;
 
-	start = ft_start_crd(filler.piece);
-	end = ft_end_crd(filler.piece);
+	start = ft_start_crd(f.piece);
+	ft_dprintf(fd, "START X= %d Y= %d\n", start.x, start.y); //test
+	end = ft_end_crd(f.piece);
 	value = 20000;
 	ft_bzero(&best_move, sizeof(t_crd));
-	while (start.y < filler.h - end.y)
+	while (start.y < f.h - end.y)
 	{
-		while (start.x < filler.w - end.x)
+		while (start.x < f.w - end.x)
 		{
-			if (value >= ft_move_value(filler.map, start, token_crd, filler.piece->len))
+			if (value >= move_value(f.map, start, token_crd, f.piece->len))
 			{
-				value = ft_move_value(filler.map, start, token_crd, filler.piece->len);
+				//inefficient with invalid moves. It should check if the move is valid.
+				value = move_value(f.map, start, token_crd, f.piece->len);
 				best_move = start;
 			}
 			start.x++;
 		}
-		start.x -= (filler.w - end.x);
+		start.x -= f.w;
 		start.y++;
+		ft_dprintf(fd, "EOL, X = %d Y = %d\n", start.x, start.y); //test
 	}
+	ft_dprintf(fd, "\nBEST MOVE: %d %d == %d\n", best_move.y, best_move.x, value); //test
+	ft_dprintf(fd, "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n"); //test
+	close(fd);
 	return (best_move);
 }
