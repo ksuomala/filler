@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/15 18:43:14 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/17 02:11:50 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_crd			ft_start_crd(t_token *p)
 }
 
 /*
-** Getting the edge values so the piece won't be fitted outside
+** Getting the highest x and y values so the piece won't be fitted outside
 ** of the board.
 */
 
@@ -78,21 +78,15 @@ t_crd *token_crd, int len)
 	sum = 0;
 	x = 0;
 	y = 0;
-	ft_dprintf(fd, "\n"); //test
 	while (i < len)
 	{
 		x = token_pos.x + token_crd[i].x;
 		y = token_pos.y + token_crd[i].y;
-		ft_dprintf(fd, "move x: %d y; %d value %d\n", x, y, board[y][x]); //test
 		sum += board[y][x];
-		if (sum > 10000)
-			ft_dprintf(fd, "sum %d %d == %d\n", y, x, sum);//test
 		if (sum > 20000 || !board[y][x])
 			return (20000);
 		i++;
 	}
-	if (sum > 10000 && sum < 20000)
-		ft_dprintf(fd, "SUM = %d\n", sum); //test
 	if (sum < 10000)
 		return (20000);
 	else
@@ -113,13 +107,12 @@ t_crd			ft_next_move(t_board f, t_crd *token_crd)
 	int		value;
 
 	start = ft_start_crd(f.piece);
-	ft_dprintf(fd, "START X= %d Y= %d\n", start.x, start.y); //test
 	end = ft_end_crd(f.piece);
 	value = 20000;
 	ft_bzero(&best_move, sizeof(t_crd));
 	while (start.y < f.h - end.y)
 	{
-		while (start.x < f.w - end.x)
+		while (start.x < (f.w - 1) - end.x)
 		{
 			if (value >= move_value(f.map, start, token_crd, f.piece->len))
 			{
@@ -129,12 +122,9 @@ t_crd			ft_next_move(t_board f, t_crd *token_crd)
 			}
 			start.x++;
 		}
-		start.x -= f.w;
+		start.x -= (f.w - end.x);
 		start.y++;
-		ft_dprintf(fd, "EOL, X = %d Y = %d\n", start.x, start.y); //test
 	}
-	ft_dprintf(fd, "\nBEST MOVE: %d %d == %d\n", best_move.y, best_move.x, value); //test
-	ft_dprintf(fd, "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n"); //test
 	close(fd);
 	return (best_move);
 }
