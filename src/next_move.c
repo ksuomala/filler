@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 13:27:02 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/17 20:36:04 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** The starting position == x and y times -1.
 */
 
-t_crd			ft_start_crd(t_token *p)
+t_crd			start_crd(t_token *p)
 {
 	t_crd			start;
 	int				i;
@@ -39,12 +39,13 @@ t_crd			ft_start_crd(t_token *p)
 	return (start);
 }
 
+
 /*
 ** Getting the highest x and y values so the piece won't be fitted outside
 ** of the board.
 */
 
-t_crd			ft_end_crd(t_token *p)
+t_crd			end_crd(t_token *p)
 {
 	t_crd			end;
 	int				i;
@@ -66,8 +67,7 @@ t_crd			ft_end_crd(t_token *p)
 ** Adding up the map values of all the coordinates.
 */
 
-int				move_value(int **board, t_crd token_pos,
-t_crd *token_crd, int len)
+int				move_value(int **board, t_crd token_pos, t_token *token, int *value)
 {
 	int		sum;
 	int		i;
@@ -78,19 +78,22 @@ t_crd *token_crd, int len)
 	sum = 0;
 	x = 0;
 	y = 0;
-	while (i < len)
+	while (i < token->len)
 	{
-		x = token_pos.x + token_crd[i].x;
-		y = token_pos.y + token_crd[i].y;
+		x = token_pos.x + token->cr[i].x;
+		y = token_pos.y + token->cr[i].y;
 		sum += board[y][x];
-		if (sum > 20000 || !board[y][x])
-			return (20000);
+		if (sum > 20000 || sum > *value || !board[y][x])
+			return (0);
 		i++;
 	}
-	if (sum < 10000)
-		return (20000);
+	if (sum < 10000 || sum > *value)
+		return (0);
 	else
-		return (sum);
+	{
+		*value = sum;
+		return (1);
+	}
 }
 
 /*
@@ -99,30 +102,29 @@ t_crd *token_crd, int len)
 ** the current best_move, it will be saved as the best move.
 */
 
-t_crd			ft_next_move(t_board f, t_crd *token_crd)
+t_crd			ft_next_move(t_board f, t_token *token)
 {
 	t_crd	start;
 	t_crd	end;
 	t_crd	best_move;
+	t_crd	current;
 	int		value;
 
-	start = ft_start_crd(f.piece);
-	end = ft_end_crd(f.piece);
+	start = start_crd(f.piece);
+	end = end_crd(f.piece);
 	value = 20000;
 	ft_bzero(&best_move, sizeof(t_crd));
-	while (start.y < f.h - end.y)
+	current = start;
+	while (current.y < f.h - end.y)
 	{
-		while (start.x < (f.w - 1) - end.x)
+		while (current.x < (f.w - end.x))
 		{
-			if (value >= move_value(f.map, start, token_crd, f.piece->len))
-			{
-				value = move_value(f.map, start, token_crd, f.piece->len);
-				best_move = start;
-			}
-			start.x++;
+			if (move_value(f.map, current, token, &value))
+				best_move = current;
+			current.x++;
 		}
-		start.x -= (f.w - end.x);
-		start.y++;
+		current.x = start.x;
+		current.y++;
 	}
 	return (best_move);
 }

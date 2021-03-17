@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/15 16:47:17 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/17 20:09:58 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		main(void)
 	{
 		if (!get_data(&filler))
 			kill_filler("Failed to get data\n", &filler);
-		move = ft_next_move(filler, filler.piece->cr);
+		move = ft_next_move(filler, filler.piece);
 		out = ft_parse_coord(move);
 		if (!out)
 			kill_filler("Parsing coordinates failed\n", &filler);
