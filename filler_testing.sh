@@ -2,7 +2,7 @@
 
 player1="ksuomala.filler"
 map_dir="resources/maps/"
-vm_path="resources/filler_vm"
+vm_path="resources/filler_vm_old"
 log_dir="test_logs"
 log_file="$log_dir/script_log"
 map_dir="resources/maps/*"
