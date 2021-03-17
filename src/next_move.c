@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 02:11:50 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/17 13:27:02 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ t_crd			ft_next_move(t_board f, t_crd *token_crd)
 		{
 			if (value >= move_value(f.map, start, token_crd, f.piece->len))
 			{
-				//inefficient with invalid moves. It should check if the move is valid.
 				value = move_value(f.map, start, token_crd, f.piece->len);
 				best_move = start;
 			}
@@ -125,6 +124,5 @@ t_crd			ft_next_move(t_board f, t_crd *token_crd)
 		start.x -= (f.w - end.x);
 		start.y++;
 	}
-	close(fd);
 	return (best_move);
 }

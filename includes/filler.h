@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/15 18:23:07 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/17 13:28:47 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # define EMPTY 500
 # define WIN_WT 1280
 # define WIN_HT 720
-
-int fd; //test
 
 typedef struct	s_crd
 {
@@ -53,6 +51,5 @@ char			get_player(void);
 int				**minesweeper(t_board f);
 t_crd			ft_next_move(t_board f, t_crd *token_crd);
 void			kill_filler(char *str, t_board *filler);
-
 
 #endif
