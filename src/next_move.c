@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 20:36:04 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/18 14:14:23 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_crd			start_crd(t_token *p)
 	return (start);
 }
 
-
 /*
 ** Getting the highest x and y values so the piece won't be fitted outside
 ** of the board.
@@ -67,7 +66,7 @@ t_crd			end_crd(t_token *p)
 ** Adding up the map values of all the coordinates.
 */
 
-int				move_value(int **board, t_crd token_pos, t_token *token, int *value)
+int				move_value(int **board, t_crd pos, t_token *token, int *val)
 {
 	int		sum;
 	int		i;
@@ -80,18 +79,18 @@ int				move_value(int **board, t_crd token_pos, t_token *token, int *value)
 	y = 0;
 	while (i < token->len)
 	{
-		x = token_pos.x + token->cr[i].x;
-		y = token_pos.y + token->cr[i].y;
+		x = pos.x + token->cr[i].x;
+		y = pos.y + token->cr[i].y;
 		sum += board[y][x];
-		if (sum > 20000 || sum > *value || !board[y][x])
+		if (sum > 20000 || sum > *val || !board[y][x])
 			return (0);
 		i++;
 	}
-	if (sum < 10000 || sum > *value)
+	if (sum < 10000 || sum > *val)
 		return (0);
 	else
 	{
-		*value = sum;
+		*val = sum;
 		return (1);
 	}
 }
