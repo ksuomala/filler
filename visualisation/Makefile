@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/17 17:44:04 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/21 14:56:25 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ fclean: clean
 
 $(LIBSDL2_TTF): $(LIBSDL2) | $(UNZIP_TTF)
 	@echo "Configuring SDL2_ttf..."
-	cd SDL2/SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR))
+	cd SDL2/SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)) --sdl2_config=$(BUILD_DIR)
 	@echo "SDL2_ttf configured!"
 	@echo "bulding SDL2_ttf"
 	$(MAKE) --directory=SDL2/SDL2_ttf
