@@ -112,7 +112,7 @@ then
 		then
 			echo -e "\e[34m$p1 \e[0mvs \e[35m$p2\e[0m"
 		else
-			echo "$1 vs $2"
+			echo "$p1 vs $p2"
 		fi
 		loop_games $p1 $p2
 		loop_games $p2 $p1
