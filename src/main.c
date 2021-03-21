@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 20:09:58 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/18 19:30:07 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ void	kill_filler(char *error, t_board *filler)
 	if (filler)
 	{
 		ft_free2d((void**)filler->board);
-		ft_memdel((void**)&filler->piece->cr);
-		ft_memdel((void**)&filler->piece);
+		if (filler->piece)
+		{
+			ft_memdel((void**)&filler->piece->cr);
+			ft_memdel((void**)&filler->piece);
+		}
 		ft_free2d((void**)filler->map);
 	}
+	ft_putendl("ERROR:");
 	ft_putstr(error);
 	exit(0);
 }
@@ -36,9 +40,9 @@ int		get_data(t_board *filler)
 	if (!filler->p)
 		filler->p = get_player();
 	get_board(filler);
-	filler->map = minesweeper(*filler);
-	if (!(filler->piece = get_piece()))
+	if (!(filler->piece = get_piece(filler->w, filler->h))) //before or after minesweeper?
 		return (0);
+	filler->map = minesweeper(*filler);
 	return (1);
 }
 

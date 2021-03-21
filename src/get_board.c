@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 01:43:57 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/21 12:54:08 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ t_crd			*get_coordinates(t_token *token)
 				arr[token->len].y = y;
 				token->len++;
 			}
+			else if (line[x] != '.')
+				kill_filler("Invalid character in piece\n", NULL);
 		}
 		ft_strdel(&line);
 	}
@@ -74,7 +76,7 @@ t_crd			*get_coordinates(t_token *token)
 ** Getting the token that has to be placed on the board.
 */
 
-t_token			*get_piece(void)
+t_token			*get_piece(int max_w, int max_h)
 {
 	char		*line;
 	char		**token_size;
@@ -85,8 +87,13 @@ t_token			*get_piece(void)
 		kill_filler("no more lines\n", NULL);
 	if (!(token_size = ft_strsplit(line, ' ')))
 		kill_filler("error reading token\n", NULL);
+	if (ft_strcmp("Piece", token_size[0]) || !token_size[1] || !token_size[2] ||
+	token_size[3])
+		kill_filler("Invalid line before token\n", NULL);
 	new->h = ft_atoi(token_size[1]);
 	new->w = ft_atoi(token_size[2]);
+	if (new->h > max_h || new->w > max_w)
+		kill_filler("The piece is larger than the board\n", NULL);
 	ft_free2d((void**)token_size);
 	ft_strdel(&line);
 	new->cr = get_coordinates(new);
@@ -99,10 +106,13 @@ void			get_board_size(t_board *filler)
 	char *line;
 
 	if (get_next_line(0, &line) <= 0)
-		kill_filler("GNL error\n", NULL);
+		exit(0);
 	if (!(board_size = ft_strsplit(line, ' ')))
 		kill_filler("failed split\n", NULL);
 	ft_strdel(&line);
+	if (ft_strcmp("Plateau", board_size[0]) || !ft_isnumeric_str(board_size[1])
+	|| !ft_isdigit(board_size[2][0]) || board_size[3])
+		kill_filler("Invalid line before board\n", NULL);
 	filler->w = ft_atoi(board_size[2]);
 	filler->h = ft_atoi(board_size[1]);
 	ft_free2d((void*)board_size);
@@ -130,9 +140,13 @@ void			get_board(t_board *filler)
 	{
 		if (get_next_line(0, &line) <= 0)
 			kill_filler("GNL_error 123\n", NULL);
+		if (ft_strlen(line) != (size_t)(filler->w + 4))
+			kill_filler("Wrong line length\n", filler);
 		filler->board[i] = ft_strsub(line, 4, filler->w);
 		if (!filler->board[i])
-			kill_filler("Failed to allocate for board substring\n", filler);
+			kill_filler("Failed to create substring\n", filler);
+		if (!ft_str_isvalid(filler->board[i], ".oOxX"))
+			kill_filler("Invalid characters in map lines\n", filler);
 		free(line);
 	}
 }
