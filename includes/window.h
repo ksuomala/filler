@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/14 20:46:02 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/18 18:29:32 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "SDL_ttf.h"
 # include <fcntl.h>
 # include "filler.h"
+
+# define WIN_WT 1280
+# define WIN_HT 720
 
 typedef	struct		s_buttons
 {

@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 20:16:56 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/18 19:15:55 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <fcntl.h>
 
 # define EMPTY 500
-# define WIN_WT 1280
-# define WIN_HT 720
 
 typedef struct	s_crd
 {
@@ -46,7 +44,7 @@ typedef struct	s_grid
 }				t_board;
 
 void			get_board(t_board *filler);
-t_token			*get_piece(void);
+t_token			*get_piece(int max_w, int max_h);
 char			get_player(void);
 int				**minesweeper(t_board f);
 t_crd			ft_next_move(t_board f, t_token *token);
