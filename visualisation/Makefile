@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/22 20:48:01 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/22 20:52:03 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ $(NAME): $(OBJS)
 
 $(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) | $(OBJ_DIR) $(LIBFT)
 	@echo "Compiling..."
-	(CC) $(C_FLAGS) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
+	$(CC) $(C_FLAGS) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
 	@mv $(SRCS:.c=.o) $(OBJ_DIR)/
 	@echo "*object files created!"
 
