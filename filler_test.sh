@@ -63,11 +63,11 @@ loop_games()
 					exit
 				fi
 				winner=$(grep "won" filler.trace)
-				if [[ "$winner" == *"$player1"* ]];
+				if [[ "$winner" == *"$p1"* ]];
 				then
 					echo -n 1
 					games_won=$(($games_won+1))
-				elif [[ "$winner" == *"$player2"* ]];
+				elif [[ "$winner" == *"$p2"* ]];
 				then
 					echo -n 2
 					games_lost=$(($games_lost+1))
