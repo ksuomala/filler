@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/22 22:31:46 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/22 22:35:00 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS = graphics_main.c \
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 LIBSDL2 = $(LIB_DIR)libSDL2/lib/libSDL2.a
 LIBSDL2_TTF = $(LIB_DIR)lib/libSDL2_ttf.a
-LIB_FT2 = $(LIB_DIR)libft2/libfreetype.a
+LIB_FT2 = $(LIB_DIR)libft2/lib/libfreetype.a
 SDL2_CONFIG = $(abspath lib/libSDL2/bin/sdl2-config)
 LIBSDL_MAKE = SDL2/libSDL2/Makefile
 LIBFT = ../libft/libft.a
@@ -43,7 +43,7 @@ IF_FT2 =
 
 
 
-LINKS = -L ../libft -lft -L lib/lib -lSDL2_ttf -L lib/libSDL2/lib `$(LIB_DIR)libSDL2/bin/sdl2-config --libs` -L $(LIB_DIR)libft2 -lfreetype
+LINKS = -L ../libft -lft -L lib/lib -lSDL2_ttf -L lib/libSDL2/lib `$(LIB_DIR)libSDL2/bin/sdl2-config --libs` -L $(LIB_DIR)libft2/lib -lfreetype
 
 #FLAGS = -g -Wall -Wextra -Werror `sdl2-config --cflags --libs`
 
