@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/22 22:35:00 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/22 23:14:17 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,19 +39,8 @@ CC = gcc
 C_FLAGS = -g -Wall -Wextra -Werror `$(LIB_DIR)libSDL2/bin/sdl2-config --cflags`
 L_FLAGS = `$(LIB_DIR)libSDL2/bin/sdl2-config --libs`
 FREETYPE_BUILD = SDL2/SDL2_ttf/external/freetype-2.9.1/
-IF_FT2 =
-
-
-
 LINKS = -L ../libft -lft -L lib/lib -lSDL2_ttf -L lib/libSDL2/lib `$(LIB_DIR)libSDL2/bin/sdl2-config --libs` -L $(LIB_DIR)libft2/lib -lfreetype
-
-#FLAGS = -g -Wall -Wextra -Werror `sdl2-config --cflags --libs`
-
-#LINKS = -L ../libft -lft -lSDL2_image -lSDL2_ttf -lm
-
-# rm -f
-
-INCL = -I ../includes -I ../libft -I lib/libSDL2/include -I lib/include/SDL2
+INCL = -I ../includes -I ../libft -I lib/libSDL2/include -I lib/include/SDL2 -I lib/libft2/libft2/lib -I lib/libft2/include/freetype2/
 
 .PHONY: all clean fclean leaks re
 
