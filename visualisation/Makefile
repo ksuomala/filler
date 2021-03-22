@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/21 14:56:25 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/22 20:48:01 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 LIBSDL2 = $(LIB_DIR)libSDL2/lib/libSDL2.a
 LIBSDL2_TTF = $(LIB_DIR)lib/libSDL2_ttf.a
 LIBSDL_MAKE = SDL2/libSDL2/Makefile
-LIBFT = ../libft/libft.aSDL2-2.0.14.zip
+LIBFT = ../libft/libft.a
 BUILD_DIR = SDL2/
 LIB_DIR = lib/
 F_SANITIZE = -fsanitize=leak -fsanitize=address
@@ -42,7 +42,7 @@ ifeq "$(OS_NAME)" "linux"
 	LINUX_LINK = -lfreetype
 endif
 
-LINKS = -L ../libft -lft -L lib/lib
+LINKS = -L ../libft -lft -L lib/lib -L lib/libSDL2/lib
 
 #FLAGS = -g -Wall -Wextra -Werror `sdl2-config --cflags --libs`
 
@@ -52,17 +52,17 @@ LINKS = -L ../libft -lft -L lib/lib
 
 INCL = -I ../includes -I ../libft -I lib/libSDL2/include -I lib/include/SDL2
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean leaks re
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) $(L_FLAGS) $(INCL) $(LINKS)
+	$(CC) $(OBJS) -o $(NAME) $(LINKS) $(L_FLAGS) $(INCL)
 	@echo "executable compiled!"
 
 $(OBJS): $(addprefix $(SRCS_DIR), $(SRCS)) $(LIBSDL2_TTF) | $(OBJ_DIR) $(LIBFT)
 	@echo "Compiling..."
-	$(CC) $(C_FLAGS) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
+	(CC) $(C_FLAGS) $(INCL) -c $(addprefix $(SRCS_DIR), $(SRCS))
 	@mv $(SRCS:.c=.o) $(OBJ_DIR)/
 	@echo "*object files created!"
 
@@ -82,7 +82,7 @@ fclean: clean
 
 $(LIBSDL2_TTF): $(LIBSDL2) | $(UNZIP_TTF)
 	@echo "Configuring SDL2_ttf..."
-	cd SDL2/SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)) --sdl2_config=$(BUILD_DIR)
+	cd SDL2/SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)) SDL2_CONFIG=$(abspath $(BUILD_DIR))
 	@echo "SDL2_ttf configured!"
 	@echo "bulding SDL2_ttf"
 	$(MAKE) --directory=SDL2/SDL2_ttf
