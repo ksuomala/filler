@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/22 21:31:50 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/22 21:33:05 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = graphics_main.c \
 	events.c
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 LIBSDL2 = $(LIB_DIR)libSDL2/lib/libSDL2.a
-SDL2_CONFIG = $(abspath lib/libSDL2/bin)
+SDL2_CONFIG = $(abspath lib/libSDL2/bin/sdl2-config)
 LIBSDL2_TTF = $(LIB_DIR)lib/libSDL2_ttf.a
 LIBSDL_MAKE = SDL2/libSDL2/Makefile
 LIBFT = ../libft/libft.a
