@@ -20,6 +20,7 @@ read -n 1 -p "Do you want to manually select a player? [y / n] If n is selected,
 echo
 if [ $select_player == "y" ]
 then
+	ls $players_dir
 	read -p "Type name for PLAYER2 and press ENTER " p2
 	echo "$p2 set as PLAYER2"
 fi
@@ -40,7 +41,7 @@ loop_games()
 				echo "Running map $map 5 times. $1 as player1"
 			fi
 			games_won=0
-			for i in {1..2}
+			for i in {1..5}
 			do
 				./$vm_path -f $map -p1 ./$1 -p2 ./$2 > $log_file
 				grep -A1 "error" $log_file > $log_dir/error
@@ -122,7 +123,7 @@ else
 	then
 		echo -e "\e[34m$p1 \e[0mvs \e[35m$p2\e[0m"
 	else
-		echo "$1 vs $2"
+		echo "$p1 vs $p2"
 	fi
 	loop_games $p1 $p2
 	loop_games $p2 $p2
