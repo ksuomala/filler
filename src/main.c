@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/18 19:30:07 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/22 19:03:53 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	kill_filler(char *error, t_board *filler)
 	}
 	ft_putendl("ERROR:");
 	ft_putstr(error);
-	exit(0);
+	exit(0); //test
 }
 
 /*
