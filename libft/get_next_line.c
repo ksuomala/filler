@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 18:50:19 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/18 21:19:47 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/22 17:05:35 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char			*ft_strcut(char **s)
 		return (NULL);
 	while (s[0][i] != '\n' && s[0][i] != '\0')
 		i++;
-	if (s[0][i] == '\0' || (s[0][i] == '\n' && s[0][i + 1] == '\0'))
+	if (s[0][i] == '\0')
 	{
 		if (i == 0)
 			return (NULL);
