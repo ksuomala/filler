@@ -22,6 +22,7 @@ if [ $select_player == "y" ]
 then
 	ls $players_dir
 	read -p "Type name for PLAYER2 and press ENTER " p2
+	p2=$players_dir/$p2
 	echo "$p2 set as PLAYER2"
 fi
 read -n 1 -p "Do you want to visualize the games that you lose? [y/n]" visualize
