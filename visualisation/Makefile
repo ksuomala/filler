@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:21:02 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/22 21:25:39 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/22 21:31:50 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = graphics_main.c \
 	events.c
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 LIBSDL2 = $(LIB_DIR)libSDL2/lib/libSDL2.a
-LIBSDL2_CONFIG = $(abspath $(BUILD_DIR)/libSDL2/libsdl2-config)
+SDL2_CONFIG = $(abspath lib/libSDL2/bin)
 LIBSDL2_TTF = $(LIB_DIR)lib/libSDL2_ttf.a
 LIBSDL_MAKE = SDL2/libSDL2/Makefile
 LIBFT = ../libft/libft.a
@@ -80,11 +80,11 @@ fclean: clean
 
 $(LIBSDL2_TTF): $(LIBSDL2) | $(UNZIP_TTF)
 	@echo "Configuring SDL2_ttf..."
-	cd SDL2/SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)) SDL2_CONFIG=$(LIBSDL2_CONFIG)
+	cd SDL2/SDL2_ttf && ./configure --prefix=$(abspath $(LIB_DIR)) SDL2_CONFIG=$(SDL2_CONFIG)
 	@echo "SDL2_ttf configured!"
 	@echo "bulding SDL2_ttf"
-	$(MAKE) SDL2_CONFIG=$(LIBSDL2_CONFIG) --directory=SDL2/SDL2_ttf
-	$(MAKE) SDL2_CONFIG=$(LIBSDL2_CONFIG) --directory=SDL2/SDL2_ttf install
+	$(MAKE) SDL2_CONFIG=$(SDL2_CONFIG) --directory=SDL2/SDL2_ttf
+	$(MAKE) SDL2_CONFIG=$(SDL2_CONFIG) --directory=SDL2/SDL2_ttf install
 	@echo "SDL2_ttf built!"
 
 $(LIBSDL2): $(LIB_DIR) | $(UNZIP_SDL)
