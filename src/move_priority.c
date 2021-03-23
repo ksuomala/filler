@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 19:57:26 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 20:02:33 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:10:18 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		move_priority(t_board *filler)
 					filler->reverse_move = 1;
 				return (1);
 			}
+			pos.x++;
 		}
 		pos.y++;
 	}
