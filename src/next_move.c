@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/18 14:14:23 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:06:46 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,40 @@ t_crd			end_crd(t_token *p)
 			end.y = p->cr[i].y;
 	}
 	return (end);
+}
+
+/*
+** If there are multiple options for best moves with the same value, reverse method
+** uses the one that comes first in the search. move_value picks the last one.
+*/
+
+int				reverse_move_value(int **board, t_crd pos, t_token *token, int *val)
+{
+	int		sum;
+	int		i;
+	int		x;
+	int		y;
+
+	i = 0;
+	sum = 0;
+	x = 0;
+	y = 0;
+	while (i < token->len)
+	{
+		x = pos.x + token->cr[i].x;
+		y = pos.y + token->cr[i].y;
+		sum += board[y][x];
+		if (sum > 20000 || sum > *val || !board[y][x])
+			return (0);
+		i++;
+	}
+	if (sum < 10000 || sum >= *val)
+		return (0);
+	else
+	{
+		*val = sum;
+		return (1);
+	}
 }
 
 /*
@@ -118,7 +152,9 @@ t_crd			ft_next_move(t_board f, t_token *token)
 	{
 		while (current.x < (f.w - end.x))
 		{
-			if (move_value(f.map, current, token, &value))
+			if (f.reverse_move && move_value(f.map, current, token, &value))
+				best_move = current;
+			else if (reverse_move_value(f.map, current, token, &value))
 				best_move = current;
 			current.x++;
 		}

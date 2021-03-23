@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 16:39:16 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:05:21 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@ int		get_data(t_board *filler)
 		return (0);
 	if (!get_board(filler))
 		return (0);
+	if (filler->reverse_move == -1)
+		if (!move_priority(filler))
+			return (kill_filler("Invalid board\n", filler, NULL));
 	if (!(filler->piece = get_piece(filler)))
 		return (0);
-	filler->map = minesweeper(*filler);
+	if (!(filler->map = minesweeper(*filler)))
+		return (0);
 	return (1);
 }
 
@@ -97,6 +101,7 @@ int		main(void)
 	char		*out;
 
 	ft_bzero(&filler, sizeof(filler));
+	filler.reverse_move = -1;
 	while (1)
 	{
 		if (!get_data(&filler))

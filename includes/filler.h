@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 16:49:37 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:04:56 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_grid
 	char	**board;
 	int		**map;
 	char	p;
+	int		reverse_move;
 	int		size;
 	int		w;
 	int		h;
@@ -49,6 +50,7 @@ char			get_player(void);
 int				**minesweeper(t_board f);
 t_crd			ft_next_move(t_board f, t_token *token);
 void			set_coordinate(t_crd *coordinate, int x, int y);
+int				move_priority(t_board *filler);
 
 int				kill_filler(char *str, t_board *filler, char *line);
 void			*kill_filler_ptr(char *error, t_board *filler, char *line);
