@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:11:16 by ksuomala          #+#    #+#             */
-/*   Updated: 2020/12/23 04:10:50 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 21:00:20 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ t_buttons	background(t_filler *data, t_game game)
 
 	SDL_SetRenderDrawColor(data->renderer, 25, 25, 25, 255);
 	SDL_RenderClear(data->renderer);
-	board.h = WIN_HT * 0.9;
-	data->square_size = board.h / data->h;
+	data->square_size = WIN_HT * 0.9 / data->h;
+	board.h = data->square_size * data->h;
 	board.w = data->square_size * data->w;
 	board.x = WIN_HT * 0.05;
 	board.y = WIN_HT * 0.05;

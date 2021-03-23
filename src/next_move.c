@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 21:29:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 20:06:46 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:57:37 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ t_crd			end_crd(t_token *p)
 }
 
 /*
-** If there are multiple options for best moves with the same value, reverse method
-** uses the one that comes first in the search. move_value picks the last one.
+** If there are multiple options for best moves with the same value, reverse
+** method uses the one that comes first in the search. move_value picks the
+** last one.
 */
 
-int				reverse_move_value(int **board, t_crd pos, t_token *token, int *val)
+int				reverse_move_value(int **board, t_crd pos, t_token *token,\
+int *val)
 {
 	int		sum;
 	int		i;

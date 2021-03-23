@@ -117,6 +117,7 @@ then
 			echo "$p1 vs $p2"
 		fi
 		loop_games $p1 $p2
+		echo "$p2 vs $p1"
 		loop_games $p2 $p1
 	done
 else
@@ -127,5 +128,6 @@ else
 		echo "$p1 vs $p2"
 	fi
 	loop_games $p1 $p2
+	echo "$p2 vs $p1"
 	loop_games $p2 $p2
 fi

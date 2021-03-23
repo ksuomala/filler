@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 01:37:27 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/18 18:29:32 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:44:12 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include "filler.h"
 
-# define WIN_WT 1280
-# define WIN_HT 720
+# define WIN_WT 800
+# define WIN_HT 600
 
 typedef	struct		s_buttons
 {
