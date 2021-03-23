@@ -6,29 +6,12 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/22 19:03:53 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 12:26:23 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include <fcntl.h>
-
-void	kill_filler(char *error, t_board *filler)
-{
-	if (filler)
-	{
-		ft_free2d((void**)filler->board);
-		if (filler->piece)
-		{
-			ft_memdel((void**)&filler->piece->cr);
-			ft_memdel((void**)&filler->piece);
-		}
-		ft_free2d((void**)filler->map);
-	}
-	ft_putendl("ERROR:");
-	ft_putstr(error);
-	exit(0); //test
-}
 
 /*
 ** Reading the stdin and saving the board and the next game piece.
@@ -39,8 +22,11 @@ int		get_data(t_board *filler)
 {
 	if (!filler->p)
 		filler->p = get_player();
-	get_board(filler);
-	if (!(filler->piece = get_piece(filler->w, filler->h))) //before or after minesweeper?
+	if (!filler->p)
+		return (0);
+	if (!get_board(filler))
+		return (0);
+	if (!(filler->piece = get_piece(filler->w, filler->h)))
 		return (0);
 	filler->map = minesweeper(*filler);
 	return (1);
@@ -88,11 +74,17 @@ int		main(void)
 	while (1)
 	{
 		if (!get_data(&filler))
+		{
 			kill_filler("Failed to get data\n", &filler);
+			return (0);
+		}
 		move = ft_next_move(filler, filler.piece);
 		out = ft_parse_coord(move);
 		if (!out)
+		{
 			kill_filler("Parsing coordinates failed\n", &filler);
+			return (0);
+		}
 		ft_cleanup(filler);
 		ft_printf("%s\n", out);
 		ft_strdel(&out);

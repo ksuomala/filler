@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 02:02:33 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/17 13:26:39 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 12:31:15 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ int						**minesweeper(t_board f)
 	y = -1;
 	x = -1;
 	if (!(f.map = ft_memalloc(sizeof(int*) * (f.h + 1))))
-		kill_filler("Failed to malloc map\n", &f);
+		return (kill_filler_ptr("Failed to malloc map\n", &f));
 	while (f.board[++y])
 	{
 		f.map[y] = ft_memalloc(sizeof(int) * f.w);
 		if (!f.map[y])
-			kill_filler("failed to malloc map row", &f);
+			return (kill_filler_ptr("failed to malloc map row", &f));
 		while (f.board[y][++x])
 		{
 			if (is_opp(f, y, x))

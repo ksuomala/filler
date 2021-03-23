@@ -6,7 +6,7 @@
 #    By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/16 03:20:59 by ksuomala          #+#    #+#              #
-#    Updated: 2021/03/13 15:22:37 by ksuomala         ###   ########.fr        #
+#    Updated: 2021/03/23 12:28:19 by ksuomala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS = main.c \
 	get_board.c \
 	minesweeper.c \
 	next_move.c \
+	kill_filler.c
 
 SRCS_DIR = src/
 
