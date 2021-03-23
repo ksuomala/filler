@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 20:05:21 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 21:41:25 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	get_player(void)
 	if (get_next_line(0, &line) < 1)
 		return (kill_filler("No more lines\n", NULL, NULL));
 	if (!(p = ft_strchr(line, 'p')))
-		return (kill_filler("invalid input from vm\n", NULL, NULL));
+		return (kill_filler("invalid input from vm\n", NULL, line));
 	p += 1;
 	c = *p;
 	ft_strdel(&line);
@@ -57,6 +57,8 @@ int		get_data(t_board *filler)
 			return (kill_filler("Invalid board\n", filler, NULL));
 	if (!(filler->piece = get_piece(filler)))
 		return (0);
+	if (!filler->piece->len)
+		return (kill_filler("Invalid piece\n", filler, NULL));
 	if (!(filler->map = minesweeper(*filler)))
 		return (0);
 	return (1);
