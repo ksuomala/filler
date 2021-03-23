@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 19:57:26 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 20:10:18 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:13:12 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		move_priority(t_board *filler)
 		pos.x = 0;
 		while (pos.x < filler->w)
 		{
-			if (filler->board[pos.y][pos.x] == filler->p)
+			if (filler->board[pos.y][pos.x] == filler->p || filler->board[pos.y][pos.x] == ft_toupper(filler->p))
 			{
 				if (pos.y > filler->h / 2)
 					filler->reverse_move = 0;
