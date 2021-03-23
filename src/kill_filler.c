@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 12:27:18 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 12:32:25 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:33:37 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 **	Same as kill_filler, but returns a pointer.
 */
 
-void	*kill_filler_ptr(char *error, t_board *filler)
+void	free_token_resources(char **split, t_token *token)
+{
+	ft_free2d((void**)split);
+	ft_memdel((void**)&token);
+}
+
+void	*kill_filler_ptr(char *error, t_board *filler, char *line)
 {
 	if (filler)
 	{
@@ -28,8 +34,9 @@ void	*kill_filler_ptr(char *error, t_board *filler)
 		}
 		ft_free2d((void**)filler->map);
 	}
-	ft_putendl("ERROR:");
-	ft_putstr(error);
+	ft_strdel(&line);
+	ft_putstr_fd("ERROR:\n", 2);
+	ft_putstr_fd(error, 2);
 	return (NULL);
 }
 
@@ -37,7 +44,7 @@ void	*kill_filler_ptr(char *error, t_board *filler)
 ** Frees all the allocated pointers and returns 0.
 */
 
-int		kill_filler(char *error, t_board *filler)
+int		kill_filler(char *error, t_board *filler, char *line)
 {
 	if (filler)
 	{
@@ -49,7 +56,8 @@ int		kill_filler(char *error, t_board *filler)
 		}
 		ft_free2d((void**)filler->map);
 	}
-	ft_putendl("ERROR:");
-	ft_putstr(error);
+	ft_strdel(&line);
+	ft_putstr_fd("ERROR:\n", 2);
+	ft_putstr_fd(error, 2);
 	return (0);
 }

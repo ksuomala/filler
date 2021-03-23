@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 12:33:04 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:16:03 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ typedef struct	s_grid
 }				t_board;
 
 int				get_board(t_board *filler);
-t_token			*get_piece(int max_w, int max_h);
+t_token			*get_piece(t_board *filler);
 char			get_player(void);
 int				**minesweeper(t_board f);
 t_crd			ft_next_move(t_board f, t_token *token);
 
-int				kill_filler(char *str, t_board *filler);
-void	*kill_filler_ptr(char *error, t_board *filler);
+int				kill_filler(char *str, t_board *filler, char *line);
+void			*kill_filler_ptr(char *error, t_board *filler, char *line);
+void			free_token_resources(char **split, t_token *token);
 
 #endif

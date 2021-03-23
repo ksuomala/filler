@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 16:51:57 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/18 18:49:01 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 14:23:21 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	while (i < len)
 	{
 		if (!s[i + start])
+		{
+			free(ptr);
 			return (NULL);
+		}
 		ptr[i] = s[i + start];
 		i++;
 	}

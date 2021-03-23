@@ -6,12 +6,39 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 12:26:23 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:09:09 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include <fcntl.h>
+
+/*
+** Reading the first line to see which player to play (p_).
+*/
+
+char			get_player(void)
+{
+	char *line;
+	char *p;
+	char c;
+
+	if (get_next_line(0, &line) < 1)
+		return (kill_filler("No more lines\n", NULL, NULL));
+	if (!(p = ft_strchr(line, 'p')))
+		return (kill_filler("invalid input from vm\n", NULL, NULL));
+	p += 1;
+	c = *p;
+	ft_strdel(&line);
+	if (c == '1')
+		return ('o');
+	else if (c == '2')
+		return ('x');
+	else
+		return (kill_filler("Invalid player\n", NULL, NULL));
+	return (0);
+}
+
 
 /*
 ** Reading the stdin and saving the board and the next game piece.
@@ -26,7 +53,7 @@ int		get_data(t_board *filler)
 		return (0);
 	if (!get_board(filler))
 		return (0);
-	if (!(filler->piece = get_piece(filler->w, filler->h)))
+	if (!(filler->piece = get_piece(filler)))
 		return (0);
 	filler->map = minesweeper(*filler);
 	return (1);
@@ -74,15 +101,12 @@ int		main(void)
 	while (1)
 	{
 		if (!get_data(&filler))
-		{
-			kill_filler("Failed to get data\n", &filler);
 			return (0);
-		}
 		move = ft_next_move(filler, filler.piece);
 		out = ft_parse_coord(move);
 		if (!out)
 		{
-			kill_filler("Parsing coordinates failed\n", &filler);
+			kill_filler("Parsing coordinates failed\n", &filler, NULL);
 			return (0);
 		}
 		ft_cleanup(filler);
