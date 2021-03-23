@@ -6,12 +6,11 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:09:45 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 16:34:14 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 16:51:23 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
 
 /*
 ** Saving the token as coordinates into an array of t_crd structs.
@@ -23,8 +22,7 @@ t_crd			*get_coordinates(t_token *token)
 	char			*line;
 	t_crd			pos;
 
-	pos.y = -1;
-	pos.x = -1;
+	set_coordinate(&pos, -1, -1);
 	while (++pos.y < token->h)
 	{
 		pos.x = -1;
@@ -34,8 +32,7 @@ t_crd			*get_coordinates(t_token *token)
 		{
 			if (line[pos.x] == '*')
 			{
-				arr[token->len].x = pos.x;
-				arr[token->len].y = pos.y;
+				set_coordinate(&arr[token->len], pos.x, pos.y);
 				token->len++;
 			}
 			else if (line[pos.x] != '.')
@@ -47,7 +44,6 @@ t_crd			*get_coordinates(t_token *token)
 	}
 	return (ft_memdup((t_crd*)arr, sizeof(t_crd) * token->len));
 }
-
 
 int				get_piece_size(t_board *filler, t_token *piece)
 {
@@ -89,7 +85,7 @@ t_token			*get_piece(t_board *filler)
 	if (new->h > filler->h || new->w > filler->w)
 	{
 		ft_memdel((void**)&new);
-		return (kill_filler_ptr("The piece is larger than the board\n", filler, NULL));
+		return (kill_filler_ptr("The piece is too large\n", filler, NULL));
 	}
 	new->cr = get_coordinates(new);
 	if (!new->cr)
@@ -143,13 +139,13 @@ int				get_board(t_board *filler)
 	i = -1;
 	while (++i < filler->h)
 	{
-		if (get_next_line(0, &line) <= 0) //leak
+		if (get_next_line(0, &line) <= 0)
 			return (kill_filler("GNL_error 123\n", NULL, NULL));
 		filler->board[i] = ft_strsub(line, 4, filler->w);
 		if (!filler->board[i] || ft_strlen(line) != (size_t)(filler->w + 4))
-			return (kill_filler("Wrong substring or line length\n", filler, line));
+			return (kill_filler("substring or line length\n", filler, line));
 		if (!ft_str_isvalid(filler->board[i], ".oOxX"))
-			return (kill_filler("Invalid characters in map lines\n", filler, line));
+			return (kill_filler("Map lines\n", filler, line));
 		free(line);
 	}
 	return (1);

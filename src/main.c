@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:49:30 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 15:09:09 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 16:39:16 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Reading the first line to see which player to play (p_).
 */
 
-char			get_player(void)
+char	get_player(void)
 {
 	char *line;
 	char *p;
@@ -38,7 +38,6 @@ char			get_player(void)
 		return (kill_filler("Invalid player\n", NULL, NULL));
 	return (0);
 }
-
 
 /*
 ** Reading the stdin and saving the board and the next game piece.

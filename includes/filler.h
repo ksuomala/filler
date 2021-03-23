@@ -6,7 +6,7 @@
 /*   By: ksuomala <ksuomala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 03:40:52 by ksuomala          #+#    #+#             */
-/*   Updated: 2021/03/23 15:16:03 by ksuomala         ###   ########.fr       */
+/*   Updated: 2021/03/23 16:49:37 by ksuomala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_token			*get_piece(t_board *filler);
 char			get_player(void);
 int				**minesweeper(t_board f);
 t_crd			ft_next_move(t_board f, t_token *token);
+void			set_coordinate(t_crd *coordinate, int x, int y);
 
 int				kill_filler(char *str, t_board *filler, char *line);
 void			*kill_filler_ptr(char *error, t_board *filler, char *line);
