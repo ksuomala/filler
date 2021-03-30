@@ -94,7 +94,7 @@ loop_games()
 					fi
 				fi
 			done
-			if [ $games_won -lt $(($i/2)) ]
+			if [ $games_won -lt $(($number_of_games/2)) ]
 			then
 				if [ $os = "linux" ]
 				then
