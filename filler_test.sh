@@ -18,6 +18,8 @@ touch $log_file
 echo YOUR OS is $os
 read -n 1 -p "Do you want to manually select a player? [y / n] If n is selected, all the players in $players_dir will be played against." select_player
 echo
+read -p "How many games do you want to play? __ " number_of_games
+echo $number_of_games
 if [ $select_player == "y" ]
 then
 	ls $players_dir
@@ -37,13 +39,18 @@ loop_games()
 		do
 			if [ $os = "linux" ]
 			then
-				echo -e "Running map \e[33m$map\e[0m 5 times. \e[32m$1\e[0m as player1"
+				echo -e "Running map \e[33m$map\e[0m $number_of_games times. \e[32m$1\e[0m as player1"
 			else
-				echo "Running map $map 5 times. $1 as player1"
+				echo "Running map $map $number_of_games times. $1 as player1"
 			fi
 			games_won=0
-			for i in {1..5}
+			for i in {1..$number_of_games}
 			do
+				if [ games_won > $(($number_of_games/2)) ]
+				then
+					echo 3 games won
+					break
+				fi
 				./$vm_path -f $map -p1 ./$1 -p2 ./$2 > $log_file
 				grep -A1 "error" $log_file > $log_dir/error
 				if [ -s $log_dir/error ]
@@ -70,7 +77,7 @@ loop_games()
 					games_won=$(($games_won+1))
 				elif [[ "$winner" == *"$p2"* ]];
 				then
-					echo -n 2
+					echo -n 0
 					games_lost=$(($games_lost+1))
 					cp $log_file $log_file$games_lost
 					if [ $visualize = "y" ]
@@ -129,5 +136,5 @@ else
 	fi
 	loop_games $p1 $p2
 	echo "$p2 vs $p1"
-	loop_games $p2 $p2
+	loop_games $p2 $p1
 fi
