@@ -46,7 +46,7 @@ loop_games()
 			games_won=0
 			for i in {1..$number_of_games}
 			do
-				if [ $games_won > $(($number_of_games/2)) ]
+				if [ $(($number_of_games/2)) -lt $games_won ]
 				then
 					echo "$games_won games won"
 					break
