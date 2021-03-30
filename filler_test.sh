@@ -48,7 +48,7 @@ loop_games()
 			do
 				if [ games_won > $(($number_of_games/2)) ]
 				then
-					echo 3 games won
+					echo "$games_won games won"
 					break
 				fi
 				./$vm_path -f $map -p1 ./$1 -p2 ./$2 > $log_file
