@@ -18,8 +18,6 @@ touch $log_file
 echo YOUR OS is $os
 read -n 1 -p "Do you want to manually select a player? [y / n] If n is selected, all the players in $players_dir will be played against." select_player
 echo
-read -p "How many games do you want to play? __ " number_of_games
-echo $number_of_games
 if [ $select_player == "y" ]
 then
 	ls $players_dir
@@ -27,6 +25,8 @@ then
 	p2=$players_dir/$p2
 	echo "$p2 set as PLAYER2"
 fi
+read -p "How many games do you want to play? __ " number_of_games
+echo $number_of_games
 read -n 1 -p "Do you want to visualize the games that you lose? [y/n]" visualize
 echo
 read -n 1 -p "Do you want to quit if you lose a single game? [y/n] " quit_if_lose
@@ -46,7 +46,7 @@ loop_games()
 			games_won=0
 			for i in {1..$number_of_games}
 			do
-				if [ games_won > $(($number_of_games/2)) ]
+				if [ $games_won > $(($number_of_games/2)) ]
 				then
 					echo "$games_won games won"
 					break
