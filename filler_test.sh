@@ -46,6 +46,7 @@ loop_games()
 			games_won=0
 			for i in {1..$number_of_games}
 			do
+				echo $i
 				if [ $(($number_of_games/2)) -lt $games_won ]
 				then
 					echo "$games_won games won"
@@ -98,13 +99,13 @@ loop_games()
 			then
 				if [ $os = "linux" ]
 				then
-					echo -e "\e[31m $games_won/$i\e[0m"
+					echo -e "\e[31m $games_won/$number_of_games\e[0m"
 				else
-					echo " $games_won/$i"
+					echo " $games_won/$number_of_games"
 				fi
 				elif [ $os = "linux" ]
 				then
-					echo -e "\e[32m $games_won/$i\e[0m"
+					echo -e "\e[32m $games_won/$number_of_games\e[0m"
 				else
 				echo " $games_won/$i"
 			fi
